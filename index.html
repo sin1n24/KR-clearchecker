@@ -1,16 +1,16 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>かわロボ クリアチェッカー 2026</title>
-<meta property="og:title" content="かわロボ クリアチェッカー 2026">
-<meta property="og:description" content="川崎ロボット競技大会の年間活動100項目を記録するWebチェッカー。達成を積み重ねて年末アドベントカレンダーで発表！一番埋めた人には粗品進呈🎁">
-<meta property="og:url" content="https://sin1n24.github.io/KR-clearchecker/">
+<title>縺九ｏ繝ｭ繝・繧ｯ繝ｪ繧｢繝√ぉ繝・き繝ｼ 2026</title>
+<meta property="og:title" content="縺九ｏ繝ｭ繝・繧ｯ繝ｪ繧｢繝√ぉ繝・き繝ｼ 2026">
+<meta property="og:description" content="蟾晏ｴ弱Ο繝懊ャ繝育ｫｶ謚螟ｧ莨壹・蟷ｴ髢捺ｴｻ蜍・00鬆・岼繧定ｨ倬鹸縺吶ｋWeb繝√ぉ繝・き繝ｼ縲る＃謌舌ｒ遨阪∩驥阪・縺ｦ蟷ｴ譛ｫ繧｢繝峨・繝ｳ繝医き繝ｬ繝ｳ繝繝ｼ縺ｧ逋ｺ陦ｨ・∽ｸ逡ｪ蝓九ａ縺滉ｺｺ縺ｫ縺ｯ邊怜刀騾ｲ蜻芋沁・>
+<meta property="og:url" content="https://sin1.studio/KR-clearchecker/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="かわロボ クリアチェッカー 2026">
-<meta name="twitter:description" content="川崎ロボット競技大会の年間活動100項目を記録するWebチェッカー。達成を積み重ねて年末アドベントカレンダーで発表！一番埋めた人には粗品進呈🎁">
+<meta name="twitter:title" content="縺九ｏ繝ｭ繝・繧ｯ繝ｪ繧｢繝√ぉ繝・き繝ｼ 2026">
+<meta name="twitter:description" content="蟾晏ｴ弱Ο繝懊ャ繝育ｫｶ謚螟ｧ莨壹・蟷ｴ髢捺ｴｻ蜍・00鬆・岼繧定ｨ倬鹸縺吶ｋWeb繝√ぉ繝・き繝ｼ縲る＃謌舌ｒ遨阪∩驥阪・縺ｦ蟷ｴ譛ｫ繧｢繝峨・繝ｳ繝医き繝ｬ繝ｳ繝繝ｼ縺ｧ逋ｺ陦ｨ・∽ｸ逡ｪ蝓九ａ縺滉ｺｺ縺ｫ縺ｯ邊怜刀騾ｲ蜻芋沁・>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
 :root{
@@ -54,7 +54,7 @@ h1 em{font-style:normal;color:var(--battle);}
 .sp{flex:1;min-width:0;}
 .tb{background:var(--s2);border:1px solid var(--border);border-radius:7px;color:var(--dim);padding:.27rem .65rem;font-size:.72rem;font-family:var(--f);cursor:pointer;transition:all .15s;white-space:nowrap;}
 .tb:hover{color:var(--text);border-color:var(--dim);}
-/* 全体を見るボタン */
+/* 蜈ｨ菴薙ｒ隕九ｋ繝懊ち繝ｳ */
 .tb.illust-btn{border-color:rgba(168,85,247,.4);color:#a855f7;}
 .tb.illust-btn:hover{background:rgba(168,85,247,.15);border-color:#a855f7;}
 .tb.ranking-btn{border-color:rgba(94,203,110,.4);color:#5ecb6e;}
@@ -94,7 +94,7 @@ h1 em{font-style:normal;color:var(--battle);}
 .card.achieved .card-text{color:var(--text);font-weight:700;}
 
 /* ================================================================
-   ILLUSTRATION OVERLAY (全画面モーダル)
+   ILLUSTRATION OVERLAY (蜈ｨ逕ｻ髱｢繝｢繝ｼ繝繝ｫ)
    ================================================================ */
 #illustOverlay{
   display:none;
@@ -129,12 +129,12 @@ h1 em{font-style:normal;color:var(--battle);}
 }
 #illustCanvas{display:block;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges;}
 
-/* チェック済みブロックのオーバーレイ */
+/* 繝√ぉ繝・け貂医∩繝悶Ο繝・け縺ｮ繧ｪ繝ｼ繝舌・繝ｬ繧､ */
 #maskLayer{position:absolute;inset:0;display:grid;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(10,1fr);pointer-events:none;}
 .mask-block{
   background:#0a0c12;
 }
-/* 落下アニメーション */
+/* 關ｽ荳九い繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ */
 @keyframes blockDrop {
   0%   { transform:translateY(0);    opacity:1; }
   15%  { transform:translateY(-8%);  opacity:1; }
@@ -214,14 +214,14 @@ footer a{color:var(--dim);}
 
 <header>
   <div class="eyebrow">Kawasaki Robot Competition 2026</div>
-  <h1>かわロボ<br><em>クリアチェッカー</em></h1>
+  <h1>縺九ｏ繝ｭ繝・br><em>繧ｯ繝ｪ繧｢繝√ぉ繝・き繝ｼ</em></h1>
   <div class="score-panel">
     <div class="score-total"><span id="totalCount">0</span><span class="d"> / 100</span></div>
     <div class="score-cats">
-      <div class="sc"><div class="dot" style="background:#4a7cf5"></div>戦績 <strong id="c_battle">0</strong>/25</div>
-      <div class="sc"><div class="dot" style="background:#f5c842"></div>制作 <strong id="c_make">0</strong>/25</div>
-      <div class="sc"><div class="dot" style="background:#5ecb6e"></div>やらかし <strong id="c_fail">0</strong>/25</div>
-      <div class="sc"><div class="dot" style="background:#e8609a"></div>経験その他 <strong id="c_exp">0</strong>/25</div>
+      <div class="sc"><div class="dot" style="background:#4a7cf5"></div>謌ｦ邵ｾ <strong id="c_battle">0</strong>/25</div>
+      <div class="sc"><div class="dot" style="background:#f5c842"></div>蛻ｶ菴・<strong id="c_make">0</strong>/25</div>
+      <div class="sc"><div class="dot" style="background:#5ecb6e"></div>繧・ｉ縺九＠ <strong id="c_fail">0</strong>/25</div>
+      <div class="sc"><div class="dot" style="background:#e8609a"></div>邨碁ｨ薙◎縺ｮ莉・<strong id="c_exp">0</strong>/25</div>
     </div>
   </div>
 </header>
@@ -232,41 +232,40 @@ footer a{color:var(--dim);}
 </div>
 
 <div class="toolbar">
-  <button class="fb active" data-cat="all"    onclick="setFilter('all')">すべて</button>
-  <button class="fb" data-cat="battle" onclick="setFilter('battle')">⚔️ 戦績</button>
-  <button class="fb" data-cat="make"   onclick="setFilter('make')">🔧 制作</button>
-  <button class="fb" data-cat="fail"   onclick="setFilter('fail')">💥 やらかし</button>
-  <button class="fb" data-cat="exp"    onclick="setFilter('exp')">🌟 経験その他</button>
+  <button class="fb active" data-cat="all"    onclick="setFilter('all')">縺吶∋縺ｦ</button>
+  <button class="fb" data-cat="battle" onclick="setFilter('battle')">笞費ｸ・謌ｦ邵ｾ</button>
+  <button class="fb" data-cat="make"   onclick="setFilter('make')">肌 蛻ｶ菴・/button>
+  <button class="fb" data-cat="fail"   onclick="setFilter('fail')">徴 繧・ｉ縺九＠</button>
+  <button class="fb" data-cat="exp"    onclick="setFilter('exp')">検 邨碁ｨ薙◎縺ｮ莉・/button>
   <div class="sp"></div>
-  <button class="tb illust-btn" onclick="openIllust()">🖼 全体を見る</button>
-  <button class="tb" onclick="openShare()">📢 シェア</button>
-  <button class="tb ranking-btn" onclick="submitRanking()">📊 結果を投稿</button>
-  <a class="tb" href="ranking.html" target="_blank" style="text-decoration:none;color:var(--dim);">🏆 ランキング</a>
+  <button class="tb illust-btn" onclick="openIllust()">名 蜈ｨ菴薙ｒ隕九ｋ</button>
+  <button class="tb" onclick="openShare()">討 繧ｷ繧ｧ繧｢</button>
+  <button class="tb ranking-btn" onclick="submitRanking()">投 邨先棡繧呈兜遞ｿ</button>
+  <a class="tb" href="ranking.html" target="_blank" style="text-decoration:none;color:var(--dim);">醇 繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ</a>
 </div>
 
 <div class="data-row">
-  <span>データ：</span>
-  <span class="dl" onclick="exportJSON()">⬇ JSON書き出し</span>
-  <label>⬆ JSON読込<input type="file" id="jsonInput" accept=".json" onchange="handleJSONImport(event)"></label>
-  <label>📥 Excel取込<input type="file" id="xlsxInput" accept=".xlsx" onchange="handleXLSXImport(event)"></label>
+  <span>繝・・繧ｿ・・/span>
+  <span class="dl" onclick="exportJSON()">筮・JSON譖ｸ縺榊・縺・/span>
+  <label>筮・JSON隱ｭ霎ｼ<input type="file" id="jsonInput" accept=".json" onchange="handleJSONImport(event)"></label>
+  <label>踏 Excel蜿冶ｾｼ<input type="file" id="xlsxInput" accept=".xlsx" onchange="handleXLSXImport(event)"></label>
   <div class="sp"></div>
-  <button class="danger-btn" onclick="confirmReset()">🗑 リセット</button>
+  <button class="danger-btn" onclick="confirmReset()">卵 繝ｪ繧ｻ繝・ヨ</button>
   <span class="st" id="dataStatus"></span>
 </div>
 
 <div class="main" id="mainContent"></div>
 
 <footer>
-  評価期間：2026年1月1日〜12月上旬（立命杯終了が目安）<br>
-  企画：<a href="https://note.com/jolly_roses919/n/n93ba68eadac8" target="_blank">下剋上(かわロボ)</a>
-  ／年末アドベントカレンダーで結果発表！一番埋めた人には粗品進呈予定🎁
-</footer>
+  隧穂ｾ｡譛滄俣・・026蟷ｴ1譛・譌･縲・2譛井ｸ頑流・育ｫ句多譚ｯ邨ゆｺ・′逶ｮ螳会ｼ・br>
+  莨∫判・・a href="https://note.com/jolly_roses919/n/n93ba68eadac8" target="_blank">荳句焔荳・縺九ｏ繝ｭ繝・</a>
+  ・丞ｹｴ譛ｫ繧｢繝峨・繝ｳ繝医き繝ｬ繝ｳ繝繝ｼ縺ｧ邨先棡逋ｺ陦ｨ・∽ｸ逡ｪ蝓九ａ縺滉ｺｺ縺ｫ縺ｯ邊怜刀騾ｲ蜻井ｺ亥ｮ夸沁・</footer>
 
 <!-- ILLUSTRATION OVERLAY -->
 <div id="illustOverlay">
   <div class="illust-modal-hd">
-    <h2>🖼 めくりイラスト</h2>
-    <button class="illust-close" onclick="closeIllust()">✕ 閉じる</button>
+    <h2>名 繧√￥繧翫う繝ｩ繧ｹ繝・/h2>
+    <button class="illust-close" onclick="closeIllust()">笨・髢峨§繧・/button>
   </div>
   <div class="illust-canvas-wrap">
     <canvas id="illustCanvas" width="500" height="500"></canvas>
@@ -280,23 +279,23 @@ footer a{color:var(--dim);}
 
 <div id="confirmOverlay">
   <div class="confirm-box">
-    <h3>🗑 本当によろしいですか？</h3>
-    <p>すべての達成記録が消えます。<br>この操作は取り消せません。</p>
+    <h3>卵 譛ｬ蠖薙↓繧医ｍ縺励＞縺ｧ縺吶°・・/h3>
+    <p>縺吶∋縺ｦ縺ｮ驕疲・險倬鹸縺梧ｶ医∴縺ｾ縺吶・br>縺薙・謫堺ｽ懊・蜿悶ｊ豸医○縺ｾ縺帙ｓ縲・/p>
     <div class="confirm-actions">
-      <button class="c-btn" onclick="closeConfirm()">キャンセル</button>
-      <button class="c-btn danger" onclick="doReset()">リセットする</button>
+      <button class="c-btn" onclick="closeConfirm()">繧ｭ繝｣繝ｳ繧ｻ繝ｫ</button>
+      <button class="c-btn danger" onclick="doReset()">繝ｪ繧ｻ繝・ヨ縺吶ｋ</button>
     </div>
   </div>
 </div>
 
 <div id="shareModal">
   <div class="modal-box">
-    <h2>📢 進捗をシェア</h2>
+    <h2>討 騾ｲ謐励ｒ繧ｷ繧ｧ繧｢</h2>
     <div class="share-text" id="shareText"></div>
     <div class="modal-actions">
-      <button class="mbtn" onclick="closeShare()">閉じる</button>
-      <button class="mbtn p" onclick="copyShare()">コピー</button>
-      <button class="mbtn tw" onclick="tweetShare()">𝕏 ポスト</button>
+      <button class="mbtn" onclick="closeShare()">髢峨§繧・/button>
+      <button class="mbtn p" onclick="copyShare()">繧ｳ繝斐・</button>
+      <button class="mbtn tw" onclick="tweetShare()">撫 繝昴せ繝・/button>
     </div>
   </div>
 </div>
@@ -312,116 +311,116 @@ const PIXELS=["w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w
 // ITEMS / CONFIG
 // ================================================================
 const ITEMS=[
-  {id:0,cat:'battle',text:'本大会優勝経験者からから一本を取る'},
-  {id:1,cat:'battle',text:'2本先取の試合で先に1本とられた状態から勝利'},
-  {id:2,cat:'battle',text:'リングからの脱輪で負ける'},
-  {id:3,cat:'battle',text:'試合終了まで残り10秒足らずで勝利'},
-  {id:4,cat:'battle',text:'大会で何かしらの賞を受賞'},
-  {id:5,cat:'battle',text:'アームを使わずに勝利する'},
-  {id:6,cat:'battle',text:'タイムアップによりコイントス(もしくはじゃんけん等）で決着'},
-  {id:7,cat:'battle',text:'2026年本大会優勝'},
-  {id:8,cat:'battle',text:'1台の機体で、練習会を含め100本以上の試合をした'},
-  {id:9,cat:'battle',text:'トーナメントでベスト8以内に残る'},
-  {id:10,cat:'battle',text:'借りた機体で上位3位に入る　or　レンタルした機体が上位3位に入る'},
-  {id:11,cat:'battle',text:'3連敗する'},
-  {id:12,cat:'battle',text:'本大会予選敗退'},
-  {id:13,cat:'battle',text:'同チームの先輩もしくはOBに勝利する'},
-  {id:14,cat:'battle',text:'横回転に勝利する'},
-  {id:15,cat:'battle',text:'回転シールドに勝利する'},
-  {id:16,cat:'battle',text:'トーナメントで優勝'},
-  {id:17,cat:'battle',text:'本大会決勝トーナメント進出'},
-  {id:18,cat:'battle',text:'トーナメント上位3位に入る'},
-  {id:19,cat:'battle',text:'3秒以内に相手から一本を取る'},
-  {id:20,cat:'battle',text:'初戦敗退'},
-  {id:21,cat:'battle',text:'3大会で上位3位に入賞'},
-  {id:22,cat:'battle',text:'本大会に抽選漏れで出れず'},
-  {id:23,cat:'battle',text:'クランク機体で3回戦以上勝ち上がる'},
-  {id:24,cat:'battle',text:'5連勝以上する'},
-  {id:25,cat:'make',text:'機体を1台完成させる'},
-  {id:26,cat:'make',text:'新しい工具やツールを購入'},
-  {id:27,cat:'make',text:'2台の機体を完成'},
-  {id:28,cat:'make',text:'アームに電子制御を加える'},
-  {id:29,cat:'make',text:'1台の機体に20枚以上の脚を搭載'},
-  {id:30,cat:'make',text:'新しい工作機械の購入、もしくは導入'},
-  {id:31,cat:'make',text:'3台以上の機体を完成'},
-  {id:32,cat:'make',text:'制御アンプを自作'},
-  {id:33,cat:'make',text:'有限軌道アームの機体を作成'},
-  {id:34,cat:'make',text:'無限回転アームの機体を作成'},
-  {id:35,cat:'make',text:'1台の機体に6個以上の脚ユニットを搭載'},
-  {id:36,cat:'make',text:'アドベントカレンダーの記事を参考に機体制作'},
-  {id:37,cat:'make',text:'攻撃機構を2つ以上備えた機体を作る'},
-  {id:38,cat:'make',text:'機体に着色(塗装・染色など)'},
-  {id:39,cat:'make',text:'ヘッケンリンク以外の脚機構の機体を作成'},
-  {id:40,cat:'make',text:'他人の意見やアドバイスをもとに機体を改良する'},
-  {id:41,cat:'make',text:'ミニかわロボかBRAVE機体を完成させる'},
-  {id:42,cat:'make',text:'過去の名機のオマージュ、リスペクト機体作成'},
-  {id:43,cat:'make',text:'4種類以上の工作機械(CNC・旋盤・ボール盤・3Dプリンタ・マシニングセンタ等)を使用して機体を製作'},
-  {id:44,cat:'make',text:'リングの障害物を作成'},
-  {id:45,cat:'make',text:'機体の一部にカーボンを使用'},
-  {id:46,cat:'make',text:'やったことが無い加工方法や設計にトライ'},
-  {id:47,cat:'make',text:'自分が過去に作って無い腕機構を作る'},
-  {id:48,cat:'make',text:'手加工で作った部品を使用'},
-  {id:49,cat:'make',text:'機体の一部に3Dプリンターで作った部品を使用する'},
-  {id:50,cat:'fail',text:'ギヤを合計5個以上破損'},
-  {id:51,cat:'fail',text:'加工ミスをする'},
-  {id:52,cat:'fail',text:'プラスとマイナスを間違える'},
-  {id:53,cat:'fail',text:'機体の運搬中に壁等の何かしらに傷を付けてしまう'},
-  {id:54,cat:'fail',text:'アンプを焼く'},
-  {id:55,cat:'fail',text:'加工音等で近所もしくは他団体からクレームをもらう'},
-  {id:56,cat:'fail',text:'ねじ切りタップを折る'},
-  {id:57,cat:'fail',text:'自分の機体から発煙'},
-  {id:58,cat:'fail',text:'致命的な設計ミスをする'},
-  {id:59,cat:'fail',text:'アームで地面や障害物を叩いて自滅'},
-  {id:60,cat:'fail',text:'ドリル、エンドミルを折る'},
-  {id:61,cat:'fail',text:'会場への移動中に職務質問を受ける'},
-  {id:62,cat:'fail',text:'アンプを3つ以上焼く'},
-  {id:63,cat:'fail',text:'ベアリング等の軸受けが粉砕'},
-  {id:64,cat:'fail',text:'アームのギヤが砕ける'},
-  {id:65,cat:'fail',text:'モーターを総計3つ以上焼く'},
-  {id:66,cat:'fail',text:'フレームが破断'},
-  {id:67,cat:'fail',text:'時間以内にスタート台に立てれず一本を取られる'},
-  {id:68,cat:'fail',text:'試合中に機体が故障、破損し敗北'},
-  {id:69,cat:'fail',text:'スタートミスをする'},
-  {id:70,cat:'fail',text:'モーターを焼く'},
-  {id:71,cat:'fail',text:'大会もしくは練習会に遅刻'},
-  {id:72,cat:'fail',text:'工具を破損する　or　紛失する'},
-  {id:73,cat:'fail',text:'可燃物に引火'},
-  {id:74,cat:'fail',text:'脚のギヤが砕ける'},
-  {id:75,cat:'exp',text:'練習会に参加'},
-  {id:76,cat:'exp',text:'折れた、もしくはなめたねじを救出'},
-  {id:77,cat:'exp',text:'KHKから新発売されたアルミギヤを使用'},
-  {id:78,cat:'exp',text:'大会or練習会を開催'},
-  {id:79,cat:'exp',text:'大会会場近くのラーメンを食べる'},
-  {id:80,cat:'exp',text:'横回転に部品をもがれる'},
-  {id:81,cat:'exp',text:'気になる機体の制作者へ質問をする'},
-  {id:82,cat:'exp',text:'大会、練習会の遠征距離が1000キロを超える'},
-  {id:83,cat:'exp',text:'試合中に機体が真っ二つになる　or　真っ二つにされる'},
-  {id:84,cat:'exp',text:'試合中に電装系を千切られる'},
-  {id:85,cat:'exp',text:'家族、親族と共に大会、練習会に参加'},
-  {id:86,cat:'exp',text:'川崎市産業振興会館前で写真撮影'},
-  {id:87,cat:'exp',text:'4つ以上の大会に参加'},
-  {id:88,cat:'exp',text:'他人の作った機体で試合を行う'},
-  {id:89,cat:'exp',text:'他人に機体制作を手伝ってもらう　or　機体制作を手伝う'},
-  {id:90,cat:'exp',text:'回転シールドに機体の一部を粉砕される'},
-  {id:91,cat:'exp',text:'リサイクルラバーチャレンジのゴムを貰う'},
-  {id:92,cat:'exp',text:'SNSでかわロボプレイヤーを新規フォローする'},
-  {id:93,cat:'exp',text:'1試合中に5回以上復帰する'},
-  {id:94,cat:'exp',text:'アドベントカレンダーの記事を書く'},
-  {id:95,cat:'exp',text:'かわロボ初参加メンバーのサポートをする(設計、製作、機体貸し出し等、内容問わず)'},
-  {id:96,cat:'exp',text:'大会に参加'},
-  {id:97,cat:'exp',text:'機体名を1文字で大会に参加'},
-  {id:98,cat:'exp',text:'大会前日もしくは当日に機体を完成させる'},
-  {id:99,cat:'exp',text:'1つの大会や練習会で2台以上の機体を操縦'},
+  {id:0,cat:'battle',text:'譛ｬ螟ｧ莨壼━蜍晉ｵ碁ｨ楢・°繧峨°繧我ｸ譛ｬ繧貞叙繧・},
+  {id:1,cat:'battle',text:'2譛ｬ蜈亥叙縺ｮ隧ｦ蜷医〒蜈医↓1譛ｬ縺ｨ繧峨ｌ縺溽憾諷九°繧牙享蛻ｩ'},
+  {id:2,cat:'battle',text:'繝ｪ繝ｳ繧ｰ縺九ｉ縺ｮ閼ｱ霈ｪ縺ｧ雋縺代ｋ'},
+  {id:3,cat:'battle',text:'隧ｦ蜷育ｵゆｺ・∪縺ｧ谿九ｊ10遘定ｶｳ繧峨★縺ｧ蜍晏茜'},
+  {id:4,cat:'battle',text:'螟ｧ莨壹〒菴輔°縺励ｉ縺ｮ雉槭ｒ蜿苓ｳ・},
+  {id:5,cat:'battle',text:'繧｢繝ｼ繝繧剃ｽｿ繧上★縺ｫ蜍晏茜縺吶ｋ'},
+  {id:6,cat:'battle',text:'繧ｿ繧､繝繧｢繝・・縺ｫ繧医ｊ繧ｳ繧､繝ｳ繝医せ(繧ゅ＠縺上・縺倥ｃ繧薙￠繧鍋ｭ会ｼ峨〒豎ｺ逹'},
+  {id:7,cat:'battle',text:'2026蟷ｴ譛ｬ螟ｧ莨壼━蜍・},
+  {id:8,cat:'battle',text:'1蜿ｰ縺ｮ讖滉ｽ薙〒縲∫ｷｴ鄙剃ｼ壹ｒ蜷ｫ繧・00譛ｬ莉･荳翫・隧ｦ蜷医ｒ縺励◆'},
+  {id:9,cat:'battle',text:'繝医・繝翫Γ繝ｳ繝医〒繝吶せ繝・莉･蜀・↓谿九ｋ'},
+  {id:10,cat:'battle',text:'蛟溘ｊ縺滓ｩ滉ｽ薙〒荳贋ｽ・菴阪↓蜈･繧九or縲繝ｬ繝ｳ繧ｿ繝ｫ縺励◆讖滉ｽ薙′荳贋ｽ・菴阪↓蜈･繧・},
+  {id:11,cat:'battle',text:'3騾｣謨励☆繧・},
+  {id:12,cat:'battle',text:'譛ｬ螟ｧ莨壻ｺ磯∈謨鈴'},
+  {id:13,cat:'battle',text:'蜷後メ繝ｼ繝縺ｮ蜈郁ｼｩ繧ゅ＠縺上・OB縺ｫ蜍晏茜縺吶ｋ'},
+  {id:14,cat:'battle',text:'讓ｪ蝗櫁ｻ｢縺ｫ蜍晏茜縺吶ｋ'},
+  {id:15,cat:'battle',text:'蝗櫁ｻ｢繧ｷ繝ｼ繝ｫ繝峨↓蜍晏茜縺吶ｋ'},
+  {id:16,cat:'battle',text:'繝医・繝翫Γ繝ｳ繝医〒蜆ｪ蜍・},
+  {id:17,cat:'battle',text:'譛ｬ螟ｧ莨壽ｱｺ蜍昴ヨ繝ｼ繝翫Γ繝ｳ繝磯ｲ蜃ｺ'},
+  {id:18,cat:'battle',text:'繝医・繝翫Γ繝ｳ繝井ｸ贋ｽ・菴阪↓蜈･繧・},
+  {id:19,cat:'battle',text:'3遘剃ｻ･蜀・↓逶ｸ謇九°繧我ｸ譛ｬ繧貞叙繧・},
+  {id:20,cat:'battle',text:'蛻晄姶謨鈴'},
+  {id:21,cat:'battle',text:'3螟ｧ莨壹〒荳贋ｽ・菴阪↓蜈･雉・},
+  {id:22,cat:'battle',text:'譛ｬ螟ｧ莨壹↓謚ｽ驕ｸ貍上ｌ縺ｧ蜃ｺ繧後★'},
+  {id:23,cat:'battle',text:'繧ｯ繝ｩ繝ｳ繧ｯ讖滉ｽ薙〒3蝗樊姶莉･荳雁享縺｡荳翫′繧・},
+  {id:24,cat:'battle',text:'5騾｣蜍昜ｻ･荳翫☆繧・},
+  {id:25,cat:'make',text:'讖滉ｽ薙ｒ1蜿ｰ螳梧・縺輔○繧・},
+  {id:26,cat:'make',text:'譁ｰ縺励＞蟾･蜈ｷ繧・ヤ繝ｼ繝ｫ繧定ｳｼ蜈･'},
+  {id:27,cat:'make',text:'2蜿ｰ縺ｮ讖滉ｽ薙ｒ螳梧・'},
+  {id:28,cat:'make',text:'繧｢繝ｼ繝縺ｫ髮ｻ蟄仙宛蠕｡繧貞刈縺医ｋ'},
+  {id:29,cat:'make',text:'1蜿ｰ縺ｮ讖滉ｽ薙↓20譫壻ｻ･荳翫・閼壹ｒ謳ｭ霈・},
+  {id:30,cat:'make',text:'譁ｰ縺励＞蟾･菴懈ｩ滓｢ｰ縺ｮ雉ｼ蜈･縲√ｂ縺励￥縺ｯ蟆主・'},
+  {id:31,cat:'make',text:'3蜿ｰ莉･荳翫・讖滉ｽ薙ｒ螳梧・'},
+  {id:32,cat:'make',text:'蛻ｶ蠕｡繧｢繝ｳ繝励ｒ閾ｪ菴・},
+  {id:33,cat:'make',text:'譛蛾剞霆碁％繧｢繝ｼ繝縺ｮ讖滉ｽ薙ｒ菴懈・'},
+  {id:34,cat:'make',text:'辟｡髯仙屓霆｢繧｢繝ｼ繝縺ｮ讖滉ｽ薙ｒ菴懈・'},
+  {id:35,cat:'make',text:'1蜿ｰ縺ｮ讖滉ｽ薙↓6蛟倶ｻ･荳翫・閼壹Θ繝九ャ繝医ｒ謳ｭ霈・},
+  {id:36,cat:'make',text:'繧｢繝峨・繝ｳ繝医き繝ｬ繝ｳ繝繝ｼ縺ｮ險倅ｺ九ｒ蜿り・↓讖滉ｽ灘宛菴・},
+  {id:37,cat:'make',text:'謾ｻ謦・ｩ滓ｧ九ｒ2縺､莉･荳雁ｙ縺医◆讖滉ｽ薙ｒ菴懊ｋ'},
+  {id:38,cat:'make',text:'讖滉ｽ薙↓逹濶ｲ(蝪苓｣・・譟楢牡縺ｪ縺ｩ)'},
+  {id:39,cat:'make',text:'繝倥ャ繧ｱ繝ｳ繝ｪ繝ｳ繧ｯ莉･螟悶・閼壽ｩ滓ｧ九・讖滉ｽ薙ｒ菴懈・'},
+  {id:40,cat:'make',text:'莉紋ｺｺ縺ｮ諢剰ｦ九ｄ繧｢繝峨ヰ繧､繧ｹ繧偵ｂ縺ｨ縺ｫ讖滉ｽ薙ｒ謾ｹ濶ｯ縺吶ｋ'},
+  {id:41,cat:'make',text:'繝溘ル縺九ｏ繝ｭ繝懊°BRAVE讖滉ｽ薙ｒ螳梧・縺輔○繧・},
+  {id:42,cat:'make',text:'驕主悉縺ｮ蜷肴ｩ溘・繧ｪ繝槭・繧ｸ繝･縲√Μ繧ｹ繝壹け繝域ｩ滉ｽ謎ｽ懈・'},
+  {id:43,cat:'make',text:'4遞ｮ鬘樔ｻ･荳翫・蟾･菴懈ｩ滓｢ｰ(CNC繝ｻ譌狗乢繝ｻ繝懊・繝ｫ逶､繝ｻ3D繝励Μ繝ｳ繧ｿ繝ｻ繝槭す繝九Φ繧ｰ繧ｻ繝ｳ繧ｿ遲・繧剃ｽｿ逕ｨ縺励※讖滉ｽ薙ｒ陬ｽ菴・},
+  {id:44,cat:'make',text:'繝ｪ繝ｳ繧ｰ縺ｮ髫懷ｮｳ迚ｩ繧剃ｽ懈・'},
+  {id:45,cat:'make',text:'讖滉ｽ薙・荳驛ｨ縺ｫ繧ｫ繝ｼ繝懊Φ繧剃ｽｿ逕ｨ'},
+  {id:46,cat:'make',text:'繧・▲縺溘％縺ｨ縺檎┌縺・刈蟾･譁ｹ豕輔ｄ險ｭ險医↓繝医Λ繧､'},
+  {id:47,cat:'make',text:'閾ｪ蛻・′驕主悉縺ｫ菴懊▲縺ｦ辟｡縺・・讖滓ｧ九ｒ菴懊ｋ'},
+  {id:48,cat:'make',text:'謇句刈蟾･縺ｧ菴懊▲縺滄Κ蜩√ｒ菴ｿ逕ｨ'},
+  {id:49,cat:'make',text:'讖滉ｽ薙・荳驛ｨ縺ｫ3D繝励Μ繝ｳ繧ｿ繝ｼ縺ｧ菴懊▲縺滄Κ蜩√ｒ菴ｿ逕ｨ縺吶ｋ'},
+  {id:50,cat:'fail',text:'繧ｮ繝､繧貞粋險・蛟倶ｻ･荳顔ｴ謳・},
+  {id:51,cat:'fail',text:'蜉蟾･繝溘せ繧偵☆繧・},
+  {id:52,cat:'fail',text:'繝励Λ繧ｹ縺ｨ繝槭う繝翫せ繧帝俣驕輔∴繧・},
+  {id:53,cat:'fail',text:'讖滉ｽ薙・驕区成荳ｭ縺ｫ螢∫ｭ峨・菴輔°縺励ｉ縺ｫ蛯ｷ繧剃ｻ倥￠縺ｦ縺励∪縺・},
+  {id:54,cat:'fail',text:'繧｢繝ｳ繝励ｒ辟ｼ縺・},
+  {id:55,cat:'fail',text:'蜉蟾･髻ｳ遲峨〒霑第園繧ゅ＠縺上・莉門屮菴薙°繧峨け繝ｬ繝ｼ繝繧偵ｂ繧峨≧'},
+  {id:56,cat:'fail',text:'縺ｭ縺伜・繧翫ち繝・・繧呈釜繧・},
+  {id:57,cat:'fail',text:'閾ｪ蛻・・讖滉ｽ薙°繧臥匱辣・},
+  {id:58,cat:'fail',text:'閾ｴ蜻ｽ逧・↑險ｭ險医Α繧ｹ繧偵☆繧・},
+  {id:59,cat:'fail',text:'繧｢繝ｼ繝縺ｧ蝨ｰ髱｢繧・囿螳ｳ迚ｩ繧貞娼縺・※閾ｪ貊・},
+  {id:60,cat:'fail',text:'繝峨Μ繝ｫ縲√お繝ｳ繝峨Α繝ｫ繧呈釜繧・},
+  {id:61,cat:'fail',text:'莨壼ｴ縺ｸ縺ｮ遘ｻ蜍穂ｸｭ縺ｫ閨ｷ蜍呵ｳｪ蝠上ｒ蜿励￠繧・},
+  {id:62,cat:'fail',text:'繧｢繝ｳ繝励ｒ3縺､莉･荳顔┥縺・},
+  {id:63,cat:'fail',text:'繝吶い繝ｪ繝ｳ繧ｰ遲峨・霆ｸ蜿励￠縺檎ｲ臥・},
+  {id:64,cat:'fail',text:'繧｢繝ｼ繝縺ｮ繧ｮ繝､縺檎輔￠繧・},
+  {id:65,cat:'fail',text:'繝｢繝ｼ繧ｿ繝ｼ繧堤ｷ剰ｨ・縺､莉･荳顔┥縺・},
+  {id:66,cat:'fail',text:'繝輔Ξ繝ｼ繝縺檎ｴ譁ｭ'},
+  {id:67,cat:'fail',text:'譎る俣莉･蜀・↓繧ｹ繧ｿ繝ｼ繝亥床縺ｫ遶九※繧後★荳譛ｬ繧貞叙繧峨ｌ繧・},
+  {id:68,cat:'fail',text:'隧ｦ蜷井ｸｭ縺ｫ讖滉ｽ薙′謨・囿縲∫ｴ謳阪＠謨怜圏'},
+  {id:69,cat:'fail',text:'繧ｹ繧ｿ繝ｼ繝医Α繧ｹ繧偵☆繧・},
+  {id:70,cat:'fail',text:'繝｢繝ｼ繧ｿ繝ｼ繧堤┥縺・},
+  {id:71,cat:'fail',text:'螟ｧ莨壹ｂ縺励￥縺ｯ邱ｴ鄙剃ｼ壹↓驕・綾'},
+  {id:72,cat:'fail',text:'蟾･蜈ｷ繧堤ｴ謳阪☆繧九or縲邏帛､ｱ縺吶ｋ'},
+  {id:73,cat:'fail',text:'蜿ｯ辯・黄縺ｫ蠑慕↓'},
+  {id:74,cat:'fail',text:'閼壹・繧ｮ繝､縺檎輔￠繧・},
+  {id:75,cat:'exp',text:'邱ｴ鄙剃ｼ壹↓蜿ょ刈'},
+  {id:76,cat:'exp',text:'謚倥ｌ縺溘√ｂ縺励￥縺ｯ縺ｪ繧√◆縺ｭ縺倥ｒ謨大・'},
+  {id:77,cat:'exp',text:'KHK縺九ｉ譁ｰ逋ｺ螢ｲ縺輔ｌ縺溘い繝ｫ繝溘ぐ繝､繧剃ｽｿ逕ｨ'},
+  {id:78,cat:'exp',text:'螟ｧ莨嗤r邱ｴ鄙剃ｼ壹ｒ髢句ぎ'},
+  {id:79,cat:'exp',text:'螟ｧ莨壻ｼ壼ｴ霑代￥縺ｮ繝ｩ繝ｼ繝｡繝ｳ繧帝｣溘∋繧・},
+  {id:80,cat:'exp',text:'讓ｪ蝗櫁ｻ｢縺ｫ驛ｨ蜩√ｒ繧ゅ′繧後ｋ'},
+  {id:81,cat:'exp',text:'豌励↓縺ｪ繧区ｩ滉ｽ薙・蛻ｶ菴懆・∈雉ｪ蝠上ｒ縺吶ｋ'},
+  {id:82,cat:'exp',text:'螟ｧ莨壹∫ｷｴ鄙剃ｼ壹・驕蠕∬ｷ晞屬縺・000繧ｭ繝ｭ繧定ｶ・∴繧・},
+  {id:83,cat:'exp',text:'隧ｦ蜷井ｸｭ縺ｫ讖滉ｽ薙′逵溘▲莠後▽縺ｫ縺ｪ繧九or縲逵溘▲莠後▽縺ｫ縺輔ｌ繧・},
+  {id:84,cat:'exp',text:'隧ｦ蜷井ｸｭ縺ｫ髮ｻ陬・ｳｻ繧貞鴻蛻・ｉ繧後ｋ'},
+  {id:85,cat:'exp',text:'螳ｶ譌上∬ｦｪ譌上→蜈ｱ縺ｫ螟ｧ莨壹∫ｷｴ鄙剃ｼ壹↓蜿ょ刈'},
+  {id:86,cat:'exp',text:'蟾晏ｴ主ｸら肇讌ｭ謖ｯ闊井ｼ夐､ｨ蜑阪〒蜀咏悄謦ｮ蠖ｱ'},
+  {id:87,cat:'exp',text:'4縺､莉･荳翫・螟ｧ莨壹↓蜿ょ刈'},
+  {id:88,cat:'exp',text:'莉紋ｺｺ縺ｮ菴懊▲縺滓ｩ滉ｽ薙〒隧ｦ蜷医ｒ陦後≧'},
+  {id:89,cat:'exp',text:'莉紋ｺｺ縺ｫ讖滉ｽ灘宛菴懊ｒ謇倶ｼ昴▲縺ｦ繧ゅｉ縺・or縲讖滉ｽ灘宛菴懊ｒ謇倶ｼ昴≧'},
+  {id:90,cat:'exp',text:'蝗櫁ｻ｢繧ｷ繝ｼ繝ｫ繝峨↓讖滉ｽ薙・荳驛ｨ繧堤ｲ臥輔＆繧後ｋ'},
+  {id:91,cat:'exp',text:'繝ｪ繧ｵ繧､繧ｯ繝ｫ繝ｩ繝舌・繝√Ε繝ｬ繝ｳ繧ｸ縺ｮ繧ｴ繝繧定ｲｰ縺・},
+  {id:92,cat:'exp',text:'SNS縺ｧ縺九ｏ繝ｭ繝懊・繝ｬ繧､繝､繝ｼ繧呈眠隕上ヵ繧ｩ繝ｭ繝ｼ縺吶ｋ'},
+  {id:93,cat:'exp',text:'1隧ｦ蜷井ｸｭ縺ｫ5蝗樔ｻ･荳雁ｾｩ蟶ｰ縺吶ｋ'},
+  {id:94,cat:'exp',text:'繧｢繝峨・繝ｳ繝医き繝ｬ繝ｳ繝繝ｼ縺ｮ險倅ｺ九ｒ譖ｸ縺・},
+  {id:95,cat:'exp',text:'縺九ｏ繝ｭ繝懷・蜿ょ刈繝｡繝ｳ繝舌・縺ｮ繧ｵ繝昴・繝医ｒ縺吶ｋ(險ｭ險医∬｣ｽ菴懊∵ｩ滉ｽ楢ｲｸ縺怜・縺礼ｭ峨∝・螳ｹ蝠上ｏ縺・'},
+  {id:96,cat:'exp',text:'螟ｧ莨壹↓蜿ょ刈'},
+  {id:97,cat:'exp',text:'讖滉ｽ灘錐繧・譁・ｭ励〒螟ｧ莨壹↓蜿ょ刈'},
+  {id:98,cat:'exp',text:'螟ｧ莨壼燕譌･繧ゅ＠縺上・蠖捺律縺ｫ讖滉ｽ薙ｒ螳梧・縺輔○繧・},
+  {id:99,cat:'exp',text:'1縺､縺ｮ螟ｧ莨壹ｄ邱ｴ鄙剃ｼ壹〒2蜿ｰ莉･荳翫・讖滉ｽ薙ｒ謫咲ｸｦ'},
 ];
 
 const CAT={
-  battle:{name:'戦績編',  color:'#4a7cf5',emoji:'⚔️'},
-  make:  {name:'制作編',  color:'#f5c842',emoji:'🔧'},
-  fail:  {name:'やらかし編',color:'#5ecb6e',emoji:'💥'},
-  exp:   {name:'経験その他編',color:'#e8609a',emoji:'🌟'},
+  battle:{name:'謌ｦ邵ｾ邱ｨ',  color:'#4a7cf5',emoji:'笞費ｸ・},
+  make:  {name:'蛻ｶ菴懃ｷｨ',  color:'#f5c842',emoji:'肌'},
+  fail:  {name:'繧・ｉ縺九＠邱ｨ',color:'#5ecb6e',emoji:'徴'},
+  exp:   {name:'邨碁ｨ薙◎縺ｮ莉也ｷｨ',color:'#e8609a',emoji:'検'},
 };
 const MILESTONES=[10,25,50,75,100];
-const MS_MSG={10:['10達成','いい感じのスタート！'],25:['25達成','4分の1クリア！'],50:['50達成','折返し！本物のかわロボ戦士'],75:['75達成','すごい… 本当にすごい'],100:['FULL COMP!!','伝説になれ 🎊']};
+const MS_MSG={10:['10驕疲・','縺・＞諢溘§縺ｮ繧ｹ繧ｿ繝ｼ繝茨ｼ・],25:['25驕疲・','4蛻・・1繧ｯ繝ｪ繧｢・・],50:['50驕疲・','謚倩ｿ斐＠・∵悽迚ｩ縺ｮ縺九ｏ繝ｭ繝懈姶螢ｫ'],75:['75驕疲・','縺吶＃縺・ｦ 譛ｬ蠖薙↓縺吶＃縺・],100:['FULL COMP!!','莨晁ｪｬ縺ｫ縺ｪ繧・至']};
 const ALL_COLORS=['#4a7cf5','#f5c842','#5ecb6e','#e8609a','#a855f7','#06b6d4','#f97316','#fff'];
 
 // ================================================================
@@ -434,7 +433,7 @@ function saveState(){try{localStorage.setItem(SK,JSON.stringify([...achieved]));
 
 // ================================================================
 // ILLUSTRATION
-// item_id → block position (10x10 grid of 5x5-pixel blocks)
+// item_id 竊・block position (10x10 grid of 5x5-pixel blocks)
 // ================================================================
 function itemToBlock(id){
   if(id<25) return [Math.floor(id/5), id%5];
@@ -443,7 +442,7 @@ function itemToBlock(id){
   const i=id-75; return [5+Math.floor(i/5), 5+i%5];
 }
 
-// offscreen canvas — full pixel art rendered once
+// offscreen canvas 窶・full pixel art rendered once
 const OFF=document.createElement('canvas');
 OFF.width=500; OFF.height=500;
 const OFFCTX=OFF.getContext('2d');
@@ -476,20 +475,17 @@ function buildMaskLayer(){
       const div=document.createElement('div');
       div.className='mask-block';
       div.id=`mb_${br}_${bc}`;
-      // 全ブロック初期状態は真っ黒。アニメーションで落下して消える
-      layer.appendChild(div);
+      // 蜈ｨ繝悶Ο繝・け蛻晄悄迥ｶ諷九・逵溘▲鮟偵ゅい繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｧ關ｽ荳九＠縺ｦ豸医∴繧・      layer.appendChild(div);
     }
   }
 }
 
 function blockToItem(br,bc){
-  if(br<5 && bc<5)  return br*5+bc;           // 戦績
-  if(br<5 && bc>=5) return 25+(br*5+(bc-5));  // 制作
-  if(br>=5 && bc<5) return 50+((br-5)*5+bc);  // やらかし
-  return 75+((br-5)*5+(bc-5));                 // 経験その他
-}
+  if(br<5 && bc<5)  return br*5+bc;           // 謌ｦ邵ｾ
+  if(br<5 && bc>=5) return 25+(br*5+(bc-5));  // 蛻ｶ菴・  if(br>=5 && bc<5) return 50+((br-5)*5+bc);  // 繧・ｉ縺九＠
+  return 75+((br-5)*5+(bc-5));                 // 邨碁ｨ薙◎縺ｮ莉・}
 
-// When illust opens: blocks crack and fall away left→right, top→bottom
+// When illust opens: blocks crack and fall away left竊池ight, top竊鍛ottom
 function animateMaskReveal(){
   const scanOrder=[];
   for(let br=0;br<10;br++){
@@ -502,9 +498,8 @@ function animateMaskReveal(){
   }
   const total=scanOrder.length;
   if(total===0) return;
-  // 1枚ずつ割れて落ちる感が出るよう間隔を空ける
-  // 各アニメが0.45s → 次を0.18s後に始めると「割れてる最中に次が始まる」自然なテンポ
-  // ただし全体が長くなりすぎないよう上限3.5s
+  // 1譫壹★縺､蜑ｲ繧後※關ｽ縺｡繧区─縺悟・繧九ｈ縺・俣髫斐ｒ遨ｺ縺代ｋ
+  // 蜷・い繝九Γ縺・.45s 竊・谺｡繧・.18s蠕後↓蟋九ａ繧九→縲悟牡繧後※繧区怙荳ｭ縺ｫ谺｡縺悟ｧ九∪繧九崎・辟ｶ縺ｪ繝・Φ繝・  // 縺溘□縺怜・菴薙′髟ｷ縺上↑繧翫☆縺弱↑縺・ｈ縺・ｸ企剞3.5s
   const perBlock=Math.min(180, Math.floor(3500/total));
 
   scanOrder.forEach(({br,bc},idx)=>{
@@ -549,11 +544,11 @@ function closeIllust(){
 function updateIllustHint(){
   const t=achieved.size;
   document.getElementById('illustHint').textContent=
-    t===0?'まだ何も解放されていません。チェックを積み重ねよう！':
-    t<20?`${t}/100 解放中 — まだ霧の中…`:
-    t<50?`${t}/100 解放 — だいぶ見えてきた`:
-    t<80?`${t}/100 解放 — もう少し！`:
-    t<100?`${t}/100 解放 — ほぼコンプリート！`:'🎉 100/100 完全解放！';
+    t===0?'縺ｾ縺菴輔ｂ隗｣謾ｾ縺輔ｌ縺ｦ縺・∪縺帙ｓ縲ゅメ繧ｧ繝・け繧堤ｩ阪∩驥阪・繧医≧・・:
+    t<20?`${t}/100 隗｣謾ｾ荳ｭ 窶・縺ｾ縺髴ｧ縺ｮ荳ｭ窶ｦ`:
+    t<50?`${t}/100 隗｣謾ｾ 窶・縺縺・・隕九∴縺ｦ縺阪◆`:
+    t<80?`${t}/100 隗｣謾ｾ 窶・繧ゅ≧蟆代＠・～:
+    t<100?`${t}/100 隗｣謾ｾ 窶・縺ｻ縺ｼ繧ｳ繝ｳ繝励Μ繝ｼ繝茨ｼ～:'脂 100/100 螳悟・隗｣謾ｾ・・;
 }
 
 // ================================================================
@@ -609,7 +604,7 @@ function updateScores(){
     const cnt=ITEMS.filter(i=>i.cat===cat&&achieved.has(i.id)).length;
     document.getElementById('c_'+cat).textContent=cnt;
     const l=document.getElementById('cl_'+cat);
-    if(l) l.textContent=`${cnt}/25 達成`;
+    if(l) l.textContent=`${cnt}/25 驕疲・`;
   });
 }
 
@@ -632,15 +627,15 @@ function applyFilter(cat){
 let toastTimer;
 function showToast(text){
   const el=document.getElementById('toast');
-  const s=text.length>22?text.slice(0,22)+'…':text;
-  el.textContent='✅ '+s+' 達成！';
+  const s=text.length>22?text.slice(0,22)+'窶ｦ':text;
+  el.textContent='笨・'+s+' 驕疲・・・;
   el.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer=setTimeout(()=>el.classList.remove('show'),2400);
 }
 
 // ================================================================
-// CRACKER — left AND right, category color
+// CRACKER 窶・left AND right, category color
 // ================================================================
 function fireCracker(cat){
   const color=CAT[cat].color;
@@ -717,7 +712,7 @@ function exportJSON(){
   const a=document.createElement('a'); a.href=url;
   a.download=`kr-checker2026_${new Date().toISOString().slice(0,10)}.json`;
   a.click(); URL.revokeObjectURL(url);
-  setDataStatus('✅ JSONを書き出しました');
+  setDataStatus('笨・JSON繧呈嶌縺榊・縺励∪縺励◆');
 }
 function handleJSONImport(e){
   const f=e.target.files[0]; if(!f)return;
@@ -725,11 +720,11 @@ function handleJSONImport(e){
   r.onload=ev=>{
     try{
       const d=JSON.parse(ev.target.result);
-      if(!d.achieved||!Array.isArray(d.achieved)) throw new Error('フォーマットが違います');
+      if(!d.achieved||!Array.isArray(d.achieved)) throw new Error('繝輔か繝ｼ繝槭ャ繝医′驕輔＞縺ｾ縺・);
       d.achieved.forEach(id=>{if(id>=0&&id<100)achieved.add(id);});
       saveState(); buildUI();
-      setDataStatus(`✅ ${achieved.size}件を復元しました`);
-    }catch(err){setDataStatus('エラー: '+err.message,false);}
+      setDataStatus(`笨・${achieved.size}莉ｶ繧貞ｾｩ蜈・＠縺ｾ縺励◆`);
+    }catch(err){setDataStatus('繧ｨ繝ｩ繝ｼ: '+err.message,false);}
   };
   r.readAsText(f); e.target.value='';
 }
@@ -740,13 +735,13 @@ function handleXLSXImport(e){
     try{
       const data=new Uint8Array(ev.target.result);
       const wb=XLSX.read(data,{type:'array'});
-      const ws=wb.Sheets['チェッカー'];
-      if(!ws) throw new Error('「チェッカー」シートが見つかりません');
+      const ws=wb.Sheets['繝√ぉ繝・き繝ｼ'];
+      if(!ws) throw new Error('縲後メ繧ｧ繝・き繝ｼ縲阪す繝ｼ繝医′隕九▽縺九ｊ縺ｾ縺帙ｓ');
       const json=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
       const texts=new Set();
       for(let r2=2;r2<json.length;r2+=2){
         const ir=json[r2], sr=json[r2+1]||[];
-        for(let c=0;c<ir.length;c++) if(sr[c]==='達成') texts.add(String(ir[c]).trim());
+        for(let c=0;c<ir.length;c++) if(sr[c]==='驕疲・') texts.add(String(ir[c]).trim());
       }
       let imported=0;
       ITEMS.forEach(item=>{
@@ -758,8 +753,8 @@ function handleXLSXImport(e){
         }
       });
       saveState(); buildUI();
-      setDataStatus(`✅ ${imported}件取込しました`);
-    }catch(err){setDataStatus('エラー: '+err.message,false);}
+      setDataStatus(`笨・${imported}莉ｶ蜿冶ｾｼ縺励∪縺励◆`);
+    }catch(err){setDataStatus('繧ｨ繝ｩ繝ｼ: '+err.message,false);}
   };
   r.readAsArrayBuffer(f); e.target.value='';
 }
@@ -767,17 +762,17 @@ function confirmReset(){document.getElementById('confirmOverlay').classList.add(
 function closeConfirm(){document.getElementById('confirmOverlay').classList.remove('open');}
 function doReset(){
   achieved.clear(); lastMilestone=0; saveState(); buildUI();
-  closeConfirm(); setDataStatus('✅ リセットしました');
+  closeConfirm(); setDataStatus('笨・繝ｪ繧ｻ繝・ヨ縺励∪縺励◆');
 }
 function openShare(){
   const t=achieved.size;
   const bc={};['battle','make','fail','exp'].forEach(c=>bc[c]=ITEMS.filter(i=>i.cat===c&&achieved.has(i.id)).length);
   document.getElementById('shareText').textContent=
-`【かわロボクリアチェッカー2026】\n${t}/100項目達成！\n\n⚔️ 戦績：${bc.battle}/25\n🔧 制作：${bc.make}/25\n💥 やらかし：${bc.fail}/25\n🌟 経験その他：${bc.exp}/25\n\n#かわロボ #かわロボ2026 #クリアチェッカー\nhttps://note.com/jolly_roses919/n/n93ba68eadac8`;
+`縲舌°繧上Ο繝懊け繝ｪ繧｢繝√ぉ繝・き繝ｼ2026縲曾n${t}/100鬆・岼驕疲・・―n\n笞費ｸ・謌ｦ邵ｾ・・{bc.battle}/25\n肌 蛻ｶ菴懶ｼ・{bc.make}/25\n徴 繧・ｉ縺九＠・・{bc.fail}/25\n検 邨碁ｨ薙◎縺ｮ莉厄ｼ・{bc.exp}/25\n\n#縺九ｏ繝ｭ繝・#縺九ｏ繝ｭ繝・026 #繧ｯ繝ｪ繧｢繝√ぉ繝・き繝ｼ\nhttps://note.com/jolly_roses919/n/n93ba68eadac8`;
   document.getElementById('shareModal').classList.add('open');
 }
 function closeShare(){document.getElementById('shareModal').classList.remove('open');}
-function copyShare(){navigator.clipboard.writeText(document.getElementById('shareText').textContent).then(()=>showToast('コピーしました'));closeShare();}
+function copyShare(){navigator.clipboard.writeText(document.getElementById('shareText').textContent).then(()=>showToast('繧ｳ繝斐・縺励∪縺励◆'));closeShare();}
 function tweetShare(){window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(document.getElementById('shareText').textContent),'_blank');closeShare();}
 document.getElementById('shareModal').addEventListener('click',e=>{if(e.target===document.getElementById('shareModal'))closeShare();});
 document.getElementById('confirmOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('confirmOverlay'))closeConfirm();});
@@ -785,21 +780,21 @@ document.getElementById('confirmOverlay').addEventListener('click',e=>{if(e.targ
 // ================================================================
 // RANKING SUBMIT
 // ================================================================
-const GAS_URL='https://script.google.com/macros/s/YOUR_DEPLOY_ID/exec';
+const GAS_URL='https://script.google.com/macros/s/AKfycbwCuKjzz8q03CvQ8fiMR7Qlj83LI_kz2ta4K5eBUvmKJloBqN8RPmn9SgSxNU5Wocwy/exec';
 
 function submitRanking(){
-  if(achieved.size===0){showToast('⚠️ まだ何も達成していません');return;}
-  const handle=prompt('ハンドル名を入力してください\n（X/SNSアカウント名など、半角20文字以内）');
+  if(achieved.size===0){showToast('笞・・縺ｾ縺菴輔ｂ驕疲・縺励※縺・∪縺帙ｓ');return;}
+  const handle=prompt('繝上Φ繝峨Ν蜷阪ｒ蜈･蜉帙＠縺ｦ縺上□縺輔＞\n・・/SNS繧｢繧ｫ繧ｦ繝ｳ繝亥錐縺ｪ縺ｩ縲∝濠隗・0譁・ｭ嶺ｻ･蜀・ｼ・);
   if(!handle||!handle.trim()) return;
   const h=handle.trim().slice(0,20);
   const cats={};
   ['battle','make','fail','exp'].forEach(c=>cats[c]=ITEMS.filter(i=>i.cat===c&&achieved.has(i.id)).length);
-  if(GAS_URL.includes('YOUR_DEPLOY_ID')){showToast('⚠️ GAS URLが未設定です（管理者向け）');return;}
+  if(GAS_URL.includes('YOUR_DEPLOY_ID')){showToast('笞・・GAS URL縺梧悴險ｭ螳壹〒縺呻ｼ育ｮ｡逅・・髄縺托ｼ・);return;}
   const payload={handle:h,total:achieved.size,...cats,achieved:[...achieved]};
   fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)})
     .then(r=>r.json())
-    .then(d=>{if(d.ok)showToast('📊 ランキングに投稿しました！');else showToast('⚠️ 投稿エラー: '+d.error);})
-    .catch(()=>showToast('⚠️ 投稿に失敗しました。再試行してください'));
+    .then(d=>{if(d.ok)showToast('投 繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ縺ｫ謚慕ｨｿ縺励∪縺励◆・・);else showToast('笞・・謚慕ｨｿ繧ｨ繝ｩ繝ｼ: '+d.error);})
+    .catch(()=>showToast('笞・・謚慕ｨｿ縺ｫ螟ｱ謨励＠縺ｾ縺励◆縲ょ・隧ｦ陦後＠縺ｦ縺上□縺輔＞'));
 }
 
 // ================================================================
@@ -812,3 +807,4 @@ buildUI();
 </script>
 </body>
 </html>
+
