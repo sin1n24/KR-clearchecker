@@ -195,25 +195,7 @@ h1 em{
   .sc{font-size:.76rem;padding:.28rem .6rem;}
 }
 
-/* VIEW BANNER */
-.view-banner{
-  background:linear-gradient(90deg,var(--battle-bg) 0%,var(--surface) 100%);
-  border-bottom:2px solid var(--battle);
-  padding:.65rem 1.5rem;
-  display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;font-size:.84rem;
-}
-.vb-msg{flex:1;min-width:0;color:var(--text);font-weight:500;}
-.vb-msg strong{color:var(--battle);font-family:var(--fd);}
-.vb-btn{
-  background:var(--surface);border:1.5px solid var(--border);border-radius:8px;
-  color:var(--dim);padding:.33rem .8rem;font-size:.78rem;font-family:var(--f);
-  cursor:pointer;transition:all .15s;font-weight:500;white-space:nowrap;
-}
-.vb-btn:hover{color:var(--text);border-color:var(--dim);}
-.vb-btn.primary{background:var(--battle);border-color:var(--battle);color:#fff;font-weight:700;}
-.vb-btn.primary:hover{opacity:.88;}
 body.view-mode .card{pointer-events:none;}
-body.view-mode .data-row{display:none;}
 body.view-mode .tb.ranking-btn{display:none;}
 
 /* ILLUSTRATION OVERLAY */
@@ -398,8 +380,6 @@ footer a:hover{color:var(--battle);}
   </div>
 </header>
 
-<div id="viewBanner" style="display:none"></div>
-
 <div class="prog-wrap">
   <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
   <div class="prog-label" id="progLabel">0%</div>
@@ -418,13 +398,10 @@ footer a:hover{color:var(--battle);}
   <a class="tb" href="ranking.html" target="_blank" style="text-decoration:none;color:var(--dim);">🏆 ランキング</a>
 </div>
 
-<div class="data-row">
-  <span>データ：</span>
-  <span class="dl" onclick="exportJSON()">⬇ JSON書き出し</span>
-  <label>⬆ JSON読込<input type="file" id="jsonInput" accept=".json" onchange="handleJSONImport(event)"></label>
+<div class="data-row" id="dataRow">
   <label>📥 Excel取込<input type="file" id="xlsxInput" accept=".xlsx" onchange="handleXLSXImport(event)"></label>
   <div class="sp"></div>
-  <button class="danger-btn" onclick="confirmReset()">🗑 リセット</button>
+  <button class="danger-btn" onclick="confirmReset()">✨ 新規作成</button>
   <span class="st" id="dataStatus"></span>
 </div>
 
@@ -454,11 +431,11 @@ footer a:hover{color:var(--battle);}
 
 <div id="confirmOverlay">
   <div class="confirm-box">
-    <h3>🗑 本当によろしいですか？</h3>
+    <h3>✨ 新規作成</h3>
     <p>すべての達成記録が消えます。<br>この操作は取り消せません。</p>
     <div class="confirm-actions">
       <button class="c-btn" onclick="closeConfirm()">キャンセル</button>
-      <button class="c-btn danger" onclick="doReset()">リセットする</button>
+      <button class="c-btn danger" onclick="doReset()">新規作成する</button>
     </div>
   </div>
 </div>
@@ -912,29 +889,6 @@ function setDataStatus(msg,ok=true){
   el.textContent=msg;
   setTimeout(()=>el.textContent='',3500);
 }
-function exportJSON(){
-  const data={version:2,exported:new Date().toISOString(),achieved:[...achieved],total:achieved.size};
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url;
-  a.download=`kr-checker2026_${new Date().toISOString().slice(0,10)}.json`;
-  a.click(); URL.revokeObjectURL(url);
-  setDataStatus('✅ JSONを書き出しました');
-}
-function handleJSONImport(e){
-  const f=e.target.files[0]; if(!f)return;
-  const r=new FileReader();
-  r.onload=ev=>{
-    try{
-      const d=JSON.parse(ev.target.result);
-      if(!d.achieved||!Array.isArray(d.achieved)) throw new Error('フォーマットが違います');
-      d.achieved.forEach(id=>{if(id>=0&&id<100)achieved.add(id);});
-      saveState(); buildUI();
-      setDataStatus(`✅ ${achieved.size}件を復元しました`);
-    }catch(err){setDataStatus('エラー: '+err.message,false);}
-  };
-  r.readAsText(f); e.target.value='';
-}
 function handleXLSXImport(e){
   const f=e.target.files[0]; if(!f)return;
   const r=new FileReader();
@@ -969,7 +923,7 @@ function confirmReset(){document.getElementById('confirmOverlay').classList.add(
 function closeConfirm(){document.getElementById('confirmOverlay').classList.remove('open');}
 function doReset(){
   achieved.clear(); lastMilestone=0; saveState(); buildUI();
-  closeConfirm(); setDataStatus('✅ リセットしました');
+  closeConfirm(); setDataStatus('✅ 新規作成しました');
 }
 function openShare(){
   const t=achieved.size;
@@ -1006,22 +960,19 @@ function submitRanking(){
 }
 
 // ================================================================
-// VIEW MODE BANNER
+// VIEW MODE
 // ================================================================
-function initViewBanner(){
+function initViewMode(){
   document.body.classList.add('view-mode');
-  const t=achieved.size;
-  const el=document.getElementById('viewBanner');
   const ownUrl=location.origin+location.pathname;
-  el.className='view-banner';
-  el.style.display='';
-  el.innerHTML=`<div class="vb-msg">🔗 <strong>閲覧モード</strong> — シェアされた達成状況（${t}/100）を表示中。チェック操作は無効です。</div>
-    <button class="vb-btn" onclick="location.href='${ownUrl}'">自分のデータに戻る</button>
-    <button class="vb-btn primary" onclick="loadUrlData()">このデータを読み込む</button>`;
+  document.getElementById('dataRow').innerHTML=`
+    <div class="sp"></div>
+    <button class="tb" onclick="startWithUrlData()">📥 このデータで始める</button>
+    <button class="tb" onclick="location.href='${ownUrl}'">↩ 自分のページへ</button>`;
 }
-function loadUrlData(){
+function startWithUrlData(){
   if(!viewAchieved)return;
-  if(!confirm(`URLの達成データ（${viewAchieved.size}/100項目）を自分のデータとして読み込みます。\n現在のデータは上書きされます。よろしいですか？`))return;
+  if(!confirm('このデータ（'+viewAchieved.size+'/100項目）を読み込みます。\n現在のデータは上書きされます。'))return;
   localStorage.setItem(SK,JSON.stringify([...viewAchieved]));
   location.href=location.origin+location.pathname;
 }
@@ -1033,7 +984,7 @@ buildOffscreen();
 loadState();
 MILESTONES.forEach(m=>{if(achieved.size>=m)lastMilestone=m;});
 buildUI();
-if(VIEW_MODE)initViewBanner();
+if(VIEW_MODE)initViewMode();
 </script>
 </body>
 </html>
