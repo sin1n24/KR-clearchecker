@@ -195,6 +195,27 @@ h1 em{
   .sc{font-size:.76rem;padding:.28rem .6rem;}
 }
 
+/* VIEW BANNER */
+.view-banner{
+  background:linear-gradient(90deg,var(--battle-bg) 0%,var(--surface) 100%);
+  border-bottom:2px solid var(--battle);
+  padding:.65rem 1.5rem;
+  display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;font-size:.84rem;
+}
+.vb-msg{flex:1;min-width:0;color:var(--text);font-weight:500;}
+.vb-msg strong{color:var(--battle);font-family:var(--fd);}
+.vb-btn{
+  background:var(--surface);border:1.5px solid var(--border);border-radius:8px;
+  color:var(--dim);padding:.33rem .8rem;font-size:.78rem;font-family:var(--f);
+  cursor:pointer;transition:all .15s;font-weight:500;white-space:nowrap;
+}
+.vb-btn:hover{color:var(--text);border-color:var(--dim);}
+.vb-btn.primary{background:var(--battle);border-color:var(--battle);color:#fff;font-weight:700;}
+.vb-btn.primary:hover{opacity:.88;}
+body.view-mode .card{pointer-events:none;}
+body.view-mode .data-row{display:none;}
+body.view-mode .tb.ranking-btn{display:none;}
+
 /* ILLUSTRATION OVERLAY */
 #illustOverlay{
   display:none;position:fixed;inset:0;z-index:50;
@@ -376,6 +397,8 @@ footer a:hover{color:var(--battle);}
     </div>
   </div>
 </header>
+
+<div id="viewBanner" style="display:none"></div>
 
 <div class="prog-wrap">
   <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
@@ -580,8 +603,35 @@ const ALL_COLORS=['#4a7cf5','#f5c842','#5ecb6e','#e8609a','#a855f7','#06b6d4','#
 // ================================================================
 let achieved=new Set(), currentFilter='all', lastMilestone=0;
 const SK='kr_checker_v4';
-function loadState(){try{const s=localStorage.getItem(SK);if(s)achieved=new Set(JSON.parse(s));}catch(e){}}
-function saveState(){try{localStorage.setItem(SK,JSON.stringify([...achieved]));}catch(e){}}
+
+// URL encode/decode: 100ビット → 13バイト → base64url ≈18文字
+function encodeAchieved(s){
+  const b=new Uint8Array(13);
+  s.forEach(i=>{if(i>=0&&i<100)b[i>>3]|=1<<(i&7);});
+  let t='';b.forEach(v=>t+=String.fromCharCode(v));
+  return btoa(t).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
+}
+function decodeAchieved(str){
+  try{
+    const pad=(4-str.length%4)%4;
+    const t=atob(str.replace(/-/g,'+').replace(/_/g,'/')+('='.repeat(pad)));
+    const s=new Set();
+    for(let i=0;i<100;i++){if(t.charCodeAt(i>>3)&(1<<(i&7)))s.add(i);}
+    return s;
+  }catch(e){return null;}
+}
+const _vd=new URLSearchParams(location.search).get('d');
+const viewAchieved=_vd?decodeAchieved(_vd):null;
+const VIEW_MODE=viewAchieved!==null;
+
+function loadState(){
+  if(VIEW_MODE){achieved=new Set(viewAchieved);return;}
+  try{const s=localStorage.getItem(SK);if(s)achieved=new Set(JSON.parse(s));}catch(e){}
+}
+function saveState(){
+  if(VIEW_MODE)return;
+  try{localStorage.setItem(SK,JSON.stringify([...achieved]));}catch(e){}
+}
 
 // ================================================================
 // ILLUSTRATION
@@ -737,6 +787,7 @@ function buildUI(){
 }
 
 function toggle(id,cat){
+  if(VIEW_MODE)return;
   const was=achieved.has(id);
   if(was){achieved.delete(id);}else{achieved.add(id);}
   saveState();
@@ -923,8 +974,9 @@ function doReset(){
 function openShare(){
   const t=achieved.size;
   const bc={};['battle','make','fail','exp'].forEach(c=>bc[c]=ITEMS.filter(i=>i.cat===c&&achieved.has(i.id)).length);
+  const shareUrl=location.origin+location.pathname+'?d='+encodeAchieved(achieved);
   document.getElementById('shareText').textContent=
-`【かわロボクリアチェッカー2026】\n${t}/100項目達成！\n\n⚔️ 戦績：${bc.battle}/25\n🔧 制作：${bc.make}/25\n💥 やらかし：${bc.fail}/25\n🌟 経験その他：${bc.exp}/25\n\n#かわロボ #かわロボ2026 #クリアチェッカー\nhttps://note.com/jolly_roses919/n/n93ba68eadac8`;
+`【かわロボクリアチェッカー2026】\n${t}/100項目達成！\n\n⚔️ 戦績：${bc.battle}/25\n🔧 制作：${bc.make}/25\n💥 やらかし：${bc.fail}/25\n🌟 経験その他：${bc.exp}/25\n\n#かわロボ #かわロボ2026 #クリアチェッカー\n${shareUrl}`;
   document.getElementById('shareModal').classList.add('open');
 }
 function closeShare(){document.getElementById('shareModal').classList.remove('open');}
@@ -954,12 +1006,34 @@ function submitRanking(){
 }
 
 // ================================================================
+// VIEW MODE BANNER
+// ================================================================
+function initViewBanner(){
+  document.body.classList.add('view-mode');
+  const t=achieved.size;
+  const el=document.getElementById('viewBanner');
+  const ownUrl=location.origin+location.pathname;
+  el.className='view-banner';
+  el.style.display='';
+  el.innerHTML=`<div class="vb-msg">🔗 <strong>閲覧モード</strong> — シェアされた達成状況（${t}/100）を表示中。チェック操作は無効です。</div>
+    <button class="vb-btn" onclick="location.href='${ownUrl}'">自分のデータに戻る</button>
+    <button class="vb-btn primary" onclick="loadUrlData()">このデータを読み込む</button>`;
+}
+function loadUrlData(){
+  if(!viewAchieved)return;
+  if(!confirm(`URLの達成データ（${viewAchieved.size}/100項目）を自分のデータとして読み込みます。\n現在のデータは上書きされます。よろしいですか？`))return;
+  localStorage.setItem(SK,JSON.stringify([...viewAchieved]));
+  location.href=location.origin+location.pathname;
+}
+
+// ================================================================
 // INIT
 // ================================================================
 buildOffscreen();
 loadState();
 MILESTONES.forEach(m=>{if(achieved.size>=m)lastMilestone=m;});
 buildUI();
+if(VIEW_MODE)initViewBanner();
 </script>
 </body>
 </html>
