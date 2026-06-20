@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ 窶・縺九ｏ繝ｭ繝・繧ｯ繝ｪ繧｢繝√ぉ繝・き繝ｼ 2026</title>
-<meta property="og:title" content="繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ 窶・縺九ｏ繝ｭ繝・繧ｯ繝ｪ繧｢繝√ぉ繝・き繝ｼ 2026">
-<meta property="og:description" content="縺九ｏ繝ｭ繝・繧ｯ繝ｪ繧｢繝√ぉ繝・き繝ｼ2026 蜿ょ刈閠・Λ繝ｳ繧ｭ繝ｳ繧ｰ縲らｷ丞粋繝ｻ繧ｫ繝・ざ繝ｪ邇九・鬆・岼蛻･驕疲・邇・ｒ遒ｺ隱阪〒縺阪∪縺吶・>
+<title>ランキング — かわロボ クリアチェッカー 2026</title>
+<meta property="og:title" content="ランキング — かわロボ クリアチェッカー 2026">
+<meta property="og:description" content="かわロボ クリアチェッカー2026 参加者ランキング。総合・カテゴリ王・項目別達成率を確認できます。">
 <meta property="og:url" content="https://sin1.studio/KR-clearchecker/ranking.html">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
@@ -93,23 +93,23 @@ footer a{color:var(--dim);}
 
 <header>
   <div class="eyebrow">Kawasaki Robot Competition 2026</div>
-  <h1>縺九ｏ繝ｭ繝・<em>繝ｩ繝ｳ繧ｭ繝ｳ繧ｰ</em></h1>
+  <h1>かわロボ <em>ランキング</em></h1>
   <div class="hd-meta">
-    <span id="entryCount">隱ｭ霎ｼ荳ｭ窶ｦ</span>
+    <span id="entryCount">読込中…</span>
     <span id="updatedAt"></span>
-    <a href="index.html">竊・繝√ぉ繝・き繝ｼ縺ｫ謌ｻ繧・/a>
+    <a href="index.html">← チェッカーに戻る</a>
   </div>
 </header>
 
 <div class="tabs">
-  <button class="tab active" onclick="showTab('overall')">醇 邱丞粋</button>
-  <button class="tab" onclick="showTab('kings')">荘 繧ｫ繝・ざ繝ｪ邇・/button>
-  <button class="tab" onclick="showTab('items')">投 鬆・岼蛻･驕疲・邇・/button>
+  <button class="tab active" onclick="showTab('overall')">🏆 総合</button>
+  <button class="tab" onclick="showTab('kings')">👑 カテゴリ王</button>
+  <button class="tab" onclick="showTab('items')">📊 項目別達成率</button>
 </div>
 
 <div class="main">
   <section id="sec-overall" class="active">
-    <div class="rank-list" id="rankList"><div class="state-msg">繝・・繧ｿ隱ｭ霎ｼ荳ｭ窶ｦ</div></div>
+    <div class="rank-list" id="rankList"><div class="state-msg">データ読込中…</div></div>
   </section>
 
   <section id="sec-kings">
@@ -122,120 +122,121 @@ footer a{color:var(--dim);}
 </div>
 
 <footer>
-  莨∫判・・a href="https://note.com/jolly_roses919/n/n93ba68eadac8" target="_blank">荳句焔荳・縺九ｏ繝ｭ繝・</a>
-  ・丞ｹｴ譛ｫ繧｢繝峨・繝ｳ繝医き繝ｬ繝ｳ繝繝ｼ縺ｧ邨先棡逋ｺ陦ｨ・∽ｸ逡ｪ蝓九ａ縺滉ｺｺ縺ｫ縺ｯ邊怜刀騾ｲ蜻井ｺ亥ｮ夸沁・</footer>
+  企画：<a href="https://note.com/jolly_roses919/n/n93ba68eadac8" target="_blank">下剋上(かわロボ)</a>
+  ／年末アドベントカレンダーで結果発表！一番埋めた人には粗品進呈予定🎁
+</footer>
 
 <script>
 const RANKINGS_URL='rankings.json';
 
 const ITEMS=[
-  {id:0,cat:'battle',text:'譛ｬ螟ｧ莨壼━蜍晉ｵ碁ｨ楢・°繧峨°繧我ｸ譛ｬ繧貞叙繧・},
-  {id:1,cat:'battle',text:'2譛ｬ蜈亥叙縺ｮ隧ｦ蜷医〒蜈医↓1譛ｬ縺ｨ繧峨ｌ縺溽憾諷九°繧牙享蛻ｩ'},
-  {id:2,cat:'battle',text:'繝ｪ繝ｳ繧ｰ縺九ｉ縺ｮ閼ｱ霈ｪ縺ｧ雋縺代ｋ'},
-  {id:3,cat:'battle',text:'隧ｦ蜷育ｵゆｺ・∪縺ｧ谿九ｊ10遘定ｶｳ繧峨★縺ｧ蜍晏茜'},
-  {id:4,cat:'battle',text:'螟ｧ莨壹〒菴輔°縺励ｉ縺ｮ雉槭ｒ蜿苓ｳ・},
-  {id:5,cat:'battle',text:'繧｢繝ｼ繝繧剃ｽｿ繧上★縺ｫ蜍晏茜縺吶ｋ'},
-  {id:6,cat:'battle',text:'繧ｿ繧､繝繧｢繝・・縺ｫ繧医ｊ繧ｳ繧､繝ｳ繝医せ(繧ゅ＠縺上・縺倥ｃ繧薙￠繧鍋ｭ会ｼ峨〒豎ｺ逹'},
-  {id:7,cat:'battle',text:'2026蟷ｴ譛ｬ螟ｧ莨壼━蜍・},
-  {id:8,cat:'battle',text:'1蜿ｰ縺ｮ讖滉ｽ薙〒縲∫ｷｴ鄙剃ｼ壹ｒ蜷ｫ繧・00譛ｬ莉･荳翫・隧ｦ蜷医ｒ縺励◆'},
-  {id:9,cat:'battle',text:'繝医・繝翫Γ繝ｳ繝医〒繝吶せ繝・莉･蜀・↓谿九ｋ'},
-  {id:10,cat:'battle',text:'蛟溘ｊ縺滓ｩ滉ｽ薙〒荳贋ｽ・菴阪↓蜈･繧九or縲繝ｬ繝ｳ繧ｿ繝ｫ縺励◆讖滉ｽ薙′荳贋ｽ・菴阪↓蜈･繧・},
-  {id:11,cat:'battle',text:'3騾｣謨励☆繧・},
-  {id:12,cat:'battle',text:'譛ｬ螟ｧ莨壻ｺ磯∈謨鈴'},
-  {id:13,cat:'battle',text:'蜷後メ繝ｼ繝縺ｮ蜈郁ｼｩ繧ゅ＠縺上・OB縺ｫ蜍晏茜縺吶ｋ'},
-  {id:14,cat:'battle',text:'讓ｪ蝗櫁ｻ｢縺ｫ蜍晏茜縺吶ｋ'},
-  {id:15,cat:'battle',text:'蝗櫁ｻ｢繧ｷ繝ｼ繝ｫ繝峨↓蜍晏茜縺吶ｋ'},
-  {id:16,cat:'battle',text:'繝医・繝翫Γ繝ｳ繝医〒蜆ｪ蜍・},
-  {id:17,cat:'battle',text:'譛ｬ螟ｧ莨壽ｱｺ蜍昴ヨ繝ｼ繝翫Γ繝ｳ繝磯ｲ蜃ｺ'},
-  {id:18,cat:'battle',text:'繝医・繝翫Γ繝ｳ繝井ｸ贋ｽ・菴阪↓蜈･繧・},
-  {id:19,cat:'battle',text:'3遘剃ｻ･蜀・↓逶ｸ謇九°繧我ｸ譛ｬ繧貞叙繧・},
-  {id:20,cat:'battle',text:'蛻晄姶謨鈴'},
-  {id:21,cat:'battle',text:'3螟ｧ莨壹〒荳贋ｽ・菴阪↓蜈･雉・},
-  {id:22,cat:'battle',text:'譛ｬ螟ｧ莨壹↓謚ｽ驕ｸ貍上ｌ縺ｧ蜃ｺ繧後★'},
-  {id:23,cat:'battle',text:'繧ｯ繝ｩ繝ｳ繧ｯ讖滉ｽ薙〒3蝗樊姶莉･荳雁享縺｡荳翫′繧・},
-  {id:24,cat:'battle',text:'5騾｣蜍昜ｻ･荳翫☆繧・},
-  {id:25,cat:'make',text:'讖滉ｽ薙ｒ1蜿ｰ螳梧・縺輔○繧・},
-  {id:26,cat:'make',text:'譁ｰ縺励＞蟾･蜈ｷ繧・ヤ繝ｼ繝ｫ繧定ｳｼ蜈･'},
-  {id:27,cat:'make',text:'2蜿ｰ縺ｮ讖滉ｽ薙ｒ螳梧・'},
-  {id:28,cat:'make',text:'繧｢繝ｼ繝縺ｫ髮ｻ蟄仙宛蠕｡繧貞刈縺医ｋ'},
-  {id:29,cat:'make',text:'1蜿ｰ縺ｮ讖滉ｽ薙↓20譫壻ｻ･荳翫・閼壹ｒ謳ｭ霈・},
-  {id:30,cat:'make',text:'譁ｰ縺励＞蟾･菴懈ｩ滓｢ｰ縺ｮ雉ｼ蜈･縲√ｂ縺励￥縺ｯ蟆主・'},
-  {id:31,cat:'make',text:'3蜿ｰ莉･荳翫・讖滉ｽ薙ｒ螳梧・'},
-  {id:32,cat:'make',text:'蛻ｶ蠕｡繧｢繝ｳ繝励ｒ閾ｪ菴・},
-  {id:33,cat:'make',text:'譛蛾剞霆碁％繧｢繝ｼ繝縺ｮ讖滉ｽ薙ｒ菴懈・'},
-  {id:34,cat:'make',text:'辟｡髯仙屓霆｢繧｢繝ｼ繝縺ｮ讖滉ｽ薙ｒ菴懈・'},
-  {id:35,cat:'make',text:'1蜿ｰ縺ｮ讖滉ｽ薙↓6蛟倶ｻ･荳翫・閼壹Θ繝九ャ繝医ｒ謳ｭ霈・},
-  {id:36,cat:'make',text:'繧｢繝峨・繝ｳ繝医き繝ｬ繝ｳ繝繝ｼ縺ｮ險倅ｺ九ｒ蜿り・↓讖滉ｽ灘宛菴・},
-  {id:37,cat:'make',text:'謾ｻ謦・ｩ滓ｧ九ｒ2縺､莉･荳雁ｙ縺医◆讖滉ｽ薙ｒ菴懊ｋ'},
-  {id:38,cat:'make',text:'讖滉ｽ薙↓逹濶ｲ(蝪苓｣・・譟楢牡縺ｪ縺ｩ)'},
-  {id:39,cat:'make',text:'繝倥ャ繧ｱ繝ｳ繝ｪ繝ｳ繧ｯ莉･螟悶・閼壽ｩ滓ｧ九・讖滉ｽ薙ｒ菴懈・'},
-  {id:40,cat:'make',text:'莉紋ｺｺ縺ｮ諢剰ｦ九ｄ繧｢繝峨ヰ繧､繧ｹ繧偵ｂ縺ｨ縺ｫ讖滉ｽ薙ｒ謾ｹ濶ｯ縺吶ｋ'},
-  {id:41,cat:'make',text:'繝溘ル縺九ｏ繝ｭ繝懊°BRAVE讖滉ｽ薙ｒ螳梧・縺輔○繧・},
-  {id:42,cat:'make',text:'驕主悉縺ｮ蜷肴ｩ溘・繧ｪ繝槭・繧ｸ繝･縲√Μ繧ｹ繝壹け繝域ｩ滉ｽ謎ｽ懈・'},
-  {id:43,cat:'make',text:'4遞ｮ鬘樔ｻ･荳翫・蟾･菴懈ｩ滓｢ｰ(CNC繝ｻ譌狗乢繝ｻ繝懊・繝ｫ逶､繝ｻ3D繝励Μ繝ｳ繧ｿ繝ｻ繝槭す繝九Φ繧ｰ繧ｻ繝ｳ繧ｿ遲・繧剃ｽｿ逕ｨ縺励※讖滉ｽ薙ｒ陬ｽ菴・},
-  {id:44,cat:'make',text:'繝ｪ繝ｳ繧ｰ縺ｮ髫懷ｮｳ迚ｩ繧剃ｽ懈・'},
-  {id:45,cat:'make',text:'讖滉ｽ薙・荳驛ｨ縺ｫ繧ｫ繝ｼ繝懊Φ繧剃ｽｿ逕ｨ'},
-  {id:46,cat:'make',text:'繧・▲縺溘％縺ｨ縺檎┌縺・刈蟾･譁ｹ豕輔ｄ險ｭ險医↓繝医Λ繧､'},
-  {id:47,cat:'make',text:'閾ｪ蛻・′驕主悉縺ｫ菴懊▲縺ｦ辟｡縺・・讖滓ｧ九ｒ菴懊ｋ'},
-  {id:48,cat:'make',text:'謇句刈蟾･縺ｧ菴懊▲縺滄Κ蜩√ｒ菴ｿ逕ｨ'},
-  {id:49,cat:'make',text:'讖滉ｽ薙・荳驛ｨ縺ｫ3D繝励Μ繝ｳ繧ｿ繝ｼ縺ｧ菴懊▲縺滄Κ蜩√ｒ菴ｿ逕ｨ縺吶ｋ'},
-  {id:50,cat:'fail',text:'繧ｮ繝､繧貞粋險・蛟倶ｻ･荳顔ｴ謳・},
-  {id:51,cat:'fail',text:'蜉蟾･繝溘せ繧偵☆繧・},
-  {id:52,cat:'fail',text:'繝励Λ繧ｹ縺ｨ繝槭う繝翫せ繧帝俣驕輔∴繧・},
-  {id:53,cat:'fail',text:'讖滉ｽ薙・驕区成荳ｭ縺ｫ螢∫ｭ峨・菴輔°縺励ｉ縺ｫ蛯ｷ繧剃ｻ倥￠縺ｦ縺励∪縺・},
-  {id:54,cat:'fail',text:'繧｢繝ｳ繝励ｒ辟ｼ縺・},
-  {id:55,cat:'fail',text:'蜉蟾･髻ｳ遲峨〒霑第園繧ゅ＠縺上・莉門屮菴薙°繧峨け繝ｬ繝ｼ繝繧偵ｂ繧峨≧'},
-  {id:56,cat:'fail',text:'縺ｭ縺伜・繧翫ち繝・・繧呈釜繧・},
-  {id:57,cat:'fail',text:'閾ｪ蛻・・讖滉ｽ薙°繧臥匱辣・},
-  {id:58,cat:'fail',text:'閾ｴ蜻ｽ逧・↑險ｭ險医Α繧ｹ繧偵☆繧・},
-  {id:59,cat:'fail',text:'繧｢繝ｼ繝縺ｧ蝨ｰ髱｢繧・囿螳ｳ迚ｩ繧貞娼縺・※閾ｪ貊・},
-  {id:60,cat:'fail',text:'繝峨Μ繝ｫ縲√お繝ｳ繝峨Α繝ｫ繧呈釜繧・},
-  {id:61,cat:'fail',text:'莨壼ｴ縺ｸ縺ｮ遘ｻ蜍穂ｸｭ縺ｫ閨ｷ蜍呵ｳｪ蝠上ｒ蜿励￠繧・},
-  {id:62,cat:'fail',text:'繧｢繝ｳ繝励ｒ3縺､莉･荳顔┥縺・},
-  {id:63,cat:'fail',text:'繝吶い繝ｪ繝ｳ繧ｰ遲峨・霆ｸ蜿励￠縺檎ｲ臥・},
-  {id:64,cat:'fail',text:'繧｢繝ｼ繝縺ｮ繧ｮ繝､縺檎輔￠繧・},
-  {id:65,cat:'fail',text:'繝｢繝ｼ繧ｿ繝ｼ繧堤ｷ剰ｨ・縺､莉･荳顔┥縺・},
-  {id:66,cat:'fail',text:'繝輔Ξ繝ｼ繝縺檎ｴ譁ｭ'},
-  {id:67,cat:'fail',text:'譎る俣莉･蜀・↓繧ｹ繧ｿ繝ｼ繝亥床縺ｫ遶九※繧後★荳譛ｬ繧貞叙繧峨ｌ繧・},
-  {id:68,cat:'fail',text:'隧ｦ蜷井ｸｭ縺ｫ讖滉ｽ薙′謨・囿縲∫ｴ謳阪＠謨怜圏'},
-  {id:69,cat:'fail',text:'繧ｹ繧ｿ繝ｼ繝医Α繧ｹ繧偵☆繧・},
-  {id:70,cat:'fail',text:'繝｢繝ｼ繧ｿ繝ｼ繧堤┥縺・},
-  {id:71,cat:'fail',text:'螟ｧ莨壹ｂ縺励￥縺ｯ邱ｴ鄙剃ｼ壹↓驕・綾'},
-  {id:72,cat:'fail',text:'蟾･蜈ｷ繧堤ｴ謳阪☆繧九or縲邏帛､ｱ縺吶ｋ'},
-  {id:73,cat:'fail',text:'蜿ｯ辯・黄縺ｫ蠑慕↓'},
-  {id:74,cat:'fail',text:'閼壹・繧ｮ繝､縺檎輔￠繧・},
-  {id:75,cat:'exp',text:'邱ｴ鄙剃ｼ壹↓蜿ょ刈'},
-  {id:76,cat:'exp',text:'謚倥ｌ縺溘√ｂ縺励￥縺ｯ縺ｪ繧√◆縺ｭ縺倥ｒ謨大・'},
-  {id:77,cat:'exp',text:'KHK縺九ｉ譁ｰ逋ｺ螢ｲ縺輔ｌ縺溘い繝ｫ繝溘ぐ繝､繧剃ｽｿ逕ｨ'},
-  {id:78,cat:'exp',text:'螟ｧ莨嗤r邱ｴ鄙剃ｼ壹ｒ髢句ぎ'},
-  {id:79,cat:'exp',text:'螟ｧ莨壻ｼ壼ｴ霑代￥縺ｮ繝ｩ繝ｼ繝｡繝ｳ繧帝｣溘∋繧・},
-  {id:80,cat:'exp',text:'讓ｪ蝗櫁ｻ｢縺ｫ驛ｨ蜩√ｒ繧ゅ′繧後ｋ'},
-  {id:81,cat:'exp',text:'豌励↓縺ｪ繧区ｩ滉ｽ薙・蛻ｶ菴懆・∈雉ｪ蝠上ｒ縺吶ｋ'},
-  {id:82,cat:'exp',text:'螟ｧ莨壹∫ｷｴ鄙剃ｼ壹・驕蠕∬ｷ晞屬縺・000繧ｭ繝ｭ繧定ｶ・∴繧・},
-  {id:83,cat:'exp',text:'隧ｦ蜷井ｸｭ縺ｫ讖滉ｽ薙′逵溘▲莠後▽縺ｫ縺ｪ繧九or縲逵溘▲莠後▽縺ｫ縺輔ｌ繧・},
-  {id:84,cat:'exp',text:'隧ｦ蜷井ｸｭ縺ｫ髮ｻ陬・ｳｻ繧貞鴻蛻・ｉ繧後ｋ'},
-  {id:85,cat:'exp',text:'螳ｶ譌上∬ｦｪ譌上→蜈ｱ縺ｫ螟ｧ莨壹∫ｷｴ鄙剃ｼ壹↓蜿ょ刈'},
-  {id:86,cat:'exp',text:'蟾晏ｴ主ｸら肇讌ｭ謖ｯ闊井ｼ夐､ｨ蜑阪〒蜀咏悄謦ｮ蠖ｱ'},
-  {id:87,cat:'exp',text:'4縺､莉･荳翫・螟ｧ莨壹↓蜿ょ刈'},
-  {id:88,cat:'exp',text:'莉紋ｺｺ縺ｮ菴懊▲縺滓ｩ滉ｽ薙〒隧ｦ蜷医ｒ陦後≧'},
-  {id:89,cat:'exp',text:'莉紋ｺｺ縺ｫ讖滉ｽ灘宛菴懊ｒ謇倶ｼ昴▲縺ｦ繧ゅｉ縺・or縲讖滉ｽ灘宛菴懊ｒ謇倶ｼ昴≧'},
-  {id:90,cat:'exp',text:'蝗櫁ｻ｢繧ｷ繝ｼ繝ｫ繝峨↓讖滉ｽ薙・荳驛ｨ繧堤ｲ臥輔＆繧後ｋ'},
-  {id:91,cat:'exp',text:'繝ｪ繧ｵ繧､繧ｯ繝ｫ繝ｩ繝舌・繝√Ε繝ｬ繝ｳ繧ｸ縺ｮ繧ｴ繝繧定ｲｰ縺・},
-  {id:92,cat:'exp',text:'SNS縺ｧ縺九ｏ繝ｭ繝懊・繝ｬ繧､繝､繝ｼ繧呈眠隕上ヵ繧ｩ繝ｭ繝ｼ縺吶ｋ'},
-  {id:93,cat:'exp',text:'1隧ｦ蜷井ｸｭ縺ｫ5蝗樔ｻ･荳雁ｾｩ蟶ｰ縺吶ｋ'},
-  {id:94,cat:'exp',text:'繧｢繝峨・繝ｳ繝医き繝ｬ繝ｳ繝繝ｼ縺ｮ險倅ｺ九ｒ譖ｸ縺・},
-  {id:95,cat:'exp',text:'縺九ｏ繝ｭ繝懷・蜿ょ刈繝｡繝ｳ繝舌・縺ｮ繧ｵ繝昴・繝医ｒ縺吶ｋ(險ｭ險医∬｣ｽ菴懊∵ｩ滉ｽ楢ｲｸ縺怜・縺礼ｭ峨∝・螳ｹ蝠上ｏ縺・'},
-  {id:96,cat:'exp',text:'螟ｧ莨壹↓蜿ょ刈'},
-  {id:97,cat:'exp',text:'讖滉ｽ灘錐繧・譁・ｭ励〒螟ｧ莨壹↓蜿ょ刈'},
-  {id:98,cat:'exp',text:'螟ｧ莨壼燕譌･繧ゅ＠縺上・蠖捺律縺ｫ讖滉ｽ薙ｒ螳梧・縺輔○繧・},
-  {id:99,cat:'exp',text:'1縺､縺ｮ螟ｧ莨壹ｄ邱ｴ鄙剃ｼ壹〒2蜿ｰ莉･荳翫・讖滉ｽ薙ｒ謫咲ｸｦ'},
+  {id:0,cat:'battle',text:'本大会優勝経験者からから一本を取る'},
+  {id:1,cat:'battle',text:'2本先取の試合で先に1本とられた状態から勝利'},
+  {id:2,cat:'battle',text:'リングからの脱輪で負ける'},
+  {id:3,cat:'battle',text:'試合終了まで残り10秒足らずで勝利'},
+  {id:4,cat:'battle',text:'大会で何かしらの賞を受賞'},
+  {id:5,cat:'battle',text:'アームを使わずに勝利する'},
+  {id:6,cat:'battle',text:'タイムアップによりコイントス(もしくはじゃんけん等）で決着'},
+  {id:7,cat:'battle',text:'2026年本大会優勝'},
+  {id:8,cat:'battle',text:'1台の機体で、練習会を含め100本以上の試合をした'},
+  {id:9,cat:'battle',text:'トーナメントでベスト8以内に残る'},
+  {id:10,cat:'battle',text:'借りた機体で上位3位に入る　or　レンタルした機体が上位3位に入る'},
+  {id:11,cat:'battle',text:'3連敗する'},
+  {id:12,cat:'battle',text:'本大会予選敗退'},
+  {id:13,cat:'battle',text:'同チームの先輩もしくはOBに勝利する'},
+  {id:14,cat:'battle',text:'横回転に勝利する'},
+  {id:15,cat:'battle',text:'回転シールドに勝利する'},
+  {id:16,cat:'battle',text:'トーナメントで優勝'},
+  {id:17,cat:'battle',text:'本大会決勝トーナメント進出'},
+  {id:18,cat:'battle',text:'トーナメント上位3位に入る'},
+  {id:19,cat:'battle',text:'3秒以内に相手から一本を取る'},
+  {id:20,cat:'battle',text:'初戦敗退'},
+  {id:21,cat:'battle',text:'3大会で上位3位に入賞'},
+  {id:22,cat:'battle',text:'本大会に抽選漏れで出れず'},
+  {id:23,cat:'battle',text:'クランク機体で3回戦以上勝ち上がる'},
+  {id:24,cat:'battle',text:'5連勝以上する'},
+  {id:25,cat:'make',text:'機体を1台完成させる'},
+  {id:26,cat:'make',text:'新しい工具やツールを購入'},
+  {id:27,cat:'make',text:'2台の機体を完成'},
+  {id:28,cat:'make',text:'アームに電子制御を加える'},
+  {id:29,cat:'make',text:'1台の機体に20枚以上の脚を搭載'},
+  {id:30,cat:'make',text:'新しい工作機械の購入、もしくは導入'},
+  {id:31,cat:'make',text:'3台以上の機体を完成'},
+  {id:32,cat:'make',text:'制御アンプを自作'},
+  {id:33,cat:'make',text:'有限軌道アームの機体を作成'},
+  {id:34,cat:'make',text:'無限回転アームの機体を作成'},
+  {id:35,cat:'make',text:'1台の機体に6個以上の脚ユニットを搭載'},
+  {id:36,cat:'make',text:'アドベントカレンダーの記事を参考に機体制作'},
+  {id:37,cat:'make',text:'攻撃機構を2つ以上備えた機体を作る'},
+  {id:38,cat:'make',text:'機体に着色(塗装・染色など)'},
+  {id:39,cat:'make',text:'ヘッケンリンク以外の脚機構の機体を作成'},
+  {id:40,cat:'make',text:'他人の意見やアドバイスをもとに機体を改良する'},
+  {id:41,cat:'make',text:'ミニかわロボかBRAVE機体を完成させる'},
+  {id:42,cat:'make',text:'過去の名機のオマージュ、リスペクト機体作成'},
+  {id:43,cat:'make',text:'4種類以上の工作機械(CNC・旋盤・ボール盤・3Dプリンタ・マシニングセンタ等)を使用して機体を製作'},
+  {id:44,cat:'make',text:'リングの障害物を作成'},
+  {id:45,cat:'make',text:'機体の一部にカーボンを使用'},
+  {id:46,cat:'make',text:'やったことが無い加工方法や設計にトライ'},
+  {id:47,cat:'make',text:'自分が過去に作って無い腕機構を作る'},
+  {id:48,cat:'make',text:'手加工で作った部品を使用'},
+  {id:49,cat:'make',text:'機体の一部に3Dプリンターで作った部品を使用する'},
+  {id:50,cat:'fail',text:'ギヤを合計5個以上破損'},
+  {id:51,cat:'fail',text:'加工ミスをする'},
+  {id:52,cat:'fail',text:'プラスとマイナスを間違える'},
+  {id:53,cat:'fail',text:'機体の運搬中に壁等の何かしらに傷を付けてしまう'},
+  {id:54,cat:'fail',text:'アンプを焼く'},
+  {id:55,cat:'fail',text:'加工音等で近所もしくは他団体からクレームをもらう'},
+  {id:56,cat:'fail',text:'ねじ切りタップを折る'},
+  {id:57,cat:'fail',text:'自分の機体から発煙'},
+  {id:58,cat:'fail',text:'致命的な設計ミスをする'},
+  {id:59,cat:'fail',text:'アームで地面や障害物を叩いて自滅'},
+  {id:60,cat:'fail',text:'ドリル、エンドミルを折る'},
+  {id:61,cat:'fail',text:'会場への移動中に職務質問を受ける'},
+  {id:62,cat:'fail',text:'アンプを3つ以上焼く'},
+  {id:63,cat:'fail',text:'ベアリング等の軸受けが粉砕'},
+  {id:64,cat:'fail',text:'アームのギヤが砕ける'},
+  {id:65,cat:'fail',text:'モーターを総計3つ以上焼く'},
+  {id:66,cat:'fail',text:'フレームが破断'},
+  {id:67,cat:'fail',text:'時間以内にスタート台に立てれず一本を取られる'},
+  {id:68,cat:'fail',text:'試合中に機体が故障、破損し敗北'},
+  {id:69,cat:'fail',text:'スタートミスをする'},
+  {id:70,cat:'fail',text:'モーターを焼く'},
+  {id:71,cat:'fail',text:'大会もしくは練習会に遅刻'},
+  {id:72,cat:'fail',text:'工具を破損する　or　紛失する'},
+  {id:73,cat:'fail',text:'可燃物に引火'},
+  {id:74,cat:'fail',text:'脚のギヤが砕ける'},
+  {id:75,cat:'exp',text:'練習会に参加'},
+  {id:76,cat:'exp',text:'折れた、もしくはなめたねじを救出'},
+  {id:77,cat:'exp',text:'KHKから新発売されたアルミギヤを使用'},
+  {id:78,cat:'exp',text:'大会or練習会を開催'},
+  {id:79,cat:'exp',text:'大会会場近くのラーメンを食べる'},
+  {id:80,cat:'exp',text:'横回転に部品をもがれる'},
+  {id:81,cat:'exp',text:'気になる機体の制作者へ質問をする'},
+  {id:82,cat:'exp',text:'大会、練習会の遠征距離が1000キロを超える'},
+  {id:83,cat:'exp',text:'試合中に機体が真っ二つになる　or　真っ二つにされる'},
+  {id:84,cat:'exp',text:'試合中に電装系を千切られる'},
+  {id:85,cat:'exp',text:'家族、親族と共に大会、練習会に参加'},
+  {id:86,cat:'exp',text:'川崎市産業振興会館前で写真撮影'},
+  {id:87,cat:'exp',text:'4つ以上の大会に参加'},
+  {id:88,cat:'exp',text:'他人の作った機体で試合を行う'},
+  {id:89,cat:'exp',text:'他人に機体制作を手伝ってもらう　or　機体制作を手伝う'},
+  {id:90,cat:'exp',text:'回転シールドに機体の一部を粉砕される'},
+  {id:91,cat:'exp',text:'リサイクルラバーチャレンジのゴムを貰う'},
+  {id:92,cat:'exp',text:'SNSでかわロボプレイヤーを新規フォローする'},
+  {id:93,cat:'exp',text:'1試合中に5回以上復帰する'},
+  {id:94,cat:'exp',text:'アドベントカレンダーの記事を書く'},
+  {id:95,cat:'exp',text:'かわロボ初参加メンバーのサポートをする(設計、製作、機体貸し出し等、内容問わず)'},
+  {id:96,cat:'exp',text:'大会に参加'},
+  {id:97,cat:'exp',text:'機体名を1文字で大会に参加'},
+  {id:98,cat:'exp',text:'大会前日もしくは当日に機体を完成させる'},
+  {id:99,cat:'exp',text:'1つの大会や練習会で2台以上の機体を操縦'},
 ];
 
 const CAT_INFO={
-  battle:{name:'謌ｦ邵ｾ邱ｨ',color:'#4a7cf5',emoji:'笞費ｸ・},
-  make:  {name:'蛻ｶ菴懃ｷｨ',color:'#f5c842',emoji:'肌'},
-  fail:  {name:'繧・ｉ縺九＠邱ｨ',color:'#5ecb6e',emoji:'徴'},
-  exp:   {name:'邨碁ｨ薙◎縺ｮ莉也ｷｨ',color:'#e8609a',emoji:'検'},
+  battle:{name:'戦績編',color:'#4a7cf5',emoji:'⚔️'},
+  make:  {name:'制作編',color:'#f5c842',emoji:'🔧'},
+  fail:  {name:'やらかし編',color:'#5ecb6e',emoji:'💥'},
+  exp:   {name:'経験その他編',color:'#e8609a',emoji:'🌟'},
 };
 
 let rankingsData=null;
@@ -248,19 +249,19 @@ async function loadRankings(){
     rankingsData=await r.json();
     render();
   }catch(e){
-    document.getElementById('entryCount').textContent='隱ｭ霎ｼ螟ｱ謨・;
+    document.getElementById('entryCount').textContent='読込失敗';
     document.getElementById('rankList').innerHTML=
-      `<div class="state-msg">繝・・繧ｿ繧定ｪｭ縺ｿ霎ｼ繧√∪縺帙ｓ縺ｧ縺励◆縲・br>縺励・繧峨￥縺励※縺九ｉ繝ｪ繝ｭ繝ｼ繝峨＠縺ｦ縺上□縺輔＞縲・br><small>${e.message}</small></div>`;
+      `<div class="state-msg">データを読み込めませんでした。<br>しばらくしてからリロードしてください。<br><small>${e.message}</small></div>`;
   }
 }
 
 function render(){
   const entries=rankingsData.entries||[];
-  document.getElementById('entryCount').textContent=`蜿ょ刈閠・${entries.length}莠ｺ`;
+  document.getElementById('entryCount').textContent=`参加者 ${entries.length}人`;
   if(rankingsData.updated){
     const d=new Date(rankingsData.updated);
     document.getElementById('updatedAt').textContent=
-      `譛邨よ峩譁ｰ: ${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;
+      `最終更新: ${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;
   }
   renderOverall(entries);
   renderKings(entries);
@@ -269,13 +270,13 @@ function render(){
 
 function renderOverall(entries){
   const el=document.getElementById('rankList');
-  if(entries.length===0){el.innerHTML='<div class="state-msg">縺ｾ縺謚慕ｨｿ閠・′縺・∪縺帙ｓ縲・br>繝√ぉ繝・き繝ｼ縺九ｉ縲交沒・邨先棡繧呈兜遞ｿ縲阪〒蜿ょ刈縺励ｈ縺・ｼ・/div>';return;}
+  if(entries.length===0){el.innerHTML='<div class="state-msg">まだ投稿者がいません。<br>チェッカーから「📊 結果を投稿」で参加しよう！</div>';return;}
   const sorted=[...entries].sort((a,b)=>b.total-a.total);
   el.innerHTML='';
   sorted.forEach((en,i)=>{
     const rank=i+1;
     const cls=rank===1?'top1':rank===2?'top2':rank===3?'top3':'';
-    const medal=rank===1?'･・:rank===2?'･・:rank===3?'･・:rank;
+    const medal=rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':rank;
     const div=document.createElement('div');
     div.className='rank-item '+cls;
     const cats=['battle','make','fail','exp'];
@@ -310,14 +311,14 @@ function renderKings(entries){
     if(king){
       div.innerHTML=`
         <div class="king-cat" style="color:${info.color}">${info.emoji} ${info.name}</div>
-        <div class="king-emoji">荘</div>
+        <div class="king-emoji">👑</div>
         <div class="king-handle">${escHtml(king.handle)}</div>
         <div class="king-score" style="color:${info.color}">${king[cat]||0}/25</div>`;
     }else{
       div.innerHTML=`
         <div class="king-cat" style="color:${info.color}">${info.emoji} ${info.name}</div>
-        <div class="king-emoji">窶・/div>
-        <div class="king-handle" style="color:var(--dim)">譛ｪ謚慕ｨｿ</div>
+        <div class="king-emoji">—</div>
+        <div class="king-handle" style="color:var(--dim)">未投稿</div>
         <div class="king-score">0/25</div>`;
     }
     el.appendChild(div);
@@ -328,7 +329,7 @@ function renderItems(entries){
   const el=document.getElementById('itemRates');
   el.innerHTML='';
   const n=entries.length;
-  if(n===0){el.innerHTML='<div class="state-msg">謚慕ｨｿ閠・′縺・∪縺帙ｓ</div>';return;}
+  if(n===0){el.innerHTML='<div class="state-msg">投稿者がいません</div>';return;}
   const cats=['battle','make','fail','exp'];
   cats.forEach(cat=>{
     const info=CAT_INFO[cat];
@@ -369,4 +370,3 @@ loadRankings();
 </script>
 </body>
 </html>
-
