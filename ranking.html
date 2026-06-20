@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ランキング — かわロボ クリアチェッカー 2026</title>
+<meta property="og:title" content="ランキング — かわロボ クリアチェッカー 2026">
+<meta property="og:description" content="かわロボ クリアチェッカー2026 参加者ランキング。総合・カテゴリ王・項目別達成率を確認できます。">
+<meta property="og:url" content="https://sin1n24.github.io/KR-clearchecker/ranking.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
+:root{
+  --bg:#0e1117;--surface:#1a1f2e;--s2:#232839;--border:#2d3348;
+  --battle:#4a7cf5;--make:#f5c842;--fail:#5ecb6e;--exp:#e8609a;
+  --text:#e8eaf0;--dim:#8892a4;--f:'Noto Sans JP',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--f);min-height:100vh;}
+
+header{padding:1.5rem 1.5rem 1rem;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(74,124,245,.15) 0%,transparent 70%);pointer-events:none;}
+.eyebrow{font-size:.68rem;letter-spacing:.25em;color:var(--battle);text-transform:uppercase;margin-bottom:.3rem;}
+h1{font-size:clamp(1.3rem,4vw,2rem);font-weight:900;line-height:1.1;letter-spacing:-.02em;}
+h1 em{font-style:normal;color:var(--battle);}
+.hd-meta{display:flex;align-items:center;gap:1rem;margin-top:.5rem;flex-wrap:wrap;}
+.hd-meta a{color:var(--dim);font-size:.75rem;text-decoration:none;}
+.hd-meta a:hover{color:var(--battle);}
+#updatedAt{font-size:.72rem;color:var(--dim);}
+#entryCount{font-size:.72rem;color:var(--dim);}
+
+/* TABS */
+.tabs{display:flex;gap:.4rem;padding:.6rem 1.2rem;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:10;overflow-x:auto;}
+.tab{background:var(--s2);border:1px solid var(--border);border-radius:999px;color:var(--dim);padding:.28rem .8rem;font-size:.75rem;font-family:var(--f);cursor:pointer;white-space:nowrap;transition:all .15s;}
+.tab.active{background:var(--battle);border-color:var(--battle);color:#fff;font-weight:700;}
+.tab:hover:not(.active){border-color:var(--battle);color:var(--text);}
+
+.main{padding:1.2rem 1.5rem;max-width:700px;margin:0 auto;}
+section{display:none;}
+section.active{display:block;}
+
+/* LOADING / EMPTY */
+.state-msg{text-align:center;padding:3rem 1rem;color:var(--dim);font-size:.9rem;line-height:2;}
+
+/* RANK TABLE */
+.rank-list{display:flex;flex-direction:column;gap:8px;}
+.rank-item{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:.75rem 1rem;display:flex;align-items:center;gap:.8rem;}
+.rank-item.top1{border-color:#f5c842;box-shadow:0 0 14px rgba(245,200,66,.2);}
+.rank-item.top2{border-color:#9ca3af;}
+.rank-item.top3{border-color:#cd7f32;}
+.rank-num{font-size:1.1rem;font-weight:900;min-width:2rem;text-align:center;color:var(--dim);}
+.rank-item.top1 .rank-num{color:#f5c842;}
+.rank-item.top2 .rank-num{color:#9ca3af;}
+.rank-item.top3 .rank-num{color:#cd7f32;}
+.rank-handle{font-weight:700;font-size:.9rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.rank-total{font-size:1.2rem;font-weight:900;color:var(--battle);min-width:3.5rem;text-align:right;}
+.rank-total span{font-size:.7rem;color:var(--dim);font-weight:400;}
+.rank-bars{flex-basis:100%;display:flex;gap:4px;margin-top:.4rem;}
+.rb{flex:1;height:4px;border-radius:2px;background:var(--s2);overflow:hidden;}
+.rb-fill{height:100%;border-radius:2px;transition:width .6s ease;}
+.rb[data-c="battle"] .rb-fill{background:var(--battle);}
+.rb[data-c="make"]   .rb-fill{background:var(--make);}
+.rb[data-c="fail"]   .rb-fill{background:var(--fail);}
+.rb[data-c="exp"]    .rb-fill{background:var(--exp);}
+.rank-cats{flex-basis:100%;display:flex;gap:.6rem;font-size:.68rem;color:var(--dim);}
+.rc{display:flex;align-items:center;gap:.2rem;}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+
+/* CATEGORY KINGS */
+.kings-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+@media(max-width:420px){.kings-grid{grid-template-columns:1fr;}}
+.king-card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:1rem;text-align:center;}
+.king-cat{font-size:.68rem;font-weight:700;letter-spacing:.06em;margin-bottom:.3rem;}
+.king-emoji{font-size:1.5rem;margin-bottom:.3rem;}
+.king-handle{font-size:1rem;font-weight:900;margin-bottom:.2rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.king-score{font-size:.8rem;color:var(--dim);}
+
+/* ITEM RATES */
+.item-rates{display:flex;flex-direction:column;gap:6px;}
+.ir{display:flex;align-items:center;gap:.6rem;}
+.ir-label{font-size:.65rem;color:var(--dim);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ir-bar{width:100px;height:6px;background:var(--s2);border-radius:3px;overflow:hidden;flex-shrink:0;}
+.ir-fill{height:100%;border-radius:3px;}
+.ir-pct{font-size:.7rem;color:var(--text);min-width:2.5rem;text-align:right;flex-shrink:0;}
+.cat-hd{font-size:.8rem;font-weight:700;margin:1.2rem 0 .5rem;display:flex;align-items:center;gap:.5rem;}
+
+footer{text-align:center;padding:1.8rem;font-size:.68rem;color:var(--dim);border-top:1px solid var(--border);line-height:1.8;margin-top:2rem;}
+footer a{color:var(--dim);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Kawasaki Robot Competition 2026</div>
+  <h1>かわロボ <em>ランキング</em></h1>
+  <div class="hd-meta">
+    <span id="entryCount">読込中…</span>
+    <span id="updatedAt"></span>
+    <a href="index.html">← チェッカーに戻る</a>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('overall')">🏆 総合</button>
+  <button class="tab" onclick="showTab('kings')">👑 カテゴリ王</button>
+  <button class="tab" onclick="showTab('items')">📊 項目別達成率</button>
+</div>
+
+<div class="main">
+  <section id="sec-overall" class="active">
+    <div class="rank-list" id="rankList"><div class="state-msg">データ読込中…</div></div>
+  </section>
+
+  <section id="sec-kings">
+    <div class="kings-grid" id="kingsGrid"></div>
+  </section>
+
+  <section id="sec-items">
+    <div class="item-rates" id="itemRates"></div>
+  </section>
+</div>
+
+<footer>
+  企画：<a href="https://note.com/jolly_roses919/n/n93ba68eadac8" target="_blank">下剋上(かわロボ)</a>
+  ／年末アドベントカレンダーで結果発表！一番埋めた人には粗品進呈予定🎁
+</footer>
+
+<script>
+const RANKINGS_URL='rankings.json';
+
+const ITEMS=[
+  {id:0,cat:'battle',text:'本大会優勝経験者からから一本を取る'},
+  {id:1,cat:'battle',text:'2本先取の試合で先に1本とられた状態から勝利'},
+  {id:2,cat:'battle',text:'リングからの脱輪で負ける'},
+  {id:3,cat:'battle',text:'試合終了まで残り10秒足らずで勝利'},
+  {id:4,cat:'battle',text:'大会で何かしらの賞を受賞'},
+  {id:5,cat:'battle',text:'アームを使わずに勝利する'},
+  {id:6,cat:'battle',text:'タイムアップによりコイントス(もしくはじゃんけん等）で決着'},
+  {id:7,cat:'battle',text:'2026年本大会優勝'},
+  {id:8,cat:'battle',text:'1台の機体で、練習会を含め100本以上の試合をした'},
+  {id:9,cat:'battle',text:'トーナメントでベスト8以内に残る'},
+  {id:10,cat:'battle',text:'借りた機体で上位3位に入る　or　レンタルした機体が上位3位に入る'},
+  {id:11,cat:'battle',text:'3連敗する'},
+  {id:12,cat:'battle',text:'本大会予選敗退'},
+  {id:13,cat:'battle',text:'同チームの先輩もしくはOBに勝利する'},
+  {id:14,cat:'battle',text:'横回転に勝利する'},
+  {id:15,cat:'battle',text:'回転シールドに勝利する'},
+  {id:16,cat:'battle',text:'トーナメントで優勝'},
+  {id:17,cat:'battle',text:'本大会決勝トーナメント進出'},
+  {id:18,cat:'battle',text:'トーナメント上位3位に入る'},
+  {id:19,cat:'battle',text:'3秒以内に相手から一本を取る'},
+  {id:20,cat:'battle',text:'初戦敗退'},
+  {id:21,cat:'battle',text:'3大会で上位3位に入賞'},
+  {id:22,cat:'battle',text:'本大会に抽選漏れで出れず'},
+  {id:23,cat:'battle',text:'クランク機体で3回戦以上勝ち上がる'},
+  {id:24,cat:'battle',text:'5連勝以上する'},
+  {id:25,cat:'make',text:'機体を1台完成させる'},
+  {id:26,cat:'make',text:'新しい工具やツールを購入'},
+  {id:27,cat:'make',text:'2台の機体を完成'},
+  {id:28,cat:'make',text:'アームに電子制御を加える'},
+  {id:29,cat:'make',text:'1台の機体に20枚以上の脚を搭載'},
+  {id:30,cat:'make',text:'新しい工作機械の購入、もしくは導入'},
+  {id:31,cat:'make',text:'3台以上の機体を完成'},
+  {id:32,cat:'make',text:'制御アンプを自作'},
+  {id:33,cat:'make',text:'有限軌道アームの機体を作成'},
+  {id:34,cat:'make',text:'無限回転アームの機体を作成'},
+  {id:35,cat:'make',text:'1台の機体に6個以上の脚ユニットを搭載'},
+  {id:36,cat:'make',text:'アドベントカレンダーの記事を参考に機体制作'},
+  {id:37,cat:'make',text:'攻撃機構を2つ以上備えた機体を作る'},
+  {id:38,cat:'make',text:'機体に着色(塗装・染色など)'},
+  {id:39,cat:'make',text:'ヘッケンリンク以外の脚機構の機体を作成'},
+  {id:40,cat:'make',text:'他人の意見やアドバイスをもとに機体を改良する'},
+  {id:41,cat:'make',text:'ミニかわロボかBRAVE機体を完成させる'},
+  {id:42,cat:'make',text:'過去の名機のオマージュ、リスペクト機体作成'},
+  {id:43,cat:'make',text:'4種類以上の工作機械(CNC・旋盤・ボール盤・3Dプリンタ・マシニングセンタ等)を使用して機体を製作'},
+  {id:44,cat:'make',text:'リングの障害物を作成'},
+  {id:45,cat:'make',text:'機体の一部にカーボンを使用'},
+  {id:46,cat:'make',text:'やったことが無い加工方法や設計にトライ'},
+  {id:47,cat:'make',text:'自分が過去に作って無い腕機構を作る'},
+  {id:48,cat:'make',text:'手加工で作った部品を使用'},
+  {id:49,cat:'make',text:'機体の一部に3Dプリンターで作った部品を使用する'},
+  {id:50,cat:'fail',text:'ギヤを合計5個以上破損'},
+  {id:51,cat:'fail',text:'加工ミスをする'},
+  {id:52,cat:'fail',text:'プラスとマイナスを間違える'},
+  {id:53,cat:'fail',text:'機体の運搬中に壁等の何かしらに傷を付けてしまう'},
+  {id:54,cat:'fail',text:'アンプを焼く'},
+  {id:55,cat:'fail',text:'加工音等で近所もしくは他団体からクレームをもらう'},
+  {id:56,cat:'fail',text:'ねじ切りタップを折る'},
+  {id:57,cat:'fail',text:'自分の機体から発煙'},
+  {id:58,cat:'fail',text:'致命的な設計ミスをする'},
+  {id:59,cat:'fail',text:'アームで地面や障害物を叩いて自滅'},
+  {id:60,cat:'fail',text:'ドリル、エンドミルを折る'},
+  {id:61,cat:'fail',text:'会場への移動中に職務質問を受ける'},
+  {id:62,cat:'fail',text:'アンプを3つ以上焼く'},
+  {id:63,cat:'fail',text:'ベアリング等の軸受けが粉砕'},
+  {id:64,cat:'fail',text:'アームのギヤが砕ける'},
+  {id:65,cat:'fail',text:'モーターを総計3つ以上焼く'},
+  {id:66,cat:'fail',text:'フレームが破断'},
+  {id:67,cat:'fail',text:'時間以内にスタート台に立てれず一本を取られる'},
+  {id:68,cat:'fail',text:'試合中に機体が故障、破損し敗北'},
+  {id:69,cat:'fail',text:'スタートミスをする'},
+  {id:70,cat:'fail',text:'モーターを焼く'},
+  {id:71,cat:'fail',text:'大会もしくは練習会に遅刻'},
+  {id:72,cat:'fail',text:'工具を破損する　or　紛失する'},
+  {id:73,cat:'fail',text:'可燃物に引火'},
+  {id:74,cat:'fail',text:'脚のギヤが砕ける'},
+  {id:75,cat:'exp',text:'練習会に参加'},
+  {id:76,cat:'exp',text:'折れた、もしくはなめたねじを救出'},
+  {id:77,cat:'exp',text:'KHKから新発売されたアルミギヤを使用'},
+  {id:78,cat:'exp',text:'大会or練習会を開催'},
+  {id:79,cat:'exp',text:'大会会場近くのラーメンを食べる'},
+  {id:80,cat:'exp',text:'横回転に部品をもがれる'},
+  {id:81,cat:'exp',text:'気になる機体の制作者へ質問をする'},
+  {id:82,cat:'exp',text:'大会、練習会の遠征距離が1000キロを超える'},
+  {id:83,cat:'exp',text:'試合中に機体が真っ二つになる　or　真っ二つにされる'},
+  {id:84,cat:'exp',text:'試合中に電装系を千切られる'},
+  {id:85,cat:'exp',text:'家族、親族と共に大会、練習会に参加'},
+  {id:86,cat:'exp',text:'川崎市産業振興会館前で写真撮影'},
+  {id:87,cat:'exp',text:'4つ以上の大会に参加'},
+  {id:88,cat:'exp',text:'他人の作った機体で試合を行う'},
+  {id:89,cat:'exp',text:'他人に機体制作を手伝ってもらう　or　機体制作を手伝う'},
+  {id:90,cat:'exp',text:'回転シールドに機体の一部を粉砕される'},
+  {id:91,cat:'exp',text:'リサイクルラバーチャレンジのゴムを貰う'},
+  {id:92,cat:'exp',text:'SNSでかわロボプレイヤーを新規フォローする'},
+  {id:93,cat:'exp',text:'1試合中に5回以上復帰する'},
+  {id:94,cat:'exp',text:'アドベントカレンダーの記事を書く'},
+  {id:95,cat:'exp',text:'かわロボ初参加メンバーのサポートをする(設計、製作、機体貸し出し等、内容問わず)'},
+  {id:96,cat:'exp',text:'大会に参加'},
+  {id:97,cat:'exp',text:'機体名を1文字で大会に参加'},
+  {id:98,cat:'exp',text:'大会前日もしくは当日に機体を完成させる'},
+  {id:99,cat:'exp',text:'1つの大会や練習会で2台以上の機体を操縦'},
+];
+
+const CAT_INFO={
+  battle:{name:'戦績編',color:'#4a7cf5',emoji:'⚔️'},
+  make:  {name:'制作編',color:'#f5c842',emoji:'🔧'},
+  fail:  {name:'やらかし編',color:'#5ecb6e',emoji:'💥'},
+  exp:   {name:'経験その他編',color:'#e8609a',emoji:'🌟'},
+};
+
+let rankingsData=null;
+let currentTab='overall';
+
+async function loadRankings(){
+  try{
+    const r=await fetch(RANKINGS_URL+'?_='+Date.now());
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    rankingsData=await r.json();
+    render();
+  }catch(e){
+    document.getElementById('entryCount').textContent='読込失敗';
+    document.getElementById('rankList').innerHTML=
+      `<div class="state-msg">データを読み込めませんでした。<br>しばらくしてからリロードしてください。<br><small>${e.message}</small></div>`;
+  }
+}
+
+function render(){
+  const entries=rankingsData.entries||[];
+  document.getElementById('entryCount').textContent=`参加者 ${entries.length}人`;
+  if(rankingsData.updated){
+    const d=new Date(rankingsData.updated);
+    document.getElementById('updatedAt').textContent=
+      `最終更新: ${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;
+  }
+  renderOverall(entries);
+  renderKings(entries);
+  renderItems(entries);
+}
+
+function renderOverall(entries){
+  const el=document.getElementById('rankList');
+  if(entries.length===0){el.innerHTML='<div class="state-msg">まだ投稿者がいません。<br>チェッカーから「📊 結果を投稿」で参加しよう！</div>';return;}
+  const sorted=[...entries].sort((a,b)=>b.total-a.total);
+  el.innerHTML='';
+  sorted.forEach((en,i)=>{
+    const rank=i+1;
+    const cls=rank===1?'top1':rank===2?'top2':rank===3?'top3':'';
+    const medal=rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':rank;
+    const div=document.createElement('div');
+    div.className='rank-item '+cls;
+    const cats=['battle','make','fail','exp'];
+    const barsHtml=cats.map(c=>`<div class="rb" data-c="${c}"><div class="rb-fill" style="width:${((en[c]||0)/25*100).toFixed(0)}%"></div></div>`).join('');
+    const catsHtml=cats.map(c=>`<span class="rc"><span class="dot" style="background:${CAT_INFO[c].color}"></span>${en[c]||0}</span>`).join('');
+    div.innerHTML=`
+      <div class="rank-num">${medal}</div>
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;">
+          <div class="rank-handle">${escHtml(en.handle)}</div>
+          <div class="rank-total">${en.total}<span>/100</span></div>
+        </div>
+        <div class="rank-bars">${barsHtml}</div>
+        <div class="rank-cats">${catsHtml}</div>
+      </div>`;
+    el.appendChild(div);
+  });
+}
+
+function renderKings(entries){
+  const el=document.getElementById('kingsGrid');
+  el.innerHTML='';
+  const cats=['battle','make','fail','exp'];
+  cats.forEach(cat=>{
+    const info=CAT_INFO[cat];
+    const sorted=[...entries].sort((a,b)=>(b[cat]||0)-(a[cat]||0));
+    const king=sorted[0];
+    const div=document.createElement('div');
+    div.className='king-card';
+    div.style.borderColor=info.color+'66';
+    div.style.boxShadow=`0 0 12px ${info.color}22`;
+    if(king){
+      div.innerHTML=`
+        <div class="king-cat" style="color:${info.color}">${info.emoji} ${info.name}</div>
+        <div class="king-emoji">👑</div>
+        <div class="king-handle">${escHtml(king.handle)}</div>
+        <div class="king-score" style="color:${info.color}">${king[cat]||0}/25</div>`;
+    }else{
+      div.innerHTML=`
+        <div class="king-cat" style="color:${info.color}">${info.emoji} ${info.name}</div>
+        <div class="king-emoji">—</div>
+        <div class="king-handle" style="color:var(--dim)">未投稿</div>
+        <div class="king-score">0/25</div>`;
+    }
+    el.appendChild(div);
+  });
+}
+
+function renderItems(entries){
+  const el=document.getElementById('itemRates');
+  el.innerHTML='';
+  const n=entries.length;
+  if(n===0){el.innerHTML='<div class="state-msg">投稿者がいません</div>';return;}
+  const cats=['battle','make','fail','exp'];
+  cats.forEach(cat=>{
+    const info=CAT_INFO[cat];
+    const hd=document.createElement('div');
+    hd.className='cat-hd';
+    hd.innerHTML=`<span style="color:${info.color}">${info.emoji}</span> ${info.name}`;
+    el.appendChild(hd);
+    const items=ITEMS.filter(i=>i.cat===cat);
+    items.forEach(item=>{
+      const cnt=entries.filter(en=>en.achieved&&en.achieved.includes(item.id)).length;
+      const pct=n>0?(cnt/n*100):0;
+      const row=document.createElement('div');
+      row.className='ir';
+      row.innerHTML=`
+        <div class="ir-label" title="${escHtml(item.text)}">${escHtml(item.text)}</div>
+        <div class="ir-bar"><div class="ir-fill" style="width:${pct.toFixed(0)}%;background:${info.color}"></div></div>
+        <div class="ir-pct">${pct.toFixed(0)}%</div>`;
+      el.appendChild(row);
+    });
+  });
+}
+
+function showTab(id){
+  currentTab=id;
+  document.querySelectorAll('.tab').forEach((t,i)=>{
+    const ids=['overall','kings','items'];
+    t.classList.toggle('active',ids[i]===id);
+  });
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+}
+
+function escHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+loadRankings();
+</script>
+</body>
+</html>

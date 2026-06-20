@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>かわロボ クリアチェッカー 2026</title>
+<meta property="og:title" content="かわロボ クリアチェッカー 2026">
+<meta property="og:description" content="川崎ロボット競技大会の年間活動100項目を記録するWebチェッカー。達成を積み重ねて年末アドベントカレンダーで発表！一番埋めた人には粗品進呈🎁">
+<meta property="og:url" content="https://sin1n24.github.io/KR-clearchecker/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="かわロボ クリアチェッカー 2026">
+<meta name="twitter:description" content="川崎ロボット競技大会の年間活動100項目を記録するWebチェッカー。達成を積み重ねて年末アドベントカレンダーで発表！一番埋めた人には粗品進呈🎁">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
+:root{
+  --bg:#0e1117;--surface:#1a1f2e;--s2:#232839;--border:#2d3348;
+  --battle:#4a7cf5;--battle-bg:#0d1f3f;--battle-glow:rgba(74,124,245,.3);
+  --make:#f5c842;  --make-bg:#2a2000;  --make-glow:rgba(245,200,66,.25);
+  --fail:#5ecb6e;  --fail-bg:#0a2010;  --fail-glow:rgba(94,203,110,.25);
+  --exp:#e8609a;   --exp-bg:#280f1e;   --exp-glow:rgba(232,96,154,.25);
+  --text:#e8eaf0;--dim:#8892a4;--f:'Noto Sans JP',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:var(--f);min-height:100vh;}
+
+/* HEADER */
+header{padding:1.8rem 1.5rem 1.2rem;text-align:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(74,124,245,.18) 0%,transparent 70%);pointer-events:none;}
+.eyebrow{font-size:.68rem;letter-spacing:.25em;color:var(--battle);text-transform:uppercase;margin-bottom:.3rem;}
+h1{font-size:clamp(1.5rem,5vw,2.4rem);font-weight:900;line-height:1.1;letter-spacing:-.02em;margin-bottom:.6rem;}
+h1 em{font-style:normal;color:var(--battle);}
+.score-panel{display:flex;align-items:center;justify-content:center;gap:1.2rem;flex-wrap:wrap;margin-top:.5rem;}
+.score-total{font-size:3rem;font-weight:900;line-height:1;color:var(--battle);text-shadow:0 0 40px var(--battle-glow);}
+.score-total .d{font-size:1rem;color:var(--dim);font-weight:400;}
+.score-cats{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;}
+.sc{display:flex;align-items:center;gap:.3rem;font-size:.75rem;background:var(--s2);border-radius:999px;padding:.25rem .65rem;border:1px solid var(--border);}
+.dot{width:7px;height:7px;border-radius:50%;}
+
+/* PROGRESS */
+.prog-wrap{padding:.6rem 1.5rem 0;}
+.prog-track{height:5px;background:var(--s2);border-radius:999px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--battle),#a855f7,var(--exp));border-radius:999px;transition:width .5s cubic-bezier(.34,1.56,.64,1);width:0%;}
+.prog-label{text-align:right;font-size:.68rem;color:var(--dim);margin-top:.2rem;}
+
+/* TOOLBAR */
+.toolbar{display:flex;gap:.45rem;padding:.65rem 1.2rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:10;}
+.fb{background:var(--s2);border:1px solid var(--border);border-radius:999px;color:var(--dim);padding:.27rem .78rem;font-size:.73rem;font-family:var(--f);cursor:pointer;transition:all .15s;}
+.fb:hover{border-color:var(--battle);color:var(--text);}
+.fb.active{background:var(--battle);border-color:var(--battle);color:#fff;font-weight:700;}
+.fb[data-cat="make"].active{background:var(--make);border-color:var(--make);color:#111;}
+.fb[data-cat="fail"].active{background:var(--fail);border-color:var(--fail);color:#111;}
+.fb[data-cat="exp"].active{background:var(--exp);border-color:var(--exp);color:#fff;}
+.sp{flex:1;min-width:0;}
+.tb{background:var(--s2);border:1px solid var(--border);border-radius:7px;color:var(--dim);padding:.27rem .65rem;font-size:.72rem;font-family:var(--f);cursor:pointer;transition:all .15s;white-space:nowrap;}
+.tb:hover{color:var(--text);border-color:var(--dim);}
+/* 全体を見るボタン */
+.tb.illust-btn{border-color:rgba(168,85,247,.4);color:#a855f7;}
+.tb.illust-btn:hover{background:rgba(168,85,247,.15);border-color:#a855f7;}
+.tb.ranking-btn{border-color:rgba(94,203,110,.4);color:#5ecb6e;}
+.tb.ranking-btn:hover{background:rgba(94,203,110,.15);border-color:#5ecb6e;}
+
+/* DATA ROW */
+.data-row{display:flex;gap:.6rem;padding:.55rem 1.2rem;background:var(--surface);border-bottom:1px solid var(--border);flex-wrap:wrap;align-items:center;font-size:.72rem;color:var(--dim);}
+.data-row label{cursor:pointer;transition:color .15s;}
+.data-row label:hover{color:var(--battle);}
+.data-row input[type=file]{display:none;}
+.dl{color:var(--battle);cursor:pointer;text-decoration:underline;}
+.dl:hover{color:#7aa3ff;}
+.danger-btn{background:none;border:1px solid #991b1b;border-radius:6px;color:#fca5a5;padding:.2rem .55rem;font-size:.7rem;font-family:var(--f);cursor:pointer;transition:all .15s;}
+.danger-btn:hover{background:#7f1d1d;}
+.st{font-size:.7rem;}
+
+/* GRID */
+.main{padding:1.1rem 1.5rem;}
+.cat-sec{margin-bottom:1.7rem;}
+.cat-sec.hidden{display:none;}
+.cat-hd{display:flex;align-items:center;gap:.6rem;margin-bottom:.65rem;}
+.cat-badge{font-size:.66rem;font-weight:700;letter-spacing:.06em;padding:.2rem .65rem;border-radius:999px;border:1.5px solid;}
+.cat-sub{font-size:.72rem;color:var(--dim);}
+.item-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;}
+.card{border-radius:8px;border:1.5px solid rgba(255,255,255,.07);background:var(--surface);padding:.5rem .4rem;cursor:pointer;transition:transform .12s,border-color .18s,background .18s,box-shadow .25s;user-select:none;min-height:70px;display:flex;align-items:center;justify-content:center;text-align:center;-webkit-tap-highlight-color:transparent;}
+.card:hover{transform:translateY(-2px);}
+.card:active{transform:scale(.96);}
+.card[data-cat="battle"]{border-color:rgba(74,124,245,.22);}
+.card[data-cat="make"]  {border-color:rgba(245,200,66,.22);}
+.card[data-cat="fail"]  {border-color:rgba(94,203,110,.22);}
+.card[data-cat="exp"]   {border-color:rgba(232,96,154,.22);}
+.card.achieved[data-cat="battle"]{background:var(--battle-bg);border-color:var(--battle);box-shadow:0 0 14px var(--battle-glow);}
+.card.achieved[data-cat="make"]  {background:var(--make-bg);  border-color:var(--make);  box-shadow:0 0 14px var(--make-glow);}
+.card.achieved[data-cat="fail"]  {background:var(--fail-bg);  border-color:var(--fail);  box-shadow:0 0 14px var(--fail-glow);}
+.card.achieved[data-cat="exp"]   {background:var(--exp-bg);   border-color:var(--exp);   box-shadow:0 0 14px var(--exp-glow);}
+.card-text{font-size:clamp(.55rem,1.3vw,.67rem);line-height:1.4;color:var(--dim);}
+.card.achieved .card-text{color:var(--text);font-weight:700;}
+
+/* ================================================================
+   ILLUSTRATION OVERLAY (全画面モーダル)
+   ================================================================ */
+#illustOverlay{
+  display:none;
+  position:fixed;inset:0;z-index:50;
+  background:rgba(10,12,18,.95);
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding:1rem;
+  overflow-y:auto;
+}
+#illustOverlay.open{display:flex;}
+
+.illust-modal-hd{
+  width:100%;max-width:520px;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:.8rem;
+}
+.illust-modal-hd h2{font-size:1rem;font-weight:700;}
+.illust-modal-hd span{font-size:.72rem;color:var(--dim);}
+.illust-close{background:var(--s2);border:1px solid var(--border);border-radius:8px;color:var(--dim);padding:.3rem .8rem;font-size:.78rem;font-family:var(--f);cursor:pointer;}
+.illust-close:hover{color:var(--text);}
+
+.illust-canvas-wrap{
+  position:relative;
+  width:100%;max-width:520px;
+  aspect-ratio:1;
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  background:#0a0c12;
+}
+#illustCanvas{display:block;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges;}
+
+/* チェック済みブロックのオーバーレイ */
+#maskLayer{position:absolute;inset:0;display:grid;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(10,1fr);pointer-events:none;}
+.mask-block{
+  background:#0a0c12;
+}
+/* 落下アニメーション */
+@keyframes blockDrop {
+  0%   { transform:translateY(0);    opacity:1; }
+  15%  { transform:translateY(-8%);  opacity:1; }
+  100% { transform:translateY(130%); opacity:0; }
+}
+.mask-block.reveal {
+  animation:blockDrop 0.38s ease-in forwards;
+}
+
+.illust-hint{
+  margin-top:.6rem;
+  font-size:.72rem;color:var(--dim);
+  text-align:center;max-width:520px;
+}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.8rem;left:50%;transform:translateX(-50%) translateY(140%);background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:.6rem 1.1rem;font-size:.82rem;font-weight:700;z-index:400;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;box-shadow:0 4px 30px rgba(0,0,0,.5);pointer-events:none;max-width:88vw;overflow:hidden;text-overflow:ellipsis;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* CRACKER */
+.cracker-piece{position:fixed;pointer-events:none;z-index:450;border-radius:50%;animation:crackerFly var(--dur) ease-out forwards;}
+@keyframes crackerFly{
+  0%  {opacity:1;transform:translate(0,0) scale(1) rotate(0deg);}
+  80% {opacity:.9;}
+  100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(.1) rotate(var(--rot));}
+}
+
+/* MILESTONE */
+#msOverlay{display:none;position:fixed;inset:0;z-index:500;pointer-events:none;overflow:hidden;}
+#msOverlay.active{display:block;}
+.ms-bg{position:absolute;inset:0;background:rgba(0,0,0,.78);animation:msBgF 3.5s ease-out forwards;}
+@keyframes msBgF{0%{opacity:1}65%{opacity:1}100%{opacity:0}}
+.ms-flash{position:absolute;inset:0;background:#fff;opacity:0;animation:msFlash .5s ease-out forwards;}
+@keyframes msFlash{0%{opacity:.9}100%{opacity:0}}
+.ms-ring{position:absolute;top:50%;left:50%;width:10px;height:10px;border-radius:50%;border:3px solid var(--battle);transform:translate(-50%,-50%) scale(0);animation:msRing 1.2s ease-out forwards;}
+.ms-ring:nth-child(3){animation-delay:.15s;border-color:#a855f7;}
+.ms-ring:nth-child(4){animation-delay:.3s;border-color:var(--exp);}
+@keyframes msRing{0%{transform:translate(-50%,-50%) scale(0);opacity:1}100%{transform:translate(-50%,-50%) scale(70);opacity:0}}
+.ms-particle{position:absolute;animation:msPart var(--pd) ease-out forwards;}
+@keyframes msPart{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0}}
+.ms-scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0,rgba(0,0,0,.18) 1px,transparent 1px,transparent 4px);animation:msScanF 1.5s ease-out forwards;}
+@keyframes msScanF{0%{opacity:.7}100%{opacity:0}}
+.ms-banner{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.4);text-align:center;opacity:0;animation:msBannerIn .5s .2s cubic-bezier(.34,1.56,.64,1) forwards;}
+@keyframes msBannerIn{to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.ms-banner.out{animation:msBannerOut .4s ease-in forwards;}
+@keyframes msBannerOut{to{opacity:0;transform:translate(-50%,-50%) scale(1.1)}}
+.ms-num{font-size:clamp(4rem,18vw,8rem);font-weight:900;line-height:1;background:linear-gradient(135deg,#fff 0%,var(--battle) 50%,var(--exp) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 30px rgba(74,124,245,.8));letter-spacing:-.04em;}
+.ms-label{font-size:clamp(1rem,4vw,1.8rem);font-weight:900;color:#fff;text-shadow:0 0 20px rgba(255,255,255,.5);margin-top:.3rem;letter-spacing:.05em;}
+.ms-sub{font-size:clamp(.75rem,2.5vw,1rem);color:rgba(255,255,255,.7);margin-top:.4rem;}
+
+/* CONFIRM */
+#confirmOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:600;align-items:center;justify-content:center;padding:1rem;}
+#confirmOverlay.open{display:flex;}
+.confirm-box{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;width:100%;max-width:340px;text-align:center;}
+.confirm-box h3{font-size:1rem;margin-bottom:.5rem;}
+.confirm-box p{font-size:.82rem;color:var(--dim);margin-bottom:1.2rem;line-height:1.6;}
+.confirm-actions{display:flex;gap:.6rem;justify-content:center;}
+.c-btn{background:var(--s2);border:1px solid var(--border);border-radius:8px;color:var(--text);padding:.48rem 1.3rem;font-size:.84rem;font-family:var(--f);cursor:pointer;}
+.c-btn.danger{background:#7f1d1d;border-color:#991b1b;color:#fca5a5;font-weight:700;}
+
+/* SHARE */
+#shareModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center;padding:1rem;}
+#shareModal.open{display:flex;}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem;width:100%;max-width:460px;}
+.modal-box h2{font-size:1rem;margin-bottom:.8rem;}
+.share-text{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.9rem;font-size:.82rem;line-height:1.7;white-space:pre-wrap;margin-bottom:.9rem;color:var(--text);}
+.modal-actions{display:flex;gap:.45rem;flex-wrap:wrap;justify-content:flex-end;}
+.mbtn{background:var(--s2);border:1px solid var(--border);border-radius:7px;color:var(--text);padding:.42rem .9rem;font-size:.8rem;font-family:var(--f);cursor:pointer;}
+.mbtn.p{background:var(--battle);border-color:var(--battle);color:#fff;font-weight:700;}
+.mbtn.tw{background:#1d9bf0;border-color:#1d9bf0;color:#fff;font-weight:700;}
+
+footer{text-align:center;padding:1.8rem;font-size:.68rem;color:var(--dim);border-top:1px solid var(--border);line-height:1.8;}
+footer a{color:var(--dim);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Kawasaki Robot Competition 2026</div>
+  <h1>かわロボ<br><em>クリアチェッカー</em></h1>
+  <div class="score-panel">
+    <div class="score-total"><span id="totalCount">0</span><span class="d"> / 100</span></div>
+    <div class="score-cats">
+      <div class="sc"><div class="dot" style="background:#4a7cf5"></div>戦績 <strong id="c_battle">0</strong>/25</div>
+      <div class="sc"><div class="dot" style="background:#f5c842"></div>制作 <strong id="c_make">0</strong>/25</div>
+      <div class="sc"><div class="dot" style="background:#5ecb6e"></div>やらかし <strong id="c_fail">0</strong>/25</div>
+      <div class="sc"><div class="dot" style="background:#e8609a"></div>経験その他 <strong id="c_exp">0</strong>/25</div>
+    </div>
+  </div>
+</header>
+
+<div class="prog-wrap">
+  <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
+  <div class="prog-label" id="progLabel">0%</div>
+</div>
+
+<div class="toolbar">
+  <button class="fb active" data-cat="all"    onclick="setFilter('all')">すべて</button>
+  <button class="fb" data-cat="battle" onclick="setFilter('battle')">⚔️ 戦績</button>
+  <button class="fb" data-cat="make"   onclick="setFilter('make')">🔧 制作</button>
+  <button class="fb" data-cat="fail"   onclick="setFilter('fail')">💥 やらかし</button>
+  <button class="fb" data-cat="exp"    onclick="setFilter('exp')">🌟 経験その他</button>
+  <div class="sp"></div>
+  <button class="tb illust-btn" onclick="openIllust()">🖼 全体を見る</button>
+  <button class="tb" onclick="openShare()">📢 シェア</button>
+  <button class="tb ranking-btn" onclick="submitRanking()">📊 結果を投稿</button>
+  <a class="tb" href="ranking.html" target="_blank" style="text-decoration:none;color:var(--dim);">🏆 ランキング</a>
+</div>
+
+<div class="data-row">
+  <span>データ：</span>
+  <span class="dl" onclick="exportJSON()">⬇ JSON書き出し</span>
+  <label>⬆ JSON読込<input type="file" id="jsonInput" accept=".json" onchange="handleJSONImport(event)"></label>
+  <label>📥 Excel取込<input type="file" id="xlsxInput" accept=".xlsx" onchange="handleXLSXImport(event)"></label>
+  <div class="sp"></div>
+  <button class="danger-btn" onclick="confirmReset()">🗑 リセット</button>
+  <span class="st" id="dataStatus"></span>
+</div>
+
+<div class="main" id="mainContent"></div>
+
+<footer>
+  評価期間：2026年1月1日〜12月上旬（立命杯終了が目安）<br>
+  企画：<a href="https://note.com/jolly_roses919/n/n93ba68eadac8" target="_blank">下剋上(かわロボ)</a>
+  ／年末アドベントカレンダーで結果発表！一番埋めた人には粗品進呈予定🎁
+</footer>
+
+<!-- ILLUSTRATION OVERLAY -->
+<div id="illustOverlay">
+  <div class="illust-modal-hd">
+    <h2>🖼 めくりイラスト</h2>
+    <button class="illust-close" onclick="closeIllust()">✕ 閉じる</button>
+  </div>
+  <div class="illust-canvas-wrap">
+    <canvas id="illustCanvas" width="500" height="500"></canvas>
+    <div id="maskLayer"></div>
+  </div>
+  <div class="illust-hint" id="illustHint"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div id="msOverlay"></div>
+
+<div id="confirmOverlay">
+  <div class="confirm-box">
+    <h3>🗑 本当によろしいですか？</h3>
+    <p>すべての達成記録が消えます。<br>この操作は取り消せません。</p>
+    <div class="confirm-actions">
+      <button class="c-btn" onclick="closeConfirm()">キャンセル</button>
+      <button class="c-btn danger" onclick="doReset()">リセットする</button>
+    </div>
+  </div>
+</div>
+
+<div id="shareModal">
+  <div class="modal-box">
+    <h2>📢 進捗をシェア</h2>
+    <div class="share-text" id="shareText"></div>
+    <div class="modal-actions">
+      <button class="mbtn" onclick="closeShare()">閉じる</button>
+      <button class="mbtn p" onclick="copyShare()">コピー</button>
+      <button class="mbtn tw" onclick="tweetShare()">𝕏 ポスト</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+// ================================================================
+// PIXEL DATA
+// ================================================================
+const PIXELS=["w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#F2D1C6","#F9EBE6","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#F0C8BD","#E6A18D","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#F6E0D8","w","w","w","w","#F4D6CD","#E9AC9A","w","w","w","#F9E9E4","#EFC2B5","#F4D5CB","#F2CCC2","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#FAEFEB","#E6A28E","#F4D5CC","w","w","#F5DAD3","#F1CBC0","#F2CDC3","#F7E2DC","w","#F4D6CD","#EEC1B4","w","#F3D4C9","#F6DED6","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#F2CEC4","#F9E7E2","#F2D0C6","#F4D7CE","#F9E7E2","#EDBCAE","w","#FBF0ED","#EDBBAC","#F1CBC0","#F2CFC4","w","w","#EEBFB1","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#EDBBAD","w","w","#EEC6BA","#E8B3A3","w","w","w","#EEC8BC","#F3DDD6","w","w","#F5E1D9","#EAB4A3","#F6DED7","#F4D4CB","#F2D0C6","#F4D6CD","#EAB19F","#F2CEC3","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#F5DAD2","#E6A18D","#F2D0C5","#F3D5CC","#F0C8BB","#F2CEC3","w","w","w","w","w","w","w","w","w","w","w","w","#F4DBD3","#F8E6E0","#F9EBE7","w","#F7E0D9","#EFC5B9","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#FAECE7","#EFC3B6","#FAECE7","w","w","w","w","#D1D2D7","#A7A7A5","#B2B1A9","#AFAFA8","#B0AFA8","#AFADA7","#AFAEA7","#B2B1AA","#A7A7A5","#D0D3D9","w","w","w","#F8E6E1","#E8A896","#F7E3DC","#F8E6E0","#F8E7E1","#FAEDEA","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#F6DED7","#EBB7A6","#F3D4CB","w","w","w","#D8DAE8","#5E561C","#B19A00","#A08A00","#A68F00","#A58E00","#A68F00","#A68F00","#A18B00","#B39B00","#5F571A","#D6D6E4","w","w","#FAF0EC","#F8E5DE","#F6E0D9","#F5DBD3","#F7DED8","#F3D4CB","#E7A38F","#F8E7E1","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#F5D9D0","#F0CABE","#F3DAD2","w","w","w","w","w","#605D47","#C7AF00","#D3BB06","#FAD803","#EECB03","#EECB03","#E8C703","#E7C503","#F8D603","#D0B807","#C0A900","#615D44","w","w","w","w","w","w","#FBF2F0","#EFC3B6","#FAEDE9","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#F0C8BC","#E5A08C","#EAB8A9","#F4D7CC","#FFEAE1","#FDDEDA","#DBC9D0","#B7B9BE","#A6A282","#4B4B41","#B59E00","#A79503","#897B00","#726400","#766A00","#CCB200","#FFEC00","#EED000","#7B6D00","#D2B800","#D2BB04","#AC9700","#666667","#CACBCE","#E2E3F4","w","w","w","#EEC5B6","#EABBAD","#F4D5CC","#F2CEC3","#F5D8CF","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#F9EAE6","#F8EBE6","w","#F9EBEE","#B7AAAF","#7B6C52","#988512","#837500","#847500","#837300","#CDB703","#7B6F01","#534D00","#181800","#5A5300","#393500","#6E6200","#5E5500","#B8A500","#7F7301","#887B00","#C4AF03","#806F00","#5D5400","#AEA122","#79775C","#ADADA9","#E1E2EC","w","w","#FAEEE7","#E9B3A3","#F6DCD4","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#BEC2CC","#707052","#9C8D04","#968600","#F1D100","#7C7202","#807304","#CDB603","#C5AC00","#DCCC00","#7D6E00","#AA9700","#C0AF00","#867600","#332F01","#AC9701","#A99800","#8A7C00","#C1AB00","#CCB301","#D0B903","#786A01","#D8BE00","#A18B00","#A79300","#6C6318","#969068","#C3C4D0","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#E8E9F1","#72726D","#928302","#A08A00","#D3B900","#BDA504","#C0A901","#595101","#AD9800","#BEA900","#F3D000","#F8D500","#928101","#B39D00","#645D00","#D0B700","#8E7E01","#D6BD00","#665B00","#C3AB00","#FFED00","#F0CE00","#BFAB01","#A28F01","#887702","#BEA704","#CBB003","#B39D00","#D0B600","#675D04","#8E8A5E","#C2C7D9","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#B6B8CA","#7F762C","#8B7B00","#CDB601","#B49F03","#A08D01","#DEC200","#A38F00","#CFB700","#6F6200","#C2AB01","#C3AC01","#E6C700","#2C2901","#847B00","#6B6000","#7C6F01","#403900","#383300","#C6B800","#786B01","#7E7100","#B8A501","#C7B002","#6E6101","#B5A300","#AF9A01","#ECD300","#928302","#E1C504","#AC9701","#B29B00","#786C0B","#959384","#ECEEFE","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#AFAEA9","#665C0A","#B7A200","#BFA805","#B8A001","#B19A00","#C9B400","#A99701","#D0BB01","#B19E03","#A49405","#7B6D04","#D0B802","#C6AE01","#867600","#877900","#958500","#807400","#595301","#655A00","#AD9F00","#847500","#A99601","#D2BA01","#796C00","#938700","#C5AE03","#D8C003","#A79501","#C3AE01","#A89500","#C9B400","#998703","#FFDE00","#8F7B00","#807A3C","#DBDCE0","w","w","w","w","w","w","w","w","w","#E3E3E3","#DCDCDB","#ECECEC","#8F9197","#6E5F00","#D6BB00","#C1A903","#A18D00","#BEA701","#A69601","#BBAB03","#C4B604","#B6A600","#B09B00","#9E8D00","#4A4300","#857300","#CDB603","#DFC301","#FAD601","#F6D401","#AC9701","#F9D801","#E3C401","#EAC801","#E2C601","#D2BA02","#8D7C00","#3F3E18","#887A00","#A28D00","#A08E00","#C2AD00","#B6A504","#C1B102","#B7A501","#B8A601","#C9B101","#685D0E","#978907","#484620","#A4A5AA","#CACACA","#DEDEDE","w","w","w","w","w","#B0B0B0","#858585","#B8B8B7","#666772","#6A5E00","#B7A103","#BEA603","#AC9701","#E9CF01","#BDA804","#B9A900","#B7A600","#8F8000","#857C0F","#938B4A","#98957A","#B0AFA8","#6C6C6E","#A79200","#CDB600","#DEBF00","#E0BF00","#EFCC00","#E1C000","#E5C300","#E2C300","#CCB500","#A69100","#757575","#EAEAF2","#D1D2D5","#AAABA7","#948F5C","#7F730E","#A99700","#B2A200","#B4A504","#AD9C04","#BEA900","#6F6A41","#E6E9FF","#E9E9E7","#CECECE","#C1C0BF","#888888","#AFAFAF","w","w","w","#CFCFCF","#7C7D7C","w","#C8C9CC","#5D5519","#D7BD03","#A08D02","#E7CC00","#C0AA00","#B8A500","#BDA600","#948404","#706C4A","#B3B19E","#BABBCC","#83848E","#A8A8AE","w","w","#67644A","#98860A","#92810D","#91800A","#8E7D09","#907F09","#8F7E09","#907F0B","#968508","#646045","w","w","#E5E5E4","#6F6E70","#6A6B76","#C1C2C9","#89877B","#706912","#AB9700","#EED101","#D8BD01","#837817","#A5A282","#A6A6A4","#BFC0BF","#E1E3EB","w","#7E7E7E","#CFCFCF","w","#E4E4E4","#7D7D7D","#EFEFEE","#C7C9D1","#938212","#AD9800","#CDB505","#978501","#534D18","#A69407","#9D8E06","#747468","#C7C8D2","w","w","#878784","w","w","#C0C0BF","w","w","#D7D8E7","#E2E2ED","#E3E4F0","#E4E6F2","#E5E7F3","#E5E7F4","#E6E7F3","#DEE0EF","w","w","w","#868685","w","w","#BCBCBA","w","#D0D1E1","#918C66","#796E05","#B8AA00","#B1A000","#807200","#AA9300","#C9B200","#827516","#C9CAD0","#F0EFEE","#7E7E7E","#E4E4E4","#C5C5C5","#838382","w","#98999E","#A38C00","#EADA00","#756700","#898884","#EAECF9","#5F6270","#A1A2AB","w","w","w","w","#DDDDDD","#717171","#6E6D6C","#959494","w","w","w","#DFE4E3","#D2D4D1","#C7C6C3","#BDBCB9","#BDBBB8","#C3C2BF","#D1D2CF","#D3D8D8","#E5EBEE","#BFC5C7","#919495","#A5A4A4","#B1B0AF","w","w","w","w","#8F8E8C","#4D4813","#797557","#76755D","#C3A900","#FFEC00","#A28B00","#97999D","w","#848483","#C4C4C4","w","#9C9C9D","#AEAEAD","w","#9B998A","#A5A05E","#9D9A7E","w","#C7C6C3","#969593","w","w","w","w","w","w","w","w","#909496","#605957","#988177","#906757","#9D6652","#A96850","#B36C52","#B26B50","#B26A50","#B26B51","#AB6A50","#A06651","#956958","#5E4338","#948884","#D5D7D8","w","w","w","w","w","#E0E0E1","#686973","w","w","#92907F","#9F9C5E","#9B9A8A","w","#B1B1B0","#9C9C9C","w","w","w","#7C7C7C","#C3C3C2","w","#E5ECFB","w","#CCCCCA","#777777","w","w","w","w","w","w","w","#B2B6B7","#856D64","#A76D57","#CD7D5E","#E88B66","#F49671","#F79B77","#F49A78","#F39B79","#F29A78","#F39B79","#F29A78","#F59B78","#F79B78","#F49671","#F79A76","#CB7A5B","#925842","#8E6B5E","#A8A6A5","w","w","w","w","#DEDDDB","#797977","#D9D9D6","w","#E6EDFB","w","#C2C2C1","#7D7D7E","w","w","w","w","w","#878A8B","#654B40","#94614C","#605A57","#9F9F9F","#E8E7E7","w","w","w","w","w","w","#877F7B","#9C5E47","#DE8765","#F39876","#C97E62","#825A4B","#9E6752","#A5664D","#B67156","#B46B51","#BD7356","#B76D51","#B87155","#B06B50","#A8684F","#9D6853","#9A624C","#D48668","#A76952","#C6795C","#A26046","#846C64","#DBE1E2","w","w","w","#E3E3E3","#7E8283","#6C4D41","#8F5F49","#676461","#9F9F9F","#EFEFEF","w","w","w","w","w","#DEE5E8","#8D5B48","#E38460","#817672","w","w","w","w","w","w","w","#827A76","#B5694C","#F49A78","#DE8D6F","#E8906E","#795547","#CFDEE3","#8F9495","#CACCCD","#797979","#BAB9B9","#797675","#B5B2B1","#787675","#C1C1C0","#88898A","#D2DADC","#878787","#BF7154","#F59C79","#9D634D","#432C23","#B2684C","#7B6158","#EAEEF0","w","w","w","#CDD4D6","#995F49","#DA805C","#8F8A88","w","w","w","w","w","w","w","#D1D7DA","#895B49","#D7805F","#7E7471","w","w","w","w","w","w","#C5CACC","#8B5541","#F59B78","#DA8A6B","#E18E6E","#DD8969","#76564A","#A19794","#787472","#C9CACA","#7E8182","#ECECEC","#8C8C8C","#E7E9EA","#949A9B","#C4C7C8","#A6A6A6","#938F8E","#877F7C","#A8664D","#E69271","#F59B77","#9D634D","#4A3027","#B76C4F","#9A9B9B","w","w","w","#C1C8CA","#945F4A","#CF7C5C","#8B8684","w","w","w","w","w","w","w","#D3D9DC","#8A5B49","#D8805F","#7F7471","w","w","w","w","w","w","#AAADAF","#A46249","#ED9675","#DD8B6C","#E08D6D","#E18E6E","#E38D6C","#CA7859","#BF7458","#B06C52","#A1634B","#583C31","#3D3A38","#674235","#A36851","#A4654C","#B47056","#B76F52","#CD7C5D","#E08D6E","#DF8C6C","#E59070","#C37B5F","#53362A","#CC7A5A","#87817E","w","w","w","#C3CACC","#955F4A","#D07C5C","#8C8785","w","w","w","w","w","w","w","#D2D8DA","#895B4A","#DF8664","#837875","w","w","w","w","w","w","#D6DBDD","#7A5040","#F39774","#DD8C6E","#DF8C6C","#E08D6D","#E08D6D","#E59272","#E49171","#F99C78","#8B5B48","#C8CDCF","w","#9A9A9A","#B36B50","#F99E7A","#E79270","#E99473","#E59171","#E08D6D","#E08D6D","#E08D6D","#D68769","#F29977","#965940","#B0B3B4","w","w","w","#C3CACD","#9B644F","#D78261","#8B8684","w","w","w","w","w","w","w","#D9E0E2","#8D5B48","#BB6747","#67605D","w","w","w","w","w","w","w","#9E9E9E","#91563F","#EE9471","#E79474","#DE8D6D","#DE8C6C","#DF8C6C","#DC8B6B","#EA9371","#915D48","#A0A2A2","#CED4D7","#827D7A","#B46E53","#E79272","#DD8B6C","#DF8C6C","#DF8C6C","#DE8C6C","#DE8C6D","#E49271","#F29875","#B0664A","#847B77","w","w","w","w","#C0C7C9","#7B4632","#B66546","#928C89","w","w","w","w","w","w","w","#BEBFC0","#55433C","#B1A5A1","#A0A1A2","#999999","#DFDFDF","w","w","w","w","w","w","#A9ABAB","#845C4D","#C37456","#E78E6C","#EC9573","#E79372","#E18F6F","#DE8D6E","#E38F6F","#B36D52","#925F4B","#C47759","#E4906F","#DD8C6C","#DF8D6E","#E18F6F","#E69272","#EB9573","#EA916E","#CE7B5B","#8E5B48","#969291","w","w","w","w","#A0A0A0","#8F8F8F","#A6A09E","#887E7A","#716E6D","w","w","w","w","w","w","w","#727272","#E6E9EA","#ACAFB0","#8F8F8F","#C1C1C1","#828181","w","w","w","w","w","w","w","#E0E6E8","#9B9693","#8C695C","#A2644C","#C17254","#D98261","#E38B68","#E88F6D","#F69B78","#F89C78","#F29A77","#E9916F","#E9906E","#E58C69","#DA8260","#C67557","#AC6A50","#916757","#938682","#CDD3D5","w","w","w","w","#D6D5D5","#898888","#E4E4E3","#666767","#A7AAAB","#ADAEAE","#9C9C9C","w","w","w","w","w","w","#7E7E7E","w","#343333","#060606","#E7E9EA","#767C7F","#EBF0F2","w","w","w","w","w","w","w","w","#F0F5F6","#D3D5D6","#ADAAA9","#96837B","#947366","#936959","#8C5946","#9A614B","#97604B","#986754","#936857","#957366","#9D8A83","#AFA6A2","#BFC0C1","#E4EAEC","w","w","w","w","w","w","#777E80","#C7CCCD","#DFDFDE","#121111","#7C7C7B","#D1D1D0","#979797","w","w","w","w","w","w","#8C8C8C","#9F9F9F","#D8D7D7","#C5C6C7","#8F8885","#875745","#987162","#9C9A99","#DAE1E4","w","w","w","w","w","w","w","#C9CCCC","#92827B","#8F8E8E","w","#E8F3F6","#735D55","#CF7A59","#6A5A54","#E5EFF2","w","#7F7E7E","#8A7C77","#C9CFD1","w","w","#EAE9E9","w","w","w","#B6BBBD","#907E77","#A46A53","#815D4F","#BDC0C1","#E1E1E1","#C9C9C9","#727272","#E3E3E3","w","w","w","w","w","w","w","#CDCDCD","#9B9A9A","#A0A2A3","#7C716C","#9E6853","#CA7655","#C67353","#9B6B58","#918782","#C9D0D2","w","#807F7F","#C0BFBF","#CAD0D2","#837069","#A4654C","#C77150","#6B5D59","#CED0D1","#C7CCCE","#6A544C","#BF7153","#65554F","#CED3D5","#D1D3D4","#705F58","#CC7452","#A2624A","#85726B","#909698","#757575","#747474","#B2AEAC","#8D6F64","#B36D52","#CF7654","#B67055","#88695D","#818282","#A6A6A6","#B5B5B5","#E0E0E0","w","w","w","w","w","w","w","w","w","w","w","w","#D3DBDD","#989391","#946C5E","#BE7154","#CC7452","#A96B54","#564D48","#767878","#585B5D","#764B3B","#DB8564","#F09876","#D9896C","#644031","#B37157","#B57158","#B27057","#A96B52","#B37057","#B37057","#B16F56","#6A4334","#DA8B6C","#F09876","#DA8463","#6F4434","#747777","#9FA2A3","#5A3425","#DB8361","#A56C56","#8E7C75","#B5B9BB","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#E8EEF1","#A8AAAA","#9F8377","#8D5843","#B4AEAA","#C4CACC","#7E4D3A","#F49976","#E19070","#E18D6E","#CF8265","#895643","#BF785C","#291A14","#764A3A","#FFA47F","#5F3D30","#281914","#D28466","#8A5743","#D18466","#E08D6D","#E39171","#F29774","#865644","#D5D9DA","#B8B5B4","#49413D","#D3D9DB","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#CFD4D6","#484D4F","#CBD2D4","#7A594C","#EB906D","#DE8D6E","#DF8C6D","#E48F6F","#D18366","#81523F","#C27A5F","#513328","#895643","#F09674","#794C3B","#523328","#CD8164","#825240","#D38567","#E38F6F","#DE8C6C","#DF8E6E","#E88D6B","#6F4F42","#909698","#545555","#BBBAB9","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#B1AFAF","#777777","#4D4846","#C6785A","#E79372","#DE8C6C","#E08D6D","#E48F6F","#D18366","#835240","#BE775D","#3B251D","#7E4F3D","#F59A77","#6A4334","#3B251C","#CB8063","#845340","#D38566","#E38F6F","#E08D6D","#DE8C6C","#E89474","#C27558","#504B49","#BBBBBB","#E4E4E4","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#CCD1D4","#6F4C3E","#EE9573","#DC8B6C","#E08D6D","#E08D6D","#E48F6F","#D18365","#835240","#BD775C","#422920","#80513E","#F59A77","#6D4636","#422A21","#CD8164","#845340","#D38466","#E38F6F","#E08D6D","#E08D6D","#DD8C6D","#EB916E","#7E5C4E","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#BDC1C3","#995F48","#EE9674","#DD8B6C","#E08D6D","#E08D6D","#E48F6F","#D18365","#825240","#C0795E","#4B2F25","#855441","#F39976","#744939","#4B2F25","#CE8265","#835340","#D38466","#E38F6F","#E08D6D","#E08D6D","#DD8B6C","#EF9775","#965B45","#B4B9BA","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#989595","#B66C50","#E99474","#DD8B6C","#E08D6D","#E08D6D","#E48F6F","#D08365","#845341","#B77359","#251812","#714736","#F89C7A","#5A392D","#261812","#C77E61","#855441","#D28466","#E38F6F","#E08D6D","#E08D6D","#DD8B6C","#E99473","#B56C50","#989695","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#817672","#C9785A","#EB9575","#E4906F","#E28F6E","#E18E6E","#E48F6F","#D38467","#784C3B","#EB9472","#EA9472","#E89271","#DE8C6D","#E99371","#EA9372","#E99372","#7C4F3D","#D48667","#E38F6F","#E18D6D","#E28F6E","#E4906F","#EB9574","#C87859","#817773","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#6A5C56","#9C5F47","#BA755B","#CA7F62","#D68768","#DD8B6B","#E5906F","#D38467","#794C3B","#E79270","#DC8B6B","#DF8C6C","#E08D6D","#DF8C6C","#DC8B6B","#E79171","#7D4F3D","#D58668","#E48F6E","#DD8C6C","#D68668","#CB8063","#BA765D","#9A5C45","#6A5C56","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#EFF3F4","#5A4238","#B0694E","#A76A54","#A36952","#A46851","#A86A51","#AD6D55","#A2664F","#724939","#E89372","#DC8C6C","#DF8D6E","#DF8D6E","#DF8D6D","#DD8C6C","#E79272","#754A3A","#A2674F","#AB6C54","#AA6B53","#A36852","#A36851","#A96C55","#B16B50","#5F463B","#EEF3F5","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#918884","#845745","#975B43","#A46248","#B16E54","#AD6D55","#B57158","#A1644D","#724634","#EF916E","#E28A68","#E58B69","#E68C6A","#E48B69","#E28A68","#EE916E","#744735","#A76951","#B17057","#B37157","#AD694F","#A26147","#975A42","#825443","#948C88","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#E4E8E9","#BCB8B5","#A4948D","#765447","#8F5743","#8A5947","#895C4B","#5A443B","#9F7A6C","#9D776A","#9A7567","#947062","#9D776A","#9D776A","#9F7A6C","#5D453C","#825543","#915C47","#835240","#8B6F64","#A5948D","#BBB6B4","#E4E8E9","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#D3D7D9","#DFE2E3","#E6EAEB","#D6E3E7","#5A514D","#B56A4E","#55433C","#9FACB1","#BDC4C7","#CDD6DA","#C6D1D5","#DAE1E4","w","#CDD6DA","#C7D2D6","#CBD4D7","#BCC4C7","#5B6265","#915640","#764A39","#94A2A7","#DDE5E8","#E5E9EA","#DCE0E1","#D9DCDD","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#9E9F9E","#895541","#885948","#6E4738","#AF7058","#A36751","#AA6C54","#A66A53","#B2765F","#9B6752","#644337","#AC6B53","#7C6B64","#D3D9DB","#734D3F","#A76B55","#614134","#B3765F","#A96E58","#AA6C53","#A96A53","#A56A53","#AB6E57","#5D3E31","#A46A54","#704E40","#D7DBDC","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#939393","#B16446","#AC684F","#814C37","#DC8665","#CE7D5E","#CF7E5F","#D07E5F","#D48060","#B56C50","#6E4130","#E1825E","#7B645B","#C3CED1","#86503C","#D7805F","#683C2B","#D48060","#CF7C5D","#D07E5F","#D07E5F","#CF7D5D","#D58161","#6C3F2E","#DA8462","#85523E","#CFD5D7","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","w","#CDCDCD","#958D89","#9A928F","#8C8886","#928C8A","#918B89","#928B89","#918B89","#928C8A","#8F8A89","#918C8A","#9C908C","#ACA9A7","#ECEEEE","#948E8C","#9C928E","#8C8887","#918C89","#918B89","#928B89","#918B89","#928C8A","#918C8A","#8C8887","#9C938E","#96908E","#EEEFEF","w","w","w","w","w","w","w","w","w","w","w"];
+
+// ================================================================
+// ITEMS / CONFIG
+// ================================================================
+const ITEMS=[
+  {id:0,cat:'battle',text:'本大会優勝経験者からから一本を取る'},
+  {id:1,cat:'battle',text:'2本先取の試合で先に1本とられた状態から勝利'},
+  {id:2,cat:'battle',text:'リングからの脱輪で負ける'},
+  {id:3,cat:'battle',text:'試合終了まで残り10秒足らずで勝利'},
+  {id:4,cat:'battle',text:'大会で何かしらの賞を受賞'},
+  {id:5,cat:'battle',text:'アームを使わずに勝利する'},
+  {id:6,cat:'battle',text:'タイムアップによりコイントス(もしくはじゃんけん等）で決着'},
+  {id:7,cat:'battle',text:'2026年本大会優勝'},
+  {id:8,cat:'battle',text:'1台の機体で、練習会を含め100本以上の試合をした'},
+  {id:9,cat:'battle',text:'トーナメントでベスト8以内に残る'},
+  {id:10,cat:'battle',text:'借りた機体で上位3位に入る　or　レンタルした機体が上位3位に入る'},
+  {id:11,cat:'battle',text:'3連敗する'},
+  {id:12,cat:'battle',text:'本大会予選敗退'},
+  {id:13,cat:'battle',text:'同チームの先輩もしくはOBに勝利する'},
+  {id:14,cat:'battle',text:'横回転に勝利する'},
+  {id:15,cat:'battle',text:'回転シールドに勝利する'},
+  {id:16,cat:'battle',text:'トーナメントで優勝'},
+  {id:17,cat:'battle',text:'本大会決勝トーナメント進出'},
+  {id:18,cat:'battle',text:'トーナメント上位3位に入る'},
+  {id:19,cat:'battle',text:'3秒以内に相手から一本を取る'},
+  {id:20,cat:'battle',text:'初戦敗退'},
+  {id:21,cat:'battle',text:'3大会で上位3位に入賞'},
+  {id:22,cat:'battle',text:'本大会に抽選漏れで出れず'},
+  {id:23,cat:'battle',text:'クランク機体で3回戦以上勝ち上がる'},
+  {id:24,cat:'battle',text:'5連勝以上する'},
+  {id:25,cat:'make',text:'機体を1台完成させる'},
+  {id:26,cat:'make',text:'新しい工具やツールを購入'},
+  {id:27,cat:'make',text:'2台の機体を完成'},
+  {id:28,cat:'make',text:'アームに電子制御を加える'},
+  {id:29,cat:'make',text:'1台の機体に20枚以上の脚を搭載'},
+  {id:30,cat:'make',text:'新しい工作機械の購入、もしくは導入'},
+  {id:31,cat:'make',text:'3台以上の機体を完成'},
+  {id:32,cat:'make',text:'制御アンプを自作'},
+  {id:33,cat:'make',text:'有限軌道アームの機体を作成'},
+  {id:34,cat:'make',text:'無限回転アームの機体を作成'},
+  {id:35,cat:'make',text:'1台の機体に6個以上の脚ユニットを搭載'},
+  {id:36,cat:'make',text:'アドベントカレンダーの記事を参考に機体制作'},
+  {id:37,cat:'make',text:'攻撃機構を2つ以上備えた機体を作る'},
+  {id:38,cat:'make',text:'機体に着色(塗装・染色など)'},
+  {id:39,cat:'make',text:'ヘッケンリンク以外の脚機構の機体を作成'},
+  {id:40,cat:'make',text:'他人の意見やアドバイスをもとに機体を改良する'},
+  {id:41,cat:'make',text:'ミニかわロボかBRAVE機体を完成させる'},
+  {id:42,cat:'make',text:'過去の名機のオマージュ、リスペクト機体作成'},
+  {id:43,cat:'make',text:'4種類以上の工作機械(CNC・旋盤・ボール盤・3Dプリンタ・マシニングセンタ等)を使用して機体を製作'},
+  {id:44,cat:'make',text:'リングの障害物を作成'},
+  {id:45,cat:'make',text:'機体の一部にカーボンを使用'},
+  {id:46,cat:'make',text:'やったことが無い加工方法や設計にトライ'},
+  {id:47,cat:'make',text:'自分が過去に作って無い腕機構を作る'},
+  {id:48,cat:'make',text:'手加工で作った部品を使用'},
+  {id:49,cat:'make',text:'機体の一部に3Dプリンターで作った部品を使用する'},
+  {id:50,cat:'fail',text:'ギヤを合計5個以上破損'},
+  {id:51,cat:'fail',text:'加工ミスをする'},
+  {id:52,cat:'fail',text:'プラスとマイナスを間違える'},
+  {id:53,cat:'fail',text:'機体の運搬中に壁等の何かしらに傷を付けてしまう'},
+  {id:54,cat:'fail',text:'アンプを焼く'},
+  {id:55,cat:'fail',text:'加工音等で近所もしくは他団体からクレームをもらう'},
+  {id:56,cat:'fail',text:'ねじ切りタップを折る'},
+  {id:57,cat:'fail',text:'自分の機体から発煙'},
+  {id:58,cat:'fail',text:'致命的な設計ミスをする'},
+  {id:59,cat:'fail',text:'アームで地面や障害物を叩いて自滅'},
+  {id:60,cat:'fail',text:'ドリル、エンドミルを折る'},
+  {id:61,cat:'fail',text:'会場への移動中に職務質問を受ける'},
+  {id:62,cat:'fail',text:'アンプを3つ以上焼く'},
+  {id:63,cat:'fail',text:'ベアリング等の軸受けが粉砕'},
+  {id:64,cat:'fail',text:'アームのギヤが砕ける'},
+  {id:65,cat:'fail',text:'モーターを総計3つ以上焼く'},
+  {id:66,cat:'fail',text:'フレームが破断'},
+  {id:67,cat:'fail',text:'時間以内にスタート台に立てれず一本を取られる'},
+  {id:68,cat:'fail',text:'試合中に機体が故障、破損し敗北'},
+  {id:69,cat:'fail',text:'スタートミスをする'},
+  {id:70,cat:'fail',text:'モーターを焼く'},
+  {id:71,cat:'fail',text:'大会もしくは練習会に遅刻'},
+  {id:72,cat:'fail',text:'工具を破損する　or　紛失する'},
+  {id:73,cat:'fail',text:'可燃物に引火'},
+  {id:74,cat:'fail',text:'脚のギヤが砕ける'},
+  {id:75,cat:'exp',text:'練習会に参加'},
+  {id:76,cat:'exp',text:'折れた、もしくはなめたねじを救出'},
+  {id:77,cat:'exp',text:'KHKから新発売されたアルミギヤを使用'},
+  {id:78,cat:'exp',text:'大会or練習会を開催'},
+  {id:79,cat:'exp',text:'大会会場近くのラーメンを食べる'},
+  {id:80,cat:'exp',text:'横回転に部品をもがれる'},
+  {id:81,cat:'exp',text:'気になる機体の制作者へ質問をする'},
+  {id:82,cat:'exp',text:'大会、練習会の遠征距離が1000キロを超える'},
+  {id:83,cat:'exp',text:'試合中に機体が真っ二つになる　or　真っ二つにされる'},
+  {id:84,cat:'exp',text:'試合中に電装系を千切られる'},
+  {id:85,cat:'exp',text:'家族、親族と共に大会、練習会に参加'},
+  {id:86,cat:'exp',text:'川崎市産業振興会館前で写真撮影'},
+  {id:87,cat:'exp',text:'4つ以上の大会に参加'},
+  {id:88,cat:'exp',text:'他人の作った機体で試合を行う'},
+  {id:89,cat:'exp',text:'他人に機体制作を手伝ってもらう　or　機体制作を手伝う'},
+  {id:90,cat:'exp',text:'回転シールドに機体の一部を粉砕される'},
+  {id:91,cat:'exp',text:'リサイクルラバーチャレンジのゴムを貰う'},
+  {id:92,cat:'exp',text:'SNSでかわロボプレイヤーを新規フォローする'},
+  {id:93,cat:'exp',text:'1試合中に5回以上復帰する'},
+  {id:94,cat:'exp',text:'アドベントカレンダーの記事を書く'},
+  {id:95,cat:'exp',text:'かわロボ初参加メンバーのサポートをする(設計、製作、機体貸し出し等、内容問わず)'},
+  {id:96,cat:'exp',text:'大会に参加'},
+  {id:97,cat:'exp',text:'機体名を1文字で大会に参加'},
+  {id:98,cat:'exp',text:'大会前日もしくは当日に機体を完成させる'},
+  {id:99,cat:'exp',text:'1つの大会や練習会で2台以上の機体を操縦'},
+];
+
+const CAT={
+  battle:{name:'戦績編',  color:'#4a7cf5',emoji:'⚔️'},
+  make:  {name:'制作編',  color:'#f5c842',emoji:'🔧'},
+  fail:  {name:'やらかし編',color:'#5ecb6e',emoji:'💥'},
+  exp:   {name:'経験その他編',color:'#e8609a',emoji:'🌟'},
+};
+const MILESTONES=[10,25,50,75,100];
+const MS_MSG={10:['10達成','いい感じのスタート！'],25:['25達成','4分の1クリア！'],50:['50達成','折返し！本物のかわロボ戦士'],75:['75達成','すごい… 本当にすごい'],100:['FULL COMP!!','伝説になれ 🎊']};
+const ALL_COLORS=['#4a7cf5','#f5c842','#5ecb6e','#e8609a','#a855f7','#06b6d4','#f97316','#fff'];
+
+// ================================================================
+// STATE
+// ================================================================
+let achieved=new Set(), currentFilter='all', lastMilestone=0;
+const SK='kr_checker_v4';
+function loadState(){try{const s=localStorage.getItem(SK);if(s)achieved=new Set(JSON.parse(s));}catch(e){}}
+function saveState(){try{localStorage.setItem(SK,JSON.stringify([...achieved]));}catch(e){}}
+
+// ================================================================
+// ILLUSTRATION
+// item_id → block position (10x10 grid of 5x5-pixel blocks)
+// ================================================================
+function itemToBlock(id){
+  if(id<25) return [Math.floor(id/5), id%5];
+  if(id<50){const i=id-25; return [Math.floor(i/5), 5+i%5];}
+  if(id<75){const i=id-50; return [5+Math.floor(i/5), i%5];}
+  const i=id-75; return [5+Math.floor(i/5), 5+i%5];
+}
+
+// offscreen canvas — full pixel art rendered once
+const OFF=document.createElement('canvas');
+OFF.width=500; OFF.height=500;
+const OFFCTX=OFF.getContext('2d');
+
+function buildOffscreen(){
+  // draw each pixel as 10x10 square
+  for(let i=0;i<2500;i++){
+    const px=PIXELS[i];
+    OFFCTX.fillStyle=(px==='w')?'#f5f0eb':px;
+    const row=Math.floor(i/50), col=i%50;
+    OFFCTX.fillRect(col*10, row*10, 10, 10);
+  }
+}
+
+// Draw full illustration onto visible canvas
+function drawIllustCanvas(){
+  const cv=document.getElementById('illustCanvas');
+  const ctx=cv.getContext('2d');
+  ctx.clearRect(0,0,500,500);
+  ctx.drawImage(OFF,0,0);
+}
+
+// Build the 10x10 mask grid (100 divs, one per item/block)
+// Initially: achieved blocks visible (no mask), unachieved blocks masked
+function buildMaskLayer(){
+  const layer=document.getElementById('maskLayer');
+  layer.innerHTML='';
+  for(let br=0;br<10;br++){
+    for(let bc=0;bc<10;bc++){
+      const div=document.createElement('div');
+      div.className='mask-block';
+      div.id=`mb_${br}_${bc}`;
+      // 全ブロック初期状態は真っ黒。アニメーションで落下して消える
+      layer.appendChild(div);
+    }
+  }
+}
+
+function blockToItem(br,bc){
+  if(br<5 && bc<5)  return br*5+bc;           // 戦績
+  if(br<5 && bc>=5) return 25+(br*5+(bc-5));  // 制作
+  if(br>=5 && bc<5) return 50+((br-5)*5+bc);  // やらかし
+  return 75+((br-5)*5+(bc-5));                 // 経験その他
+}
+
+// When illust opens: blocks crack and fall away left→right, top→bottom
+function animateMaskReveal(){
+  const scanOrder=[];
+  for(let br=0;br<10;br++){
+    for(let bc=0;bc<10;bc++){
+      const itemId=blockToItem(br,bc);
+      if(itemId!==null && achieved.has(itemId)){
+        scanOrder.push({br,bc});
+      }
+    }
+  }
+  const total=scanOrder.length;
+  if(total===0) return;
+  // 1枚ずつ割れて落ちる感が出るよう間隔を空ける
+  // 各アニメが0.45s → 次を0.18s後に始めると「割れてる最中に次が始まる」自然なテンポ
+  // ただし全体が長くなりすぎないよう上限3.5s
+  const perBlock=Math.min(180, Math.floor(3500/total));
+
+  scanOrder.forEach(({br,bc},idx)=>{
+    const delay=idx*perBlock;
+    const div=document.getElementById(`mb_${br}_${bc}`);
+    if(!div) return;
+    setTimeout(()=>{ div.classList.add('reveal'); }, delay);
+  });
+}
+
+// Tiny particle burst at a mask block's screen position
+function miniCrackerAt(el){
+  const rect=el.getBoundingClientRect();
+  const cx=rect.left+rect.width/2;
+  const cy=rect.top+rect.height/2;
+  const colors=ALL_COLORS;
+  for(let i=0;i<6;i++){
+    const p=document.createElement('div');
+    p.className='cracker-piece';
+    const angle=Math.random()*Math.PI*2;
+    const dist=20+Math.random()*50;
+    const tx=Math.cos(angle)*dist;
+    const ty=Math.sin(angle)*dist;
+    const dur=(0.3+Math.random()*0.3)+'s';
+    p.style.cssText=`left:${cx}px;top:${cy}px;width:5px;height:5px;background:${colors[Math.floor(Math.random()*colors.length)]};--tx:${tx}px;--ty:${ty}px;--dur:${dur};--rot:${Math.random()*360}deg;`;
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),700);
+  }
+}
+
+function openIllust(){
+  drawIllustCanvas();
+  buildMaskLayer();
+  document.getElementById('illustOverlay').classList.add('open');
+  updateIllustHint();
+  // start reveal after paint settles
+  setTimeout(animateMaskReveal, 120);
+}
+function closeIllust(){
+  document.getElementById('illustOverlay').classList.remove('open');
+}
+function updateIllustHint(){
+  const t=achieved.size;
+  document.getElementById('illustHint').textContent=
+    t===0?'まだ何も解放されていません。チェックを積み重ねよう！':
+    t<20?`${t}/100 解放中 — まだ霧の中…`:
+    t<50?`${t}/100 解放 — だいぶ見えてきた`:
+    t<80?`${t}/100 解放 — もう少し！`:
+    t<100?`${t}/100 解放 — ほぼコンプリート！`:'🎉 100/100 完全解放！';
+}
+
+// ================================================================
+// BUILD UI
+// ================================================================
+function buildUI(){
+  const main=document.getElementById('mainContent');
+  main.innerHTML='';
+  ['battle','make','fail','exp'].forEach(cat=>{
+    const info=CAT[cat];
+    const sec=document.createElement('div');
+    sec.className='cat-sec'; sec.dataset.cat=cat;
+    sec.innerHTML=`<div class="cat-hd">
+      <span class="cat-badge" style="color:${info.color};border-color:${info.color}">${info.emoji} ${info.name}</span>
+      <span class="cat-sub" id="cl_${cat}"></span></div>
+      <div class="item-grid" id="grid_${cat}"></div>`;
+    main.appendChild(sec);
+    const grid=sec.querySelector('.item-grid');
+    ITEMS.filter(i=>i.cat===cat).forEach(item=>{
+      const c=document.createElement('div');
+      c.className='card'+(achieved.has(item.id)?' achieved':'');
+      c.dataset.cat=cat; c.dataset.id=item.id;
+      c.innerHTML=`<div class="card-text">${item.text}</div>`;
+      c.addEventListener('click',()=>toggle(item.id,cat));
+      grid.appendChild(c);
+    });
+  });
+  updateScores();
+  applyFilter(currentFilter);
+}
+
+function toggle(id,cat){
+  const was=achieved.has(id);
+  if(was){achieved.delete(id);}else{achieved.add(id);}
+  saveState();
+  const c=document.querySelector(`.card[data-id="${id}"]`);
+  if(c) c.classList.toggle('achieved',!was);
+  updateScores();
+  if(!was){
+    showToast(ITEMS[id].text);
+    fireCracker(cat);
+    checkMilestone();
+  }
+}
+
+function updateScores(){
+  const t=achieved.size;
+  document.getElementById('totalCount').textContent=t;
+  const pct=(t*100/100).toFixed(0);
+  document.getElementById('progFill').style.width=pct+'%';
+  document.getElementById('progLabel').textContent=pct+'%';
+  ['battle','make','fail','exp'].forEach(cat=>{
+    const cnt=ITEMS.filter(i=>i.cat===cat&&achieved.has(i.id)).length;
+    document.getElementById('c_'+cat).textContent=cnt;
+    const l=document.getElementById('cl_'+cat);
+    if(l) l.textContent=`${cnt}/25 達成`;
+  });
+}
+
+// ================================================================
+// FILTER
+// ================================================================
+function setFilter(cat){
+  currentFilter=cat;
+  document.querySelectorAll('.fb').forEach(b=>b.classList.toggle('active',b.dataset.cat===cat));
+  applyFilter(cat);
+}
+function applyFilter(cat){
+  document.querySelectorAll('.cat-sec').forEach(s=>
+    s.classList.toggle('hidden',cat!=='all'&&s.dataset.cat!==cat));
+}
+
+// ================================================================
+// TOAST
+// ================================================================
+let toastTimer;
+function showToast(text){
+  const el=document.getElementById('toast');
+  const s=text.length>22?text.slice(0,22)+'…':text;
+  el.textContent='✅ '+s+' 達成！';
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),2400);
+}
+
+// ================================================================
+// CRACKER — left AND right, category color
+// ================================================================
+function fireCracker(cat){
+  const color=CAT[cat].color;
+  const vy=window.innerHeight*0.42;
+  spawnCrackerSide(0,        vy, color,  1);
+  spawnCrackerSide(window.innerWidth, vy, color, -1);
+}
+function spawnCrackerSide(ox,oy,mainColor,dir){
+  const N=28;
+  for(let i=0;i<N;i++){
+    const el=document.createElement('div');
+    el.className='cracker-piece';
+    // fan angle pointing inward
+    const baseAngle=dir===1?-15:-165;
+    const angle=(baseAngle+(Math.random()-0.5)*100)*Math.PI/180;
+    const dist=110+Math.random()*220;
+    const tx=Math.cos(angle)*dist;
+    const ty=Math.sin(angle)*dist-Math.random()*40;
+    const dur=(0.45+Math.random()*0.55)+'s';
+    const rot=(Math.random()*720-360)+'deg';
+    const color=Math.random()<0.4?mainColor:ALL_COLORS[Math.floor(Math.random()*ALL_COLORS.length)];
+    const size=5+Math.random()*8;
+    el.style.cssText=`left:${ox}px;top:${oy}px;width:${size}px;height:${size}px;border-radius:${Math.random()>.5?'50%':'2px'};background:${color};--tx:${tx}px;--ty:${ty}px;--dur:${dur};--rot:${rot};animation-delay:${Math.random()*.15}s;`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),1200);
+  }
+}
+
+// ================================================================
+// MILESTONE
+// ================================================================
+function checkMilestone(){
+  const t=achieved.size;
+  for(const m of MILESTONES){
+    if(t>=m&&lastMilestone<m){lastMilestone=m;showMilestone(m);break;}
+  }
+}
+function showMilestone(n){
+  const [label,sub]=MS_MSG[n];
+  const ov=document.getElementById('msOverlay');
+  ov.innerHTML=''; ov.classList.add('active');
+  ['ms-bg','ms-flash','ms-scan'].forEach(cl=>{const d=document.createElement('div');d.className=cl;ov.appendChild(d);});
+  for(let i=0;i<3;i++){const r=document.createElement('div');r.className='ms-ring';ov.appendChild(r);}
+  const cx=window.innerWidth/2, cy=window.innerHeight/2;
+  for(let i=0;i<80;i++){
+    const p=document.createElement('div'); p.className='ms-particle';
+    const a=(i/80)*Math.PI*2, d=100+Math.random()*300;
+    p.style.cssText=`left:${cx}px;top:${cy}px;width:${4+Math.random()*12}px;height:${4+Math.random()*12}px;border-radius:${Math.random()>.5?'50%':'3px'};background:${ALL_COLORS[Math.floor(Math.random()*ALL_COLORS.length)]};--tx:${Math.cos(a)*d}px;--ty:${Math.sin(a)*d}px;--pd:${.8+Math.random()*.7}s;animation-delay:${Math.random()*.4}s;`;
+    ov.appendChild(p);
+  }
+  for(let i=0;i<6;i++) setTimeout(()=>{fireCracker('battle');fireCracker('exp');},i*200);
+  const b=document.createElement('div'); b.className='ms-banner';
+  b.innerHTML=`<div class="ms-num">${n}</div><div class="ms-label">${label}</div><div class="ms-sub">${sub}</div>`;
+  ov.appendChild(b);
+  const DUR=n===100?5000:3500;
+  setTimeout(()=>{b.classList.add('out');setTimeout(()=>{ov.classList.remove('active');ov.innerHTML='';},500);},DUR-500);
+  ov.style.pointerEvents='auto';
+  ov.addEventListener('click',()=>{ov.classList.remove('active');ov.innerHTML='';},{once:true});
+}
+
+// ================================================================
+// DATA
+// ================================================================
+function setDataStatus(msg,ok=true){
+  const el=document.getElementById('dataStatus');
+  el.style.color=ok?'#5ecb6e':'#e05555';
+  el.textContent=msg;
+  setTimeout(()=>el.textContent='',3500);
+}
+function exportJSON(){
+  const data={version:2,exported:new Date().toISOString(),achieved:[...achieved],total:achieved.size};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url;
+  a.download=`kr-checker2026_${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
+  setDataStatus('✅ JSONを書き出しました');
+}
+function handleJSONImport(e){
+  const f=e.target.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    try{
+      const d=JSON.parse(ev.target.result);
+      if(!d.achieved||!Array.isArray(d.achieved)) throw new Error('フォーマットが違います');
+      d.achieved.forEach(id=>{if(id>=0&&id<100)achieved.add(id);});
+      saveState(); buildUI();
+      setDataStatus(`✅ ${achieved.size}件を復元しました`);
+    }catch(err){setDataStatus('エラー: '+err.message,false);}
+  };
+  r.readAsText(f); e.target.value='';
+}
+function handleXLSXImport(e){
+  const f=e.target.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    try{
+      const data=new Uint8Array(ev.target.result);
+      const wb=XLSX.read(data,{type:'array'});
+      const ws=wb.Sheets['チェッカー'];
+      if(!ws) throw new Error('「チェッカー」シートが見つかりません');
+      const json=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+      const texts=new Set();
+      for(let r2=2;r2<json.length;r2+=2){
+        const ir=json[r2], sr=json[r2+1]||[];
+        for(let c=0;c<ir.length;c++) if(sr[c]==='達成') texts.add(String(ir[c]).trim());
+      }
+      let imported=0;
+      ITEMS.forEach(item=>{
+        const n=item.text.replace(/\s+/g,' ').trim();
+        for(const t of texts){
+          if(t.replace(/\s+/g,' ').trim().slice(0,8)===n.slice(0,8)&&!achieved.has(item.id)){
+            achieved.add(item.id); imported++;
+          }
+        }
+      });
+      saveState(); buildUI();
+      setDataStatus(`✅ ${imported}件取込しました`);
+    }catch(err){setDataStatus('エラー: '+err.message,false);}
+  };
+  r.readAsArrayBuffer(f); e.target.value='';
+}
+function confirmReset(){document.getElementById('confirmOverlay').classList.add('open');}
+function closeConfirm(){document.getElementById('confirmOverlay').classList.remove('open');}
+function doReset(){
+  achieved.clear(); lastMilestone=0; saveState(); buildUI();
+  closeConfirm(); setDataStatus('✅ リセットしました');
+}
+function openShare(){
+  const t=achieved.size;
+  const bc={};['battle','make','fail','exp'].forEach(c=>bc[c]=ITEMS.filter(i=>i.cat===c&&achieved.has(i.id)).length);
+  document.getElementById('shareText').textContent=
+`【かわロボクリアチェッカー2026】\n${t}/100項目達成！\n\n⚔️ 戦績：${bc.battle}/25\n🔧 制作：${bc.make}/25\n💥 やらかし：${bc.fail}/25\n🌟 経験その他：${bc.exp}/25\n\n#かわロボ #かわロボ2026 #クリアチェッカー\nhttps://note.com/jolly_roses919/n/n93ba68eadac8`;
+  document.getElementById('shareModal').classList.add('open');
+}
+function closeShare(){document.getElementById('shareModal').classList.remove('open');}
+function copyShare(){navigator.clipboard.writeText(document.getElementById('shareText').textContent).then(()=>showToast('コピーしました'));closeShare();}
+function tweetShare(){window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(document.getElementById('shareText').textContent),'_blank');closeShare();}
+document.getElementById('shareModal').addEventListener('click',e=>{if(e.target===document.getElementById('shareModal'))closeShare();});
+document.getElementById('confirmOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('confirmOverlay'))closeConfirm();});
+
+// ================================================================
+// RANKING SUBMIT
+// ================================================================
+const GAS_URL='https://script.google.com/macros/s/YOUR_DEPLOY_ID/exec';
+
+function submitRanking(){
+  if(achieved.size===0){showToast('⚠️ まだ何も達成していません');return;}
+  const handle=prompt('ハンドル名を入力してください\n（X/SNSアカウント名など、半角20文字以内）');
+  if(!handle||!handle.trim()) return;
+  const h=handle.trim().slice(0,20);
+  const cats={};
+  ['battle','make','fail','exp'].forEach(c=>cats[c]=ITEMS.filter(i=>i.cat===c&&achieved.has(i.id)).length);
+  if(GAS_URL.includes('YOUR_DEPLOY_ID')){showToast('⚠️ GAS URLが未設定です（管理者向け）');return;}
+  const payload={handle:h,total:achieved.size,...cats,achieved:[...achieved]};
+  fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)})
+    .then(r=>r.json())
+    .then(d=>{if(d.ok)showToast('📊 ランキングに投稿しました！');else showToast('⚠️ 投稿エラー: '+d.error);})
+    .catch(()=>showToast('⚠️ 投稿に失敗しました。再試行してください'));
+}
+
+// ================================================================
+// INIT
+// ================================================================
+buildOffscreen();
+loadState();
+MILESTONES.forEach(m=>{if(achieved.size>=m)lastMilestone=m;});
+buildUI();
+</script>
+</body>
+</html>
