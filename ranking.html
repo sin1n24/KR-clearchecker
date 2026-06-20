@@ -56,10 +56,7 @@ h1 em{
   background:linear-gradient(135deg,var(--battle) 0%,#7c3aed 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
-.hd-meta{
-  display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;
-  font-size:.82rem;color:var(--dim);
-}
+.hd-meta{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;font-size:.82rem;color:var(--dim);}
 .hd-meta a{
   color:var(--battle);text-decoration:none;font-weight:600;
   padding:.2rem .55rem;border:1.5px solid rgba(59,110,240,.25);border-radius:7px;
@@ -68,8 +65,7 @@ h1 em{
 .hd-meta a:hover{background:var(--battle-bg);border-color:var(--battle);}
 #updatedAt,#entryCount{
   font-family:var(--fd);font-size:.78rem;font-weight:600;
-  background:var(--s2);border:1.5px solid var(--border);
-  border-radius:6px;padding:.15rem .5rem;
+  background:var(--s2);border:1.5px solid var(--border);border-radius:6px;padding:.15rem .5rem;
 }
 
 /* TABS */
@@ -80,18 +76,14 @@ h1 em{
 }
 .tab{
   background:var(--s2);border:1.5px solid var(--border);border-radius:999px;
-  color:var(--dim);padding:.36rem 1rem;font-size:.84rem;
-  font-family:var(--f);cursor:pointer;white-space:nowrap;
-  transition:all .18s;font-weight:500;
+  color:var(--dim);padding:.38rem 1rem;font-size:.84rem;
+  font-family:var(--f);cursor:pointer;white-space:nowrap;transition:all .18s;font-weight:500;
 }
-.tab.active{
-  background:var(--battle);border-color:var(--battle);
-  color:#fff;font-weight:700;box-shadow:0 2px 8px rgba(59,110,240,.3);
-}
+.tab.active{background:var(--battle);border-color:var(--battle);color:#fff;font-weight:700;box-shadow:0 2px 8px rgba(59,110,240,.3);}
 .tab:hover:not(.active){border-color:var(--battle);color:var(--battle);background:var(--battle-bg);}
 
 /* MAIN */
-.main{padding:1.5rem;max-width:720px;margin:0 auto;}
+.main{padding:1.5rem;max-width:760px;margin:0 auto;}
 section{display:none;}
 section.active{display:block;}
 
@@ -99,91 +91,136 @@ section.active{display:block;}
 .state-msg{
   text-align:center;padding:3.5rem 1rem;color:var(--dim);
   font-size:.92rem;line-height:2;
-  background:var(--surface);border:1.5px solid var(--border);
-  border-radius:16px;margin-top:.5rem;
+  background:var(--surface);border:1.5px solid var(--border);border-radius:16px;margin-top:.5rem;
 }
 
-/* RANK LIST */
-.rank-list{display:flex;flex-direction:column;gap:8px;}
+/* ======================== RANK LIST ======================== */
+.rank-list{display:flex;flex-direction:column;gap:6px;}
+
 .rank-item{
   background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);
-  padding:.85rem 1rem;display:flex;align-items:flex-start;gap:.75rem;
+  padding:.75rem 1rem;display:flex;align-items:flex-start;gap:.75rem;
   box-shadow:var(--sh);transition:box-shadow .2s,transform .15s;
 }
 .rank-item:hover{box-shadow:var(--shm);transform:translateY(-1px);}
-.rank-item.top1{border-color:rgba(201,138,0,.5);background:linear-gradient(135deg,#fffbeb 0%,var(--surface) 60%);}
-.rank-item.top2{border-color:#b0b8c4;}
-.rank-item.top3{border-color:#c97c45;}
-.rank-num{
-  font-family:var(--fd);font-size:1.15rem;font-weight:900;
-  min-width:2.2rem;text-align:center;line-height:1.2;padding-top:.1rem;color:var(--dim);
+
+/* top 3 hero cards */
+.rank-item.rank-hero{padding:1rem 1.1rem;border-radius:14px;}
+.rank-item.top1{
+  border-color:rgba(201,138,0,.5);
+  background:linear-gradient(135deg,#fffdf0 0%,#fff 60%);
 }
-.rank-item.top1 .rank-num{color:var(--make);}
-.rank-item.top2 .rank-num{color:#9ca3af;}
-.rank-item.top3 .rank-num{color:#c97c45;}
+.rank-item.top2{border-color:#b0b8c4;background:linear-gradient(135deg,#f8f9fb 0%,#fff 60%);}
+.rank-item.top3{border-color:#c97c45;background:linear-gradient(135deg,#fef5ed 0%,#fff 60%);}
+
+.rank-num{
+  font-family:var(--fd);font-size:1.3rem;line-height:1.1;
+  min-width:2.2rem;text-align:center;padding-top:.15rem;color:var(--dim);font-weight:900;
+}
+.rank-item.rank-hero .rank-num{font-size:1.7rem;}
+.rank-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:.42rem;}
+
+.rank-top-row{display:flex;align-items:baseline;gap:.5rem;}
 .rank-handle{
   font-weight:700;font-size:.95rem;flex:1;
-  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-  color:var(--text);
+  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);
 }
+.rank-item.rank-hero .rank-handle{font-size:1.05rem;}
 .rank-total{
-  font-family:var(--fd);font-size:1.25rem;font-weight:900;color:var(--battle);
-  min-width:3.8rem;text-align:right;line-height:1;
+  font-family:var(--fd);font-size:1.3rem;font-weight:900;color:var(--battle);
+  flex-shrink:0;line-height:1;
 }
-.rank-total span{font-size:.68rem;color:var(--dim);font-weight:400;font-family:var(--f);}
-.rank-bars{flex-basis:100%;display:flex;gap:4px;margin-top:.45rem;}
-.rb{flex:1;height:5px;border-radius:999px;background:var(--s2);overflow:hidden;}
-.rb-fill{height:100%;border-radius:999px;transition:width .6s ease;}
-.rb[data-c="battle"] .rb-fill{background:var(--battle);}
-.rb[data-c="make"]   .rb-fill{background:#f5c842;}
-.rb[data-c="fail"]   .rb-fill{background:var(--fail);}
-.rb[data-c="exp"]    .rb-fill{background:var(--exp);}
-.rank-cats{flex-basis:100%;display:flex;gap:.55rem;font-size:.72rem;color:var(--dim);margin-top:.3rem;}
-.rc{display:flex;align-items:center;gap:.25rem;font-weight:500;}
-.dot{width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0;}
+.rank-item.rank-hero .rank-total{font-size:1.65rem;}
+.rank-total span{font-size:.65rem;color:var(--dim);font-weight:400;font-family:var(--f);margin-left:.05em;}
 
-/* CATEGORY KINGS */
-.kings-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+/* STACKED BAR */
+.rank-stack{
+  display:flex;height:11px;border-radius:999px;overflow:hidden;
+  background:var(--s2);width:100%;gap:0;
+}
+.rank-item.rank-hero .rank-stack{height:14px;}
+.sb-seg{height:100%;transition:flex .5s cubic-bezier(.4,0,.2,1);}
+
+/* cat counts */
+.rank-cats{display:flex;gap:.5rem;flex-wrap:wrap;}
+.rc{
+  display:flex;align-items:center;gap:.22rem;
+  font-size:.72rem;color:var(--dim);font-weight:500;font-family:var(--fd);
+}
+.rc .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+
+/* ======================== CATEGORY KINGS ======================== */
+.kings-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
 @media(max-width:420px){.kings-grid{grid-template-columns:1fr;}}
+
 .king-card{
-  background:var(--surface);border:1.5px solid var(--border);border-radius:14px;
-  padding:1.2rem;text-align:center;box-shadow:var(--sh);
+  background:var(--surface);border:1.5px solid var(--border);border-radius:16px;
+  padding:1.25rem;text-align:center;box-shadow:var(--sh);
   transition:box-shadow .2s,transform .15s;
+  border-top-width:4px;
 }
 .king-card:hover{box-shadow:var(--shm);transform:translateY(-2px);}
 .king-cat{
-  font-family:var(--fd);font-size:.72rem;font-weight:700;
-  letter-spacing:.06em;margin-bottom:.35rem;text-transform:uppercase;
+  font-family:var(--fd);font-size:.7rem;font-weight:700;
+  letter-spacing:.1em;margin-bottom:.75rem;text-transform:uppercase;
 }
-.king-emoji{font-size:1.7rem;margin-bottom:.35rem;line-height:1;}
+
+/* score ring */
+.king-ring-wrap{display:flex;justify-content:center;margin-bottom:.75rem;}
+.king-ring{
+  width:84px;height:84px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.king-ring-inner{
+  width:62px;height:62px;border-radius:50%;
+  background:var(--surface);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;z-index:1;
+}
+.king-ring-score{
+  font-family:var(--fd);font-size:1.3rem;font-weight:900;line-height:1;
+}
+.king-ring-score span{font-size:.55rem;color:var(--dim);font-weight:400;font-family:var(--f);}
+.king-no-entry{color:var(--dim);font-size:.8rem;margin-bottom:.5rem;}
+
 .king-handle{
-  font-family:var(--fd);font-size:1rem;font-weight:900;margin-bottom:.25rem;
+  font-family:var(--fd);font-size:.95rem;font-weight:900;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);
 }
-.king-score{font-size:.82rem;color:var(--dim);font-weight:500;}
 
-/* ITEM RATES */
-.item-rates{display:flex;flex-direction:column;gap:5px;}
-.ir{display:flex;align-items:center;gap:.6rem;padding:.3rem 0;}
-.ir-label{
-  font-size:.78rem;color:var(--dim);flex:1;
-  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
-.ir-bar{width:90px;height:6px;background:var(--s2);border-radius:999px;overflow:hidden;flex-shrink:0;}
-.ir-fill{height:100%;border-radius:999px;transition:width .6s ease;}
-.ir-pct{font-family:var(--fd);font-size:.76rem;color:var(--text);min-width:2.8rem;text-align:right;flex-shrink:0;font-weight:600;}
+/* ======================== ITEM RATES ======================== */
+.item-rates{display:flex;flex-direction:column;gap:0;}
+
 .cat-hd{
-  font-size:.85rem;font-weight:700;
+  font-size:.84rem;font-weight:700;
   margin:1.5rem 0 .6rem;padding-bottom:.5rem;
   display:flex;align-items:center;gap:.5rem;
-  border-bottom:1.5px solid var(--border);color:var(--text);
+  border-bottom:2px solid var(--border);color:var(--text);
 }
-.cat-hd:first-child{margin-top:.25rem;}
+.cat-hd:first-child{margin-top:.2rem;}
+.cat-hd-count{font-size:.72rem;color:var(--dim);font-weight:400;margin-left:auto;font-family:var(--fd);}
+
+.ir{
+  display:grid;
+  grid-template-columns:1fr 140px 3rem;
+  align-items:center;gap:.6rem;
+  padding:.35rem 0;
+  border-bottom:1px solid rgba(0,0,0,.04);
+}
+.ir-label{font-size:.78rem;color:var(--dim);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ir-bar{height:8px;background:var(--s2);border-radius:999px;overflow:hidden;width:100%;}
+.ir-fill{height:100%;border-radius:999px;transition:width .6s ease;}
+.ir-pct{
+  font-family:var(--fd);font-size:.78rem;font-weight:700;
+  color:var(--text);text-align:right;
+}
+.ir-cnt{font-family:var(--fd);font-size:.65rem;color:var(--dim);text-align:right;display:block;line-height:1;}
 
 /* PC */
 @media(min-width:900px){
   .main{padding:2rem 1.5rem;}
-  .ir-bar{width:130px;}
+  .ir{grid-template-columns:1fr 200px 3.2rem;}
 }
 
 /* スマホ */
@@ -191,11 +228,14 @@ section.active{display:block;}
   header{padding:1.25rem 1rem 1rem;}
   .tabs{padding:.5rem 1rem;}
   .main{padding:1rem .85rem;}
-  .rank-item{padding:.7rem .75rem;}
-  .rank-handle{font-size:.88rem;}
-  .rank-total{font-size:1.1rem;}
-  .ir-bar{width:70px;}
+  .rank-item.rank-hero{padding:.85rem .9rem;}
+  .rank-item.rank-hero .rank-total{font-size:1.4rem;}
+  .king-ring{width:70px;height:70px;}
+  .king-ring-inner{width:52px;height:52px;}
+  .king-ring-score{font-size:1.1rem;}
+  .ir{grid-template-columns:1fr 90px 2.8rem;gap:.4rem;}
   .ir-label{font-size:.72rem;}
+  .ir-pct{font-size:.72rem;}
 }
 
 footer{
@@ -351,14 +391,14 @@ const ITEMS=[
 ];
 
 const CAT_INFO={
-  battle:{name:'戦績編',color:'#4a7cf5',emoji:'⚔️'},
-  make:  {name:'制作編',color:'#f5c842',emoji:'🔧'},
-  fail:  {name:'やらかし編',color:'#5ecb6e',emoji:'💥'},
-  exp:   {name:'経験その他編',color:'#e8609a',emoji:'🌟'},
+  battle:{name:'戦績編',  color:'#3b6ef0',emoji:'⚔️'},
+  make:  {name:'制作編',  color:'#f5c842',emoji:'🔧'},
+  fail:  {name:'やらかし編',color:'#1a9e52',emoji:'💥'},
+  exp:   {name:'経験その他編',color:'#d93f74',emoji:'🌟'},
 };
+const CATS=['battle','make','fail','exp'];
 
 let rankingsData=null;
-let currentTab='overall';
 
 async function loadRankings(){
   try{
@@ -388,26 +428,44 @@ function render(){
 
 function renderOverall(entries){
   const el=document.getElementById('rankList');
-  if(entries.length===0){el.innerHTML='<div class="state-msg">まだ投稿者がいません。<br>チェッカーから「📊 結果を投稿」で参加しよう！</div>';return;}
+  if(!entries.length){
+    el.innerHTML='<div class="state-msg">まだ投稿者がいません。<br>チェッカーから「📊 結果を投稿」で参加しよう！</div>';
+    return;
+  }
   const sorted=[...entries].sort((a,b)=>b.total-a.total);
   el.innerHTML='';
+
   sorted.forEach((en,i)=>{
     const rank=i+1;
-    const cls=rank===1?'top1':rank===2?'top2':rank===3?'top3':'';
+    const isHero=rank<=3;
     const medal=rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':rank;
+    const cls=rank===1?'top1':rank===2?'top2':rank===3?'top3':'';
+
+    // stacked bar: flex proportional to score (out of 100)
+    const segs=CATS.map(c=>{
+      const v=en[c]||0;
+      return v>0
+        ?`<div class="sb-seg" style="flex:${v};background:${CAT_INFO[c].color}" title="${CAT_INFO[c].name}: ${v}/25"></div>`
+        :'';
+    }).join('');
+    const rem=100-(en.total||0);
+    const remHtml=rem>0?`<div class="sb-seg" style="flex:${rem};background:var(--s2)"></div>`:'';
+
+    // category counts
+    const catsHtml=CATS.map(c=>
+      `<span class="rc"><span class="dot" style="background:${CAT_INFO[c].color}"></span>${en[c]||0}</span>`
+    ).join('');
+
     const div=document.createElement('div');
-    div.className='rank-item '+cls;
-    const cats=['battle','make','fail','exp'];
-    const barsHtml=cats.map(c=>`<div class="rb" data-c="${c}"><div class="rb-fill" style="width:${((en[c]||0)/25*100).toFixed(0)}%"></div></div>`).join('');
-    const catsHtml=cats.map(c=>`<span class="rc"><span class="dot" style="background:${CAT_INFO[c].color}"></span>${en[c]||0}</span>`).join('');
+    div.className=`rank-item ${cls}${isHero?' rank-hero':''}`;
     div.innerHTML=`
       <div class="rank-num">${medal}</div>
-      <div style="flex:1;min-width:0;">
-        <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;">
+      <div class="rank-body">
+        <div class="rank-top-row">
           <div class="rank-handle">${escHtml(en.handle)}</div>
           <div class="rank-total">${en.total}<span>/100</span></div>
         </div>
-        <div class="rank-bars">${barsHtml}</div>
+        <div class="rank-stack">${segs}${remHtml}</div>
         <div class="rank-cats">${catsHtml}</div>
       </div>`;
     el.appendChild(div);
@@ -417,27 +475,39 @@ function renderOverall(entries){
 function renderKings(entries){
   const el=document.getElementById('kingsGrid');
   el.innerHTML='';
-  const cats=['battle','make','fail','exp'];
-  cats.forEach(cat=>{
+  CATS.forEach(cat=>{
     const info=CAT_INFO[cat];
     const sorted=[...entries].sort((a,b)=>(b[cat]||0)-(a[cat]||0));
     const king=sorted[0];
+    const score=king?(king[cat]||0):0;
+    const deg=Math.round(score/25*360);
+    const ringBg=`conic-gradient(${info.color} 0deg ${deg}deg, var(--s2) ${deg}deg 360deg)`;
+
     const div=document.createElement('div');
     div.className='king-card';
-    div.style.borderColor=info.color+'66';
-    div.style.boxShadow=`0 0 12px ${info.color}22`;
+    div.style.borderTopColor=info.color;
     if(king){
       div.innerHTML=`
         <div class="king-cat" style="color:${info.color}">${info.emoji} ${info.name}</div>
-        <div class="king-emoji">👑</div>
-        <div class="king-handle">${escHtml(king.handle)}</div>
-        <div class="king-score" style="color:${info.color}">${king[cat]||0}/25</div>`;
+        <div class="king-ring-wrap">
+          <div class="king-ring" style="background:${ringBg}">
+            <div class="king-ring-inner">
+              <div class="king-ring-score" style="color:${info.color}">${score}<span>/25</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="king-handle">${escHtml(king.handle)}</div>`;
     }else{
       div.innerHTML=`
         <div class="king-cat" style="color:${info.color}">${info.emoji} ${info.name}</div>
-        <div class="king-emoji">—</div>
-        <div class="king-handle" style="color:var(--dim)">未投稿</div>
-        <div class="king-score">0/25</div>`;
+        <div class="king-ring-wrap">
+          <div class="king-ring" style="background:var(--s2)">
+            <div class="king-ring-inner">
+              <div class="king-no-entry">—</div>
+            </div>
+          </div>
+        </div>
+        <div class="king-handle" style="color:var(--dim)">未投稿</div>`;
     }
     el.appendChild(div);
   });
@@ -447,34 +517,39 @@ function renderItems(entries){
   const el=document.getElementById('itemRates');
   el.innerHTML='';
   const n=entries.length;
-  if(n===0){el.innerHTML='<div class="state-msg">投稿者がいません</div>';return;}
-  const cats=['battle','make','fail','exp'];
-  cats.forEach(cat=>{
+  if(!n){el.innerHTML='<div class="state-msg">投稿者がいません</div>';return;}
+
+  CATS.forEach(cat=>{
     const info=CAT_INFO[cat];
+    const items=ITEMS.filter(i=>i.cat===cat).map(item=>{
+      const cnt=entries.filter(en=>en.achieved&&en.achieved.includes(item.id)).length;
+      return{...item,cnt,pct:n>0?cnt/n*100:0};
+    });
+    // 達成率の高い順にソート
+    items.sort((a,b)=>b.pct-a.pct);
+
+    const achieved=items.reduce((s,i)=>s+i.cnt,0);
     const hd=document.createElement('div');
     hd.className='cat-hd';
-    hd.innerHTML=`<span style="color:${info.color}">${info.emoji}</span> ${info.name}`;
+    hd.innerHTML=`<span style="color:${info.color}">${info.emoji}</span> ${info.name}
+      <span class="cat-hd-count">延べ達成 ${achieved}件</span>`;
     el.appendChild(hd);
-    const items=ITEMS.filter(i=>i.cat===cat);
+
     items.forEach(item=>{
-      const cnt=entries.filter(en=>en.achieved&&en.achieved.includes(item.id)).length;
-      const pct=n>0?(cnt/n*100):0;
       const row=document.createElement('div');
       row.className='ir';
       row.innerHTML=`
         <div class="ir-label" title="${escHtml(item.text)}">${escHtml(item.text)}</div>
-        <div class="ir-bar"><div class="ir-fill" style="width:${pct.toFixed(0)}%;background:${info.color}"></div></div>
-        <div class="ir-pct">${pct.toFixed(0)}%</div>`;
+        <div class="ir-bar"><div class="ir-fill" style="width:${item.pct.toFixed(0)}%;background:${info.color}"></div></div>
+        <div class="ir-pct">${item.pct.toFixed(0)}%<span class="ir-cnt">${item.cnt}/${n}人</span></div>`;
       el.appendChild(row);
     });
   });
 }
 
 function showTab(id){
-  currentTab=id;
   document.querySelectorAll('.tab').forEach((t,i)=>{
-    const ids=['overall','kings','items'];
-    t.classList.toggle('active',ids[i]===id);
+    t.classList.toggle('active',['overall','kings','items'][i]===id);
   });
   document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
   document.getElementById('sec-'+id).classList.add('active');
